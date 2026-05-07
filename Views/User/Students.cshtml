@@ -1,0 +1,275 @@
+﻿@{
+    ViewData["Title"] = "Students";
+}
+
+
+<section class="space-y-6 px-1 sm:px-2">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Student Management</p>
+            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Student List</h1>
+            <p class="mt-2 text-sm text-slate-500">View, filter, and manage registered student records.</p>
+        </div>
+    </div>
+
+    <div class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-panel sm:p-6">
+        <div class="flex flex-col gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-filter"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Filter Students</h2>
+                    <p class="text-sm text-slate-500">Search students by full name or registration number.</p>
+                </div>
+            </div>
+
+            <button id="clearFiltersButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-200">
+                <i class="fa-solid fa-rotate-left"></i>
+                Clear Filters
+            </button>
+        </div>
+
+        <form class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-12">
+            <div class="md:col-span-5">
+                <label for="studentNameFilter" class="block text-xs font-bold text-slate-700">Student Name</label>
+                <input id="studentNameFilter" type="text" placeholder="Search by student name" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div class="md:col-span-5">
+                <label for="regNumberFilter" class="block text-xs font-bold text-slate-700">Reg Number</label>
+                <input id="regNumberFilter" type="text" placeholder="Search by registration number" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div class="flex items-end md:col-span-2">
+                <button id="applyFiltersButton" type="button" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-700 px-4 py-3 text-xs font-bold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                    <i class="fa-solid fa-filter"></i>
+                    Apply Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-panel">
+        <div class="flex flex-col gap-3 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-extrabold text-slate-900">Students Table</h2>
+                    <p id="studentCountText" class="mt-1 text-sm text-slate-500">Showing all students</p>
+                </div>
+            </div>
+            <span id="activeFilterBadge" class="hidden rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700">Filters active</span>
+        </div>
+
+        <div id="studentTableContainer" class="w-full overflow-x-auto">
+            <table class="w-full min-w-[1250px] divide-y divide-slate-200 text-xs sm:text-sm">
+                <thead class="bg-slate-50 text-left text-sm font-bold text-slate-700">
+                    <tr>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Title</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Full Name</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Reg No.</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Status</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Email Address</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Contact Number</th>
+                        <th class="px-3 py-3 text-right sm:px-5 sm:py-4">Profile</th>
+                        <th class="px-3 py-3 text-right sm:px-5 sm:py-4">Edit</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <div id="pagination" class="flex flex-wrap items-center justify-center gap-2 border-t border-slate-100 px-5 py-5"></div>
+
+        <div id="noResultsBox" class="hidden px-6 py-12 text-center">
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">No students found</h3>
+            <p class="mt-2 text-sm text-slate-500">Try changing the student name or registration number filters.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const students = [
+            { id: 1, title: 'Mr.', fullName: 'Kasun Perera', regNo: 'STU-2026-001', status: 'Active', email: 'kasun.perera@smartedu.lk', contactNumber: '+94 71 245 8891' },
+            { id: 2, title: 'Ms.', fullName: 'Nethmi Fernando', regNo: 'STU-2026-002', status: 'Active', email: 'nethmi.fernando@smartedu.lk', contactNumber: '+94 77 564 2281' },
+            { id: 3, title: 'Mr.', fullName: 'Tharindu Jayasinghe', regNo: 'STU-2026-003', status: 'Inactive', email: 'tharindu.jayasinghe@smartedu.lk', contactNumber: '+94 76 882 7741' },
+            { id: 4, title: 'Ms.', fullName: 'Sachini Silva', regNo: 'STU-2026-004', status: 'Active', email: 'sachini.silva@smartedu.lk', contactNumber: '+94 70 334 1128' },
+            { id: 5, title: 'Mr.', fullName: 'Dinuka Wijesinghe', regNo: 'STU-2026-005', status: 'Active', email: 'dinuka.wijesinghe@smartedu.lk', contactNumber: '+94 75 889 3412' },
+            { id: 6, title: 'Ms.', fullName: 'Chamodi Rathnayake', regNo: 'STU-2026-006', status: 'Inactive', email: 'chamodi.rathnayake@smartedu.lk', contactNumber: '+94 78 672 4490' },
+            { id: 7, title: 'Mr.', fullName: 'Avishka Senanayake', regNo: 'STU-2026-007', status: 'Active', email: 'avishka.senanayake@smartedu.lk', contactNumber: '+94 71 908 7762' },
+            { id: 8, title: 'Ms.', fullName: 'Hiruni Gunawardena', regNo: 'STU-2026-008', status: 'Active', email: 'hiruni.gunawardena@smartedu.lk', contactNumber: '+94 76 521 9983' },
+            { id: 9, title: 'Mr.', fullName: 'Ravindu Kumara', regNo: 'STU-2026-009', status: 'Inactive', email: 'ravindu.kumara@smartedu.lk', contactNumber: '+94 77 301 5528' },
+            { id: 10, title: 'Ms.', fullName: 'Ishara Madushani', regNo: 'STU-2026-010', status: 'Active', email: 'ishara.madushani@smartedu.lk', contactNumber: '+94 72 654 4421' },
+            { id: 11, title: 'Mr.', fullName: 'Pasan De Silva', regNo: 'STU-2026-011', status: 'Active', email: 'pasan.desilva@smartedu.lk', contactNumber: '+94 71 667 2345' },
+            { id: 12, title: 'Ms.', fullName: 'Kavindi Herath', regNo: 'STU-2026-012', status: 'Inactive', email: 'kavindi.herath@smartedu.lk', contactNumber: '+94 74 213 9981' },
+            { id: 13, title: 'Mr.', fullName: 'Thisara Bandara', regNo: 'STU-2026-013', status: 'Active', email: 'thisara.bandara@smartedu.lk', contactNumber: '+94 76 118 7345' },
+            { id: 14, title: 'Mr.', fullName: 'Lakshan Karunaratne', regNo: 'STU-2026-014', status: 'Active', email: 'lakshan.karunaratne@smartedu.lk', contactNumber: '+94 77 845 6620' },
+            { id: 15, title: 'Ms.', fullName: 'Hashini Ekanayake', regNo: 'STU-2026-015', status: 'Inactive', email: 'hashini.ekanayake@smartedu.lk', contactNumber: '+94 70 984 5521' },
+            { id: 16, title: 'Mr.', fullName: 'Malith Dissanayake', regNo: 'STU-2026-016', status: 'Active', email: 'malith.dissanayake@smartedu.lk', contactNumber: '+94 71 345 7812' },
+            { id: 17, title: 'Ms.', fullName: 'Sanduni Ranasinghe', regNo: 'STU-2026-017', status: 'Active', email: 'sanduni.ranasinghe@smartedu.lk', contactNumber: '+94 75 674 2201' },
+            { id: 18, title: 'Mr.', fullName: 'Lahiru Abeysekara', regNo: 'STU-2026-018', status: 'Inactive', email: 'lahiru.abeysekara@smartedu.lk', contactNumber: '+94 78 432 1198' },
+            { id: 19, title: 'Mr.', fullName: 'Yasith Samarasinghe', regNo: 'STU-2026-019', status: 'Active', email: 'yasith.samarasinghe@smartedu.lk', contactNumber: '+94 77 926 3814' },
+            { id: 20, title: 'Ms.', fullName: 'Anjali Wickramasinghe', regNo: 'STU-2026-020', status: 'Active', email: 'anjali.wickramasinghe@smartedu.lk', contactNumber: '+94 70 552 6432' }
+        ];
+
+        const studentNameFilter = document.getElementById('studentNameFilter');
+        const regNumberFilter = document.getElementById('regNumberFilter');
+        const applyFiltersButton = document.getElementById('applyFiltersButton');
+        const clearFiltersButton = document.getElementById('clearFiltersButton');
+        const studentTableBody = document.getElementById('studentTableBody');
+        const studentCountText = document.getElementById('studentCountText');
+        const activeFilterBadge = document.getElementById('activeFilterBadge');
+        const noResultsBox = document.getElementById('noResultsBox');
+        const pagination = document.getElementById('pagination');
+        const studentTableContainer = document.getElementById('studentTableContainer');
+
+        const itemsPerPage = 5;
+        let currentPage = 1;
+        let currentFilteredStudents = [];
+
+        function getStatusBadge(status) {
+            const statusStyles = {
+                Active: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+                Inactive: 'bg-rose-50 text-rose-700 ring-rose-200'
+            };
+
+            return `<span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold ring-1 ${statusStyles[status]}">${status}</span>`;
+        }
+
+        function applyFilters(resetPage = true) {
+            const studentNameKeyword = studentNameFilter.value.trim().toLowerCase();
+            const regNumberKeyword = regNumberFilter.value.trim().toLowerCase();
+
+            currentFilteredStudents = students.filter(student => {
+                const matchesName = !studentNameKeyword || student.fullName.toLowerCase().includes(studentNameKeyword);
+                const matchesRegNo = !regNumberKeyword || student.regNo.toLowerCase().includes(regNumberKeyword);
+                return matchesName && matchesRegNo;
+            });
+
+            if (resetPage) {
+                currentPage = 1;
+            }
+
+            renderTable(currentFilteredStudents);
+            renderPagination(currentFilteredStudents.length);
+            updateFilterStatus(currentFilteredStudents.length);
+        }
+
+        function renderTable(data) {
+            studentTableBody.innerHTML = '';
+            noResultsBox.classList.toggle('hidden', data.length > 0);
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedData = data.slice(startIndex, endIndex);
+
+            paginatedData.forEach(student => {
+                const row = document.createElement('tr');
+                row.className = 'transition hover:bg-slate-50';
+                row.innerHTML = `
+                    <td class="px-3 py-3 font-semibold text-slate-700 sm:px-5 sm:py-4">${student.title}</td>
+                    <td class="px-3 py-3 font-semibold text-slate-900 sm:px-5 sm:py-4">${student.fullName}</td>
+                    <td class="px-3 py-3 text-slate-600 sm:px-5 sm:py-4">${student.regNo}</td>
+                    <td class="px-3 py-3 sm:px-5 sm:py-4">${getStatusBadge(student.status)}</td>
+                    <td class="px-3 py-3 text-slate-700 sm:px-5 sm:py-4">${student.email}</td>
+                    <td class="px-3 py-3 text-slate-700 sm:px-5 sm:py-4">${student.contactNumber}</td>
+                    <td class="px-3 py-3 text-right sm:px-5 sm:py-4">
+                        <a href="/Student/Profile/${student.id}" class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-xs font-bold text-brand-700 transition hover:bg-brand-100">
+                            <i class="fa-solid fa-id-card"></i>
+                            Profile
+                        </a>
+                    </td>
+                    <td class="px-3 py-3 text-right sm:px-5 sm:py-4">
+                        <a href="/Student/Edit/${student.id}" class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-50 text-amber-700 transition hover:bg-amber-100">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </td>
+                `;
+                studentTableBody.appendChild(row);
+            });
+        }
+
+        function renderPagination(totalItems) {
+            pagination.innerHTML = '';
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            if (totalPages <= 1) {
+                return;
+            }
+
+            const createButton = (label, page, disabled = false, active = false) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = label;
+                button.disabled = disabled;
+                button.className = active
+                    ? 'h-10 min-w-10 rounded-full bg-blue-700 px-4 text-sm font-extrabold text-white shadow-md'
+                    : 'h-10 min-w-10 rounded-full border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40';
+
+                button.addEventListener('click', () => {
+                    if (!disabled) {
+                        currentPage = page;
+                        renderTable(currentFilteredStudents);
+                        renderPagination(currentFilteredStudents.length);
+                        studentTableContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+                pagination.appendChild(button);
+            };
+
+            createButton('Prev', Math.max(1, currentPage - 1), currentPage === 1);
+
+            for (let page = 1; page <= totalPages; page++) {
+                createButton(page, page, false, page === currentPage);
+            }
+
+            createButton('Next', Math.min(totalPages, currentPage + 1), currentPage === totalPages);
+        }
+
+        function updateFilterStatus(count) {
+            const filtersActive = Boolean(studentNameFilter.value.trim() || regNumberFilter.value.trim());
+            activeFilterBadge.classList.toggle('hidden', !filtersActive);
+            studentCountText.textContent = `${count} student${count === 1 ? '' : 's'} found`;
+        }
+
+        function clearFilters() {
+            studentNameFilter.value = '';
+            regNumberFilter.value = '';
+            applyFilters(true);
+        }
+
+        function runSelfTests() {
+            console.assert(students.length === 20, 'Expected 20 student records.');
+            console.assert(students.every(student => student.email && student.contactNumber), 'Every student must have email and contact number.');
+            console.assert(typeof getStatusBadge('Active') === 'string', 'Status badge should return HTML string.');
+        }
+
+        applyFiltersButton.addEventListener('click', () => applyFilters(true));
+        clearFiltersButton.addEventListener('click', clearFilters);
+
+        studentNameFilter.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyFilters(true);
+            }
+        });
+
+        regNumberFilter.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyFilters(true);
+            }
+        });
+
+        runSelfTests();
+        applyFilters(true);
+    });
+</script>

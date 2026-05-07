@@ -1,0 +1,259 @@
+﻿@{
+    ViewData["Title"] = "Create Course Offering";
+}
+
+<section class="space-y-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Course Offering Management</p>
+                <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Course Offering Registration</h1>
+                <p class="mt-2 text-sm text-slate-500">Create a new course offering for a selected academic year and enrollment period.</p>
+            </div>
+        </div>
+
+        <form id="courseOfferingForm" class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-panel sm:p-6">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-calendar-plus"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Course Offering Information</h2>
+                    <p class="text-sm text-slate-500">Select the course, academic year, status, capacity, and enrollment dates.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-12">
+                <div class="lg:col-span-8">
+                    <label class="block text-xs font-bold text-slate-700">Course</label>
+                    <div class="relative mt-2">
+                        <button id="courseDropdownButton" type="button" class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                            <span id="selectedCourseText" class="truncate text-slate-400">Searchable dropdown of all courses</span>
+                            <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                        </button>
+
+                        <div id="courseDropdownPanel" class="absolute z-40 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                            <div class="border-b border-slate-100 p-3">
+                                <div class="relative">
+                                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                                    <input id="courseSearchInput" type="text" placeholder="Search course name or code" class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                                </div>
+                            </div>
+                            <div id="courseOptions" class="max-h-72 overflow-y-auto p-2"></div>
+                        </div>
+                    </div>
+                    <input id="selectedCourseInput" name="course" type="hidden" />
+                </div>
+
+                <div class="lg:col-span-4">
+                    <label for="academicYear" class="block text-xs font-bold text-slate-700">Academic Year</label>
+                    <select id="academicYear" name="academicYear" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <option value="">Select academic year</option>
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                    </select>
+                </div>
+
+                <div class="lg:col-span-4">
+                    <label for="status" class="block text-xs font-bold text-slate-700">Status</label>
+                    <select id="status" name="status" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <option value="">Select status</option>
+                        <option value="planned">planned</option>
+                        <option value="open">open</option>
+                        <option value="closed">closed</option>
+                        <option value="cancelled">cancelled</option>
+                        <option value="completed">completed</option>
+                    </select>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <label for="maxCapacity" class="block text-xs font-bold text-slate-700">Max Capacity</label>
+                    <input id="maxCapacity" name="maxCapacity" type="number" min="1" placeholder="120" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+
+                <div class="lg:col-span-3">
+                    <label for="enrollmentOpenDate" class="block text-xs font-bold text-slate-700">Enrollment Open Date</label>
+                    <input id="enrollmentOpenDate" name="enrollmentOpenDate" type="date" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+
+                <div class="lg:col-span-2">
+                    <label for="enrollmentEndDate" class="block text-xs font-bold text-slate-700">Enrollment End Date</label>
+                    <input id="enrollmentEndDate" name="enrollmentEndDate" type="date" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+            </div>
+
+            <div id="validationBox" class="mt-5 hidden rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700"></div>
+
+            <div class="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-end">
+                <button id="resetButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-6 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Clear
+                </button>
+
+                <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    Create
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const courses = [
+                { id: 1, title: 'BSc (Hons) in Software Engineering', code: 'CSE-UG-001' },
+                { id: 2, title: 'HND in Computing', code: 'CSE-HND-002' },
+                { id: 3, title: 'Certificate in Cyber Security', code: 'CSE-CER-003' },
+                { id: 4, title: 'Foundation in Information Technology', code: 'CSE-FDN-004' },
+                { id: 5, title: 'Diploma in Graphic Design', code: 'ART-DIP-005' },
+                { id: 6, title: 'Higher National Certificate in Multimedia Design', code: 'ART-HNC-006' },
+                { id: 7, title: 'BA in Fashion Design', code: 'ART-UG-007' },
+                { id: 8, title: 'Diploma in English Language', code: 'LAN-DIP-008' },
+                { id: 9, title: 'Certificate in Business English', code: 'LAN-CER-009' },
+                { id: 10, title: 'Foundation in Academic English', code: 'LAN-FDN-010' },
+                { id: 11, title: 'BSc Biomedical Science', code: 'LIF-UG-011' },
+                { id: 12, title: 'Diploma in Psychology', code: 'LIF-DIP-012' },
+                { id: 13, title: 'Certificate in Laboratory Practice', code: 'LIF-CER-013' },
+                { id: 14, title: 'HND in Civil Engineering', code: 'ENG-HND-014' },
+                { id: 15, title: 'HND in Electrical and Electronic Engineering', code: 'ENG-HND-015' },
+                { id: 16, title: 'Certificate in AutoCAD for Engineering', code: 'ENG-CER-016' },
+                { id: 17, title: 'Diploma in Business Management', code: 'MGT-DIP-017' },
+                { id: 18, title: 'BA (Hons) in Business Administration', code: 'MGT-UG-018' },
+                { id: 19, title: 'MBA in Project Management', code: 'MGT-PG-019' },
+                { id: 20, title: 'Doctor of Business Administration', code: 'MGT-DOC-020' }
+            ];
+
+            const form = document.getElementById('courseOfferingForm');
+            const courseDropdownButton = document.getElementById('courseDropdownButton');
+            const courseDropdownPanel = document.getElementById('courseDropdownPanel');
+            const courseSearchInput = document.getElementById('courseSearchInput');
+            const courseOptions = document.getElementById('courseOptions');
+            const selectedCourseText = document.getElementById('selectedCourseText');
+            const selectedCourseInput = document.getElementById('selectedCourseInput');
+            const academicYear = document.getElementById('academicYear');
+            const status = document.getElementById('status');
+            const maxCapacity = document.getElementById('maxCapacity');
+            const enrollmentOpenDate = document.getElementById('enrollmentOpenDate');
+            const enrollmentEndDate = document.getElementById('enrollmentEndDate');
+            const validationBox = document.getElementById('validationBox');
+            const resetButton = document.getElementById('resetButton');
+
+            function renderCourseOptions(keyword = '') {
+                const normalizedKeyword = keyword.trim().toLowerCase();
+                const filteredCourses = courses.filter(course => {
+                    return course.title.toLowerCase().includes(normalizedKeyword) || course.code.toLowerCase().includes(normalizedKeyword);
+                });
+
+                courseOptions.innerHTML = '';
+
+                if (filteredCourses.length === 0) {
+                    const emptyItem = document.createElement('div');
+                    emptyItem.className = 'px-4 py-6 text-center text-sm font-semibold text-slate-400';
+                    emptyItem.textContent = 'No courses found.';
+                    courseOptions.appendChild(emptyItem);
+                    return;
+                }
+
+                filteredCourses.forEach(course => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'w-full rounded-xl px-4 py-3 text-left transition hover:bg-brand-50';
+                    button.innerHTML = `
+                        <span class="block text-sm font-extrabold text-slate-800">${course.title}</span>
+                        <span class="mt-1 block text-xs font-bold text-slate-400">${course.code}</span>
+                    `;
+                    button.addEventListener('click', () => selectCourse(course));
+                    courseOptions.appendChild(button);
+                });
+            }
+
+            function selectCourse(course) {
+                selectedCourseInput.value = course.id;
+                selectedCourseText.textContent = `${course.title} (${course.code})`;
+                selectedCourseText.classList.remove('text-slate-400');
+                selectedCourseText.classList.add('text-slate-900');
+                courseDropdownPanel.classList.add('hidden');
+            }
+
+            function showValidation(message) {
+                validationBox.textContent = message;
+                validationBox.classList.remove('hidden');
+            }
+
+            function clearValidation() {
+                validationBox.textContent = '';
+                validationBox.classList.add('hidden');
+            }
+
+            function resetForm() {
+                form.reset();
+                selectedCourseInput.value = '';
+                selectedCourseText.textContent = 'Searchable dropdown of all courses';
+                selectedCourseText.classList.add('text-slate-400');
+                selectedCourseText.classList.remove('text-slate-900');
+                courseSearchInput.value = '';
+                renderCourseOptions();
+                clearValidation();
+            }
+
+            courseDropdownButton.addEventListener('click', () => {
+                courseDropdownPanel.classList.toggle('hidden');
+                courseSearchInput.value = '';
+                renderCourseOptions();
+                setTimeout(() => courseSearchInput.focus(), 0);
+            });
+
+            courseSearchInput.addEventListener('input', event => renderCourseOptions(event.target.value));
+
+            document.addEventListener('click', event => {
+                if (!courseDropdownPanel.contains(event.target) && !courseDropdownButton.contains(event.target)) {
+                    courseDropdownPanel.classList.add('hidden');
+                }
+            });
+
+            resetButton.addEventListener('click', resetForm);
+
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                clearValidation();
+
+                if (!selectedCourseInput.value) {
+                    showValidation('Please select a course.');
+                    return;
+                }
+
+                if (!academicYear.value) {
+                    showValidation('Please select an academic year.');
+                    return;
+                }
+
+                if (!status.value) {
+                    showValidation('Please select a status.');
+                    return;
+                }
+
+                if (!maxCapacity.value || Number(maxCapacity.value) <= 0) {
+                    showValidation('Please enter a valid max capacity.');
+                    return;
+                }
+
+                if (!enrollmentOpenDate.value) {
+                    showValidation('Please select an enrollment open date.');
+                    return;
+                }
+
+                if (!enrollmentEndDate.value) {
+                    showValidation('Please select an enrollment end date.');
+                    return;
+                }
+
+                if (new Date(enrollmentEndDate.value) < new Date(enrollmentOpenDate.value)) {
+                    showValidation('Enrollment end date must be after or equal to the enrollment open date.');
+                    return;
+                }
+
+                alert('Course offering created successfully. Connect this form action to your ASP.NET Core controller.');
+            });
+
+            renderCourseOptions();
+        });
+    </script>

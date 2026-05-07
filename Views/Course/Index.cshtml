@@ -1,0 +1,416 @@
+﻿
+@{
+    ViewData["Title"] = "Courses";
+    Layout = "";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courses | Smart Edu Higher Education Institute</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-bg {
+            background: linear-gradient(120deg, rgba(15, 23, 42, 0.94), rgba(30, 64, 175, 0.84)), url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <header class="bg-white/95 backdrop-blur sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="h-11 w-11 rounded-2xl bg-blue-700 text-white flex items-center justify-center font-extrabold text-xl">SE</div>
+                    <div>
+                        <p class="text-xl font-extrabold text-slate-900 leading-tight">Smart Edu</p>
+                        <p class="text-xs font-medium text-slate-500">Higher Education Institute</p>
+                    </div>
+                </a>
+
+                <nav class="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-700">
+                    <a href="index.html" class="hover:text-blue-700">Home</a>
+                    <a href="#about" class="hover:text-blue-700">About</a>
+                    <a href="courses.html" class="text-blue-700">Courses</a>
+                    <a href="#schools" class="hover:text-blue-700">Schools</a>
+                    <a href="#student-life" class="hover:text-blue-700">Student Life</a>
+                    <a href="#contact" class="hover:text-blue-700">Contact</a>
+                </nav>
+
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="/Account/Login" class="px-5 py-2.5 rounded-full bg-white text-blue-700 text-sm font-bold shadow hover:bg-blue-50 transition transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">Login</a>
+                    <a href="/Account/Register" class="px-5 py-2.5 rounded-full bg-blue-700 text-white text-sm font-bold hover:bg-blue-800 shadow-lg shadow-blue-700/20 transition transform hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-300">Register</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-bg text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 lg:py-8">
+                <div class="max-w-3xl">
+                    <p class="text-sm font-extrabold tracking-wider text-blue-200 uppercase">Course Finder</p>
+                    <h1 class="mt-4 text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight">Discover the right programme for your future</h1>
+                    <p class="mt-3 text-base text-blue-50 leading-7">Browse Smart Edu courses by department, programme level, or keyword. Use the filters to quickly find academic pathways that match your goals.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 lg:py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-8">
+                    <aside class="lg:col-span-4 xl:col-span-3">
+                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sticky top-28">
+                            <div class="flex items-center justify-between gap-4">
+                                <div>
+                                    <p class="text-xs font-extrabold tracking-wider text-blue-700 uppercase">Filter By</p>
+                                    <h2 class="mt-1 text-xl font-extrabold text-slate-900">Courses</h2>
+                                </div>
+                                <button id="clearFilters" type="button" class="text-sm font-bold text-blue-700 hover:text-blue-900">Clear</button>
+                            </div>
+
+                            <div class="mt-6">
+                                <label for="searchInput" class="block text-sm font-bold text-slate-700">Search courses</label>
+                                <div class="mt-2 relative">
+                                    <input id="searchInput" type="text" placeholder="Search by title or keyword" class="w-full rounded-2xl border border-slate-200 px-4 py-3 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                                    <span class="absolute right-4 top-3 text-slate-400">⌕</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-7">
+                                <h3 class="text-sm font-extrabold text-slate-900">Department</h3>
+                                <div id="departmentFilters" class="mt-3 space-y-2"></div>
+                            </div>
+
+                            <div class="mt-7 border-t border-slate-200 pt-7">
+                                <h3 class="text-sm font-extrabold text-slate-900">Programme Level</h3>
+                                <div id="programFilters" class="mt-3 space-y-2"></div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <section class="lg:col-span-8 xl:col-span-9">
+                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 sm:p-6 mb-6">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                <div>
+                                    <p class="text-sm text-slate-500">Showing</p>
+                                    <h2 id="resultCount" class="text-2xl font-extrabold text-slate-900">All courses</h2>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <label for="sortSelect" class="text-sm font-bold text-slate-600">Sort</label>
+                                    <select id="sortSelect" class="rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                        <option value="featured">Featured</option>
+                                        <option value="titleAsc">Course name A-Z</option>
+                                        <option value="levelAsc">Programme level</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="courseGrid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+
+                        <div id="noResults" class="hidden bg-white rounded-3xl border border-dashed border-slate-300 p-10 text-center">
+                            <div class="mx-auto h-16 w-16 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center text-2xl">⌕</div>
+                            <h3 class="mt-5 text-xl font-extrabold text-slate-900">No courses found</h3>
+                            <p class="mt-2 text-slate-600">Try changing the department, programme level, or search keyword.</p>
+                            <button type="button" onclick="clearAllFilters()" class="mt-6 px-6 py-3 rounded-full bg-blue-700 text-white font-bold hover:bg-blue-800 transition">Reset Filters</button>
+                        </div>
+
+                        <div id="pagination" class="mt-10 flex flex-wrap items-center justify-center gap-2"></div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="bg-slate-950 text-slate-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <p class="text-2xl font-extrabold text-white">Smart Edu Higher Education Institute</p>
+                <p class="mt-4 max-w-md leading-7">A student-centered higher education institute focused on quality teaching, employability, and lifelong learning.</p>
+            </div>
+            <div>
+                <p class="font-bold text-white">Quick Links</p>
+                <ul class="mt-4 space-y-2 text-sm">
+                    <li><a href="index.html" class="hover:text-white">Home</a></li>
+                    <li><a href="courses.html" class="hover:text-white">Courses</a></li>
+                    <li><a href="#schools" class="hover:text-white">Schools</a></li>
+                    <li><a href="/Account/Register" class="hover:text-white">Register</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold text-white">Contact</p>
+                <ul class="mt-4 space-y-2 text-sm">
+                    <li>Colombo, Sri Lanka</li>
+                    <li>info@smartedu.lk</li>
+                    <li>+94 11 234 5678</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-white/10 py-5 text-center text-sm">© 2026 Smart Edu Higher Education Institute. All rights reserved.</div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const departments = [
+                'Department of Languages',
+                'Department of Art & Design',
+                'Department of Life Science',
+                'Department of Computing',
+                'Department of Engineering',
+                'Department of Management & Law'
+            ];
+
+            const programs = [
+                'Foundation Level',
+                'Certificate Level',
+                'Higher National Diploma Level',
+                'Diploma Level',
+                'Higher National Certificate',
+                'Undergraduate Level',
+                'Postgraduate Level',
+                'Doctorate Level'
+            ];
+
+            const courses = [
+                { title: 'BSc (Hons) in Software Engineering', image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80', department: 'Department of Computing', program: 'Undergraduate Level', duration: '3 Years', mode: 'Weekday / Weekend', tag: 'Popular', description: 'A degree pathway covering programming, software architecture, databases, cloud, and agile project delivery.' },
+                { title: 'HND in Computing', image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80', department: 'Department of Computing', program: 'Higher National Diploma Level', duration: '18 Months', mode: 'Weekend', tag: 'Career Focused', description: 'A practical programme focused on systems development, networking, web applications, and IT project skills.' },
+                { title: 'Certificate in Cyber Security', image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=900&q=80', department: 'Department of Computing', program: 'Certificate Level', duration: '4 Months', mode: 'Online / Blended', tag: 'New', description: 'Introduces cyber threats, network defense, ethical hacking basics, and secure digital practices.' },
+                { title: 'Foundation in Information Technology', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=80', department: 'Department of Computing', program: 'Foundation Level', duration: '6 Months', mode: 'Weekday', tag: 'Beginner', description: 'A foundation route for students planning to continue into computing diplomas or degrees.' },
+                { title: 'Diploma in Graphic Design', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=900&q=80', department: 'Department of Art & Design', program: 'Diploma Level', duration: '8 Months', mode: 'Weekend', tag: 'Creative', description: 'Develop visual communication, branding, typography, layout, and digital design skills.' },
+                { title: 'Higher National Certificate in Multimedia Design', image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=900&q=80', department: 'Department of Art & Design', program: 'Higher National Certificate', duration: '12 Months', mode: 'Blended', tag: 'Creative', description: 'A practical programme in animation, digital media, visual storytelling, and content production.' },
+                { title: 'BA in Fashion Design', image: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=900&q=80', department: 'Department of Art & Design', program: 'Undergraduate Level', duration: '3 Years', mode: 'Weekday', tag: 'Industry Ready', description: 'Combines fashion illustration, garment construction, textile knowledge, and collection development.' },
+                { title: 'Diploma in English Language', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=900&q=80', department: 'Department of Languages', program: 'Diploma Level', duration: '6 Months', mode: 'Weekday / Weekend', tag: 'Essential', description: 'Strengthen academic, professional, and conversational English communication skills.' },
+                { title: 'Certificate in Business English', image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=80', department: 'Department of Languages', program: 'Certificate Level', duration: '3 Months', mode: 'Online', tag: 'Professional', description: 'Focused training for workplace communication, presentations, meetings, and professional writing.' },
+                { title: 'Foundation in Academic English', image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=900&q=80', department: 'Department of Languages', program: 'Foundation Level', duration: '4 Months', mode: 'Blended', tag: 'Beginner', description: 'Prepares students for higher education through reading, writing, listening, and speaking practice.' },
+                { title: 'BSc Biomedical Science', image: 'https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?auto=format&fit=crop&w=900&q=80', department: 'Department of Life Science', program: 'Undergraduate Level', duration: '3 Years', mode: 'Weekday', tag: 'Laboratory Based', description: 'Covers human biology, pathology, laboratory techniques, and biomedical research foundations.' },
+                { title: 'Diploma in Psychology', image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=900&q=80', department: 'Department of Life Science', program: 'Diploma Level', duration: '9 Months', mode: 'Weekend', tag: 'Student Choice', description: 'Introduces psychological theory, human behavior, mental health, and research methods.' },
+                { title: 'Certificate in Laboratory Practice', image: 'https://images.unsplash.com/photo-1581093588401-fbb62a02f120?auto=format&fit=crop&w=900&q=80', department: 'Department of Life Science', program: 'Certificate Level', duration: '4 Months', mode: 'Weekday', tag: 'Practical', description: 'Develops core laboratory safety, measurement, sample handling, and documentation skills.' },
+                { title: 'HND in Civil Engineering', image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80', department: 'Department of Engineering', program: 'Higher National Diploma Level', duration: '18 Months', mode: 'Weekend', tag: 'Technical', description: 'Focuses on construction technology, structural principles, surveying, and engineering management.' },
+                { title: 'HND in Electrical and Electronic Engineering', image: 'https://images.unsplash.com/photo-1581092160607-ee22731c0d13?auto=format&fit=crop&w=900&q=80', department: 'Department of Engineering', program: 'Higher National Diploma Level', duration: '18 Months', mode: 'Weekend', tag: 'Technical', description: 'Covers circuits, embedded systems, power systems, industrial electronics, and practical engineering skills.' },
+                { title: 'Certificate in AutoCAD for Engineering', image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80', department: 'Department of Engineering', program: 'Certificate Level', duration: '3 Months', mode: 'Blended', tag: 'Skill Based', description: 'A focused design course for producing accurate technical drawings using CAD tools.' },
+                { title: 'Diploma in Business Management', image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80', department: 'Department of Management & Law', program: 'Diploma Level', duration: '8 Months', mode: 'Weekday / Weekend', tag: 'Popular', description: 'Builds knowledge in management, marketing, accounting, leadership, and business operations.' },
+                { title: 'BA (Hons) in Business Administration', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80', department: 'Department of Management & Law', program: 'Undergraduate Level', duration: '3 Years', mode: 'Weekday', tag: 'Professional', description: 'A management degree pathway covering strategy, finance, human resources, and entrepreneurship.' },
+                { title: 'MBA in Project Management', image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=900&q=80', department: 'Department of Management & Law', program: 'Postgraduate Level', duration: '1 Year', mode: 'Weekend / Online', tag: 'Executive', description: 'Advanced study in project planning, governance, leadership, risk, and strategic delivery.' },
+                { title: 'Doctor of Business Administration', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=80', department: 'Department of Management & Law', program: 'Doctorate Level', duration: '3 Years', mode: 'Blended', tag: 'Research', description: 'A research-focused doctorate for senior professionals and academic progression.' }
+            ];
+
+            const departmentContainer = document.getElementById('departmentFilters');
+            const programContainer = document.getElementById('programFilters');
+            const courseGrid = document.getElementById('courseGrid');
+            const resultCount = document.getElementById('resultCount');
+            const searchInput = document.getElementById('searchInput');
+            const sortSelect = document.getElementById('sortSelect');
+            const noResults = document.getElementById('noResults');
+            const clearFiltersButton = document.getElementById('clearFilters');
+            const pagination = document.getElementById('pagination');
+            const itemsPerPage = 6;
+            let currentPage = 1;
+
+            function assertRequiredElementsExist() {
+                const requiredElements = {
+                    departmentContainer,
+                    programContainer,
+                    courseGrid,
+                    resultCount,
+                    searchInput,
+                    sortSelect,
+                    noResults,
+                    clearFiltersButton,
+                    pagination
+                };
+
+                Object.entries(requiredElements).forEach(([name, element]) => {
+                    console.assert(element !== null, `Required DOM element missing: ${name}`);
+                });
+            }
+
+            function createCheckbox(container, name, value) {
+                if (!container) return;
+
+                const id = value.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                const label = document.createElement('label');
+                label.className = 'flex items-start gap-3 rounded-2xl px-3 py-2 hover:bg-slate-50 cursor-pointer transition';
+                label.innerHTML = `
+                    <input type="checkbox" name="${name}" value="${value}" id="${id}" class="mt-1 h-4 w-4 rounded border-slate-300 text-blue-700 focus:ring-blue-600" />
+                    <span class="text-sm font-medium text-slate-700">${value}</span>
+                `;
+                container.appendChild(label);
+            }
+
+            function getCheckedValues(name) {
+                return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(input => input.value);
+            }
+
+            function getFilteredCourses() {
+                const selectedDepartments = getCheckedValues('department');
+                const selectedPrograms = getCheckedValues('program');
+                const keyword = searchInput.value.trim().toLowerCase();
+                const sortBy = sortSelect.value;
+
+                let filteredCourses = courses.filter(course => {
+                    const matchesDepartment = selectedDepartments.length === 0 || selectedDepartments.includes(course.department);
+                    const matchesProgram = selectedPrograms.length === 0 || selectedPrograms.includes(course.program);
+                    const matchesKeyword = !keyword || `${course.title} ${course.department} ${course.program} ${course.description}`.toLowerCase().includes(keyword);
+                    return matchesDepartment && matchesProgram && matchesKeyword;
+                });
+
+                if (sortBy === 'titleAsc') {
+                    filteredCourses.sort((a, b) => a.title.localeCompare(b.title));
+                }
+
+                if (sortBy === 'levelAsc') {
+                    filteredCourses.sort((a, b) => a.program.localeCompare(b.program));
+                }
+
+                return filteredCourses;
+            }
+
+            function renderPagination(totalItems) {
+                pagination.innerHTML = '';
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+                if (totalPages <= 1) {
+                    return;
+                }
+
+                const createButton = (label, page, disabled = false, active = false) => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.textContent = label;
+                    button.disabled = disabled;
+                    button.className = active
+                        ? 'h-10 min-w-10 px-4 rounded-full bg-blue-700 text-white text-sm font-extrabold shadow-md'
+                        : 'h-10 min-w-10 px-4 rounded-full bg-white border border-slate-200 text-slate-700 text-sm font-bold hover:bg-blue-50 hover:text-blue-700 transition disabled:opacity-40 disabled:cursor-not-allowed';
+                    button.addEventListener('click', () => {
+                        if (!disabled) {
+                            currentPage = page;
+                            renderCourses(false);
+                            courseGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                    pagination.appendChild(button);
+                };
+
+                createButton('Prev', Math.max(1, currentPage - 1), currentPage === 1);
+
+                for (let page = 1; page <= totalPages; page++) {
+                    createButton(page, page, false, page === currentPage);
+                }
+
+                createButton('Next', Math.min(totalPages, currentPage + 1), currentPage === totalPages);
+            }
+
+            function renderCourses(resetPage = true) {
+                if (resetPage) {
+                    currentPage = 1;
+                }
+
+                const filteredCourses = getFilteredCourses();
+                const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+
+                if (currentPage > totalPages && totalPages > 0) {
+                    currentPage = totalPages;
+                }
+
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const paginatedCourses = filteredCourses.slice(startIndex, startIndex + itemsPerPage);
+
+                courseGrid.innerHTML = '';
+                resultCount.textContent = `${filteredCourses.length} course${filteredCourses.length === 1 ? '' : 's'} found`;
+
+                if (filteredCourses.length === 0) {
+                    noResults.classList.remove('hidden');
+                    pagination.innerHTML = '';
+                    return;
+                }
+
+                noResults.classList.add('hidden');
+
+                paginatedCourses.forEach(course => {
+                    const card = document.createElement('article');
+                    card.className = 'group bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition overflow-hidden flex flex-col h-full';
+                    card.innerHTML = `
+                        <div class="relative h-44 overflow-hidden">
+                            <img src="${course.image}" alt="${course.title}" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/10 to-transparent"></div>
+                            <span class="absolute left-4 bottom-4 inline-flex px-3 py-1 rounded-full bg-white/90 text-blue-700 text-xs font-extrabold backdrop-blur">${course.tag}</span>
+                        </div>
+                        <div class="p-6 flex flex-col flex-1">
+                            <div class="flex items-center justify-between gap-3">
+                                <span class="inline-flex px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-extrabold">${course.program}</span>
+                            </div>
+                            <h3 class="mt-5 text-xl font-extrabold text-slate-900 group-hover:text-blue-700 transition">${course.title}</h3>
+                            <p class="mt-3 text-sm font-semibold text-slate-500">${course.department}</p>
+                            <p class="mt-4 text-sm text-slate-600 leading-6">${course.description}</p>
+                            <div class="mt-6 grid grid-cols-2 gap-3 text-sm">
+                                <div class="rounded-2xl bg-slate-50 p-3">
+                                    <p class="text-slate-500">Duration</p>
+                                    <p class="font-extrabold text-slate-900">${course.duration}</p>
+                                </div>
+                                <div class="rounded-2xl bg-slate-50 p-3">
+                                    <p class="text-slate-500">Mode</p>
+                                    <p class="font-extrabold text-slate-900">${course.mode}</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto pt-6 flex items-center gap-3">
+                                <a href="#" class="flex-1 text-center px-4 py-3 rounded-full bg-blue-700 text-white text-sm font-bold hover:bg-blue-800 transition transform hover:-translate-y-0.5">View</a>
+                                <a href="/Account/Register" class="flex-1 text-center px-4 py-3 rounded-full bg-slate-100 text-slate-900 text-sm font-bold hover:bg-slate-200 transition transform hover:-translate-y-0.5">Apply</a>
+                            </div>
+                        </div>
+                    `;
+                    courseGrid.appendChild(card);
+                });
+
+                renderPagination(filteredCourses.length);
+            }
+
+            function clearAllFilters() {
+                document.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
+                searchInput.value = '';
+                sortSelect.value = 'featured';
+                renderCourses();
+            }
+
+            function runSelfTests() {
+                console.assert(courses.length === 20, 'Expected 20 sample courses.');
+                console.assert(departments.length === 6, 'Expected 6 departments.');
+                console.assert(programs.length === 8, 'Expected 8 programme levels.');
+                console.assert(document.querySelectorAll('input[name="department"]').length === departments.length, 'Department checkbox count mismatch.');
+                console.assert(document.querySelectorAll('input[name="program"]').length === programs.length, 'Programme checkbox count mismatch.');
+                console.assert(courseGrid.children.length <= itemsPerPage, 'Initial page should not render more than itemsPerPage cards.');
+                console.assert(!noResults.classList.contains('hidden') === false, 'No results panel should be hidden on initial load.');
+            }
+
+            window.clearAllFilters = clearAllFilters;
+
+            assertRequiredElementsExist();
+            departments.forEach(department => createCheckbox(departmentContainer, 'department', department));
+            programs.forEach(program => createCheckbox(programContainer, 'program', program));
+
+            document.addEventListener('change', event => {
+                if (event.target.matches('input[type="checkbox"], #sortSelect')) {
+                    renderCourses();
+                }
+            });
+
+            searchInput.addEventListener('input', renderCourses);
+            clearFiltersButton.addEventListener('click', clearAllFilters);
+
+            renderCourses();
+            runSelfTests();
+        });
+    </script>
+</body>
+</html>

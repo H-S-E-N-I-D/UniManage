@@ -1,0 +1,75 @@
+/* _Layout.cshtml.css
+   LearnSpace eLMS — layout-scoped styles
+   Most styling is handled by Tailwind. This file covers
+   things Tailwind cannot express cleanly inline.
+*/
+
+/* ── Sidebar scroll ── */
+.sidebar-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+.sidebar-scroll::-webkit-scrollbar        { width: 4px; }
+.sidebar-scroll::-webkit-scrollbar-track  { background: transparent; }
+.sidebar-scroll::-webkit-scrollbar-thumb  { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+
+/* ── Active nav item ── */
+.nav-item-active {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border-left-color: #63d3f5 !important;
+    color: #ffffff !important;
+}
+
+/* ── Sidebar arrow rotation ── */
+.arrow-open {
+    transform: rotate(90deg);
+}
+
+/* ── Avatar gradient fallback ── */
+.avatar-gradient {
+    background: linear-gradient(135deg, #1a6b8a, #63d3f5);
+}
+
+/* ── Primary button style ── */
+.btn-lms {
+    background-color: #1a6b8a;
+    color: #ffffff;
+    border: none;
+    padding: 0.45rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+.btn-lms:hover  { background-color: #124d66; }
+.btn-lms:active { background-color: #0d3a4d; }
+
+/* ── Card helper ── */
+.lms-card {
+    background: #ffffff;
+    border: 0.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+}
+
+/* ── Progress bar ── */
+.lms-progress {
+    height: 4px;
+    background: #f1f5f9;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.lms-progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: #1a6b8a;
+    transition: width 0.4s ease;
+}
+
+/* ── Pill badges ── */
+.pill { display: inline-flex; align-items: center; font-size: 10.5px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+.pill-blue   { background: #e0f2fe; color: #0369a1; }
+.pill-green  { background: #dcfce7; color: #15803d; }
+.pill-amber  { background: #fef3c7; color: #b45309; }
+.pill-red    { background: #fee2e2; color: #b91c1c; }
+.pill-purple { background: #ede9fe; color: #6d28d9; }

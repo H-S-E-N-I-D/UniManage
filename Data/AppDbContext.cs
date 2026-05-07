@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using UniManage.Models;
 
 namespace UniManage.Data
@@ -10,6 +11,10 @@ namespace UniManage.Data
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<AcademicYear> AcademicYears { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -22,6 +27,15 @@ namespace UniManage.Data
             builder.Entity<IdentityUserLogin<string>>().ToTable("User_Logins");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("Role_Claims");
             builder.Entity<IdentityUserToken<string>>().ToTable("User_Tokens");
+
+            builder.Entity<Department>().Property(e => e.CreatedAt)
+            .ValueGeneratedOnAdd()
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+
+            builder.Entity<Department>().Property(e => e.UpdatedAt)
+            .ValueGeneratedOnAddOrUpdate()
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+
         }
     }
 }

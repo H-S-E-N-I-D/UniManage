@@ -1,0 +1,156 @@
+﻿@{
+    ViewData["Title"] = "Register Module";
+}
+
+<section class="w-full space-y-6 px-1 sm:px-2">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Module Management</p>
+            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Module Registration</h1>
+            <p class="mt-2 text-sm text-slate-500">Create a new academic module by entering its basic details, credits, duration, and status.</p>
+        </div>
+    </div>
+
+    <form id="moduleRegistrationForm" class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-panel sm:p-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                <i class="fa-solid fa-cubes"></i>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold text-slate-900">Module Information</h2>
+                <p class="text-sm text-slate-500">Enter the module information required for course and semester planning.</p>
+            </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div>
+                <label for="moduleName" class="block text-xs font-bold text-slate-700">Module Name</label>
+                <input id="moduleName" name="moduleName" type="text" placeholder="Programming Fundamentals" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div>
+                <label for="moduleCode" class="block text-xs font-bold text-slate-700">Module Code</label>
+                <input id="moduleCode" name="moduleCode" type="text" placeholder="MOD-CSE-001" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div>
+                <label for="numberOfCredits" class="block text-xs font-bold text-slate-700">Number of Credits</label>
+                <input id="numberOfCredits" name="numberOfCredits" type="number" min="1" placeholder="15" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div>
+                <label for="durationWeeks" class="block text-xs font-bold text-slate-700">Duration in Weeks</label>
+                <input id="durationWeeks" name="durationWeeks" type="number" min="1" placeholder="12" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div class="md:col-span-2">
+                <label for="description" class="block text-xs font-bold text-slate-700">Description</label>
+                <textarea id="description" name="description" rows="6" placeholder="Write a short description about the module..." class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600"></textarea>
+            </div>
+
+            <div class="md:col-span-2">
+                <div class="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wide text-slate-500">Module Status</p>
+                        <p id="statusText" class="mt-1 text-sm font-extrabold text-emerald-700">Active</p>
+                    </div>
+
+                    <label class="relative inline-flex cursor-pointer items-center">
+                        <input id="isActiveToggle" name="isActive" type="checkbox" checked class="peer sr-only" />
+                        <div class="peer h-7 w-14 rounded-full bg-slate-300 after:absolute after:left-1 after:top-1 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition peer-checked:bg-brand-700 peer-checked:after:translate-x-7"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="validationBox" class="mt-5 hidden rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700"></div>
+
+        <div class="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-end">
+            <button id="clearButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-6 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">
+                <i class="fa-solid fa-rotate-left"></i>
+                Clear
+            </button>
+
+            <button type="submit" class="inline-flex min-w-[180px] items-center justify-center gap-2 rounded-full bg-brand-700 px-8 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                <i class="fa-solid fa-circle-plus"></i>
+                Register Module
+            </button>
+        </div>
+    </form>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('moduleRegistrationForm');
+        const moduleName = document.getElementById('moduleName');
+        const moduleCode = document.getElementById('moduleCode');
+        const numberOfCredits = document.getElementById('numberOfCredits');
+        const durationWeeks = document.getElementById('durationWeeks');
+        const description = document.getElementById('description');
+        const isActiveToggle = document.getElementById('isActiveToggle');
+        const statusText = document.getElementById('statusText');
+        const validationBox = document.getElementById('validationBox');
+        const clearButton = document.getElementById('clearButton');
+
+        function showValidation(message) {
+            validationBox.textContent = message;
+            validationBox.classList.remove('hidden');
+        }
+
+        function clearValidation() {
+            validationBox.textContent = '';
+            validationBox.classList.add('hidden');
+        }
+
+        function updateStatusText() {
+            statusText.textContent = isActiveToggle.checked ? 'Active' : 'Inactive';
+            statusText.className = isActiveToggle.checked
+                ? 'mt-1 text-sm font-extrabold text-emerald-700'
+                : 'mt-1 text-sm font-extrabold text-rose-700';
+        }
+
+        function resetForm() {
+            form.reset();
+            isActiveToggle.checked = true;
+            updateStatusText();
+            clearValidation();
+        }
+
+        isActiveToggle.addEventListener('change', updateStatusText);
+        clearButton.addEventListener('click', resetForm);
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            clearValidation();
+
+            if (!moduleName.value.trim()) {
+                showValidation('Please enter the module name.');
+                return;
+            }
+
+            if (!moduleCode.value.trim()) {
+                showValidation('Please enter the module code.');
+                return;
+            }
+
+            if (!numberOfCredits.value || Number(numberOfCredits.value) <= 0) {
+                showValidation('Please enter a valid number of credits.');
+                return;
+            }
+
+            if (!durationWeeks.value || Number(durationWeeks.value) <= 0) {
+                showValidation('Please enter a valid duration in weeks.');
+                return;
+            }
+
+            if (!description.value.trim()) {
+                showValidation('Please enter the module description.');
+                return;
+            }
+
+            alert('Module registered successfully. Connect this form action to your ASP.NET Core controller.');
+        });
+
+        updateStatusText();
+    });
+</script>

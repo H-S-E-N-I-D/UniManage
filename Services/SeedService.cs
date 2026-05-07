@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using UniManage.Data;
 using UniManage.Models;
 
@@ -24,6 +25,7 @@ namespace UniManage.Services
                 logger.LogInformation("Seeding roles.");
                 await AddRoleAsync(roleManager, "Admin");
                 await AddRoleAsync(roleManager, "System Admin");
+                await AddRoleAsync(roleManager, "Department Admin");
                 await AddRoleAsync(roleManager, "User");
                 await AddRoleAsync(roleManager, "Student");
                 await AddRoleAsync(roleManager, "Lecturer");
@@ -55,6 +57,11 @@ namespace UniManage.Services
                         logger.LogError("Failed to create admin user: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
                     }
                 }
+
+                logger.LogInformation("Seeding departments.");
+                await SeedDepartmentsAsync(context, logger);
+
+                logger.LogInformation("Database seeding completed successfully.");
             }
             catch (Exception ex)
             {
@@ -73,6 +80,78 @@ namespace UniManage.Services
                 {
                     throw new Exception($"Failed to create role '{roleName}': {string.Join(", ", result.Errors.Select(e => e.Description))}");
                 }
+            }
+        }
+
+        private static async Task SeedDepartmentsAsync(AppDbContext context, ILogger<SeedService> logger)
+        {
+            var existingDepartmentNames = await context.Departments
+                .Select(d => d.Name)
+                .ToListAsync();
+
+            var departmentsToSeed = new List<Department>
+    {
+        new Department
+        {
+            Guid = System.Guid.NewGuid().ToString(),
+            Name = "Department of Languages",
+            Description = "Handles academic programs, teaching, and research related to languages.",
+            IsActive = true
+        },
+        new Department
+        {
+            Guid = System.Guid.NewGuid().ToString(),
+            Name = "Department of Art & Design",
+            Description = "Handles academic programs, teaching, and research related to art and design.",
+            IsActive = true
+        },
+        new Department
+        {
+            Guid = System.Guid.NewGuid().ToString(),
+            Name = "Department of Life Science",
+            Description = "Handles academic programs, teaching, and research related to life sciences.",
+            IsActive = true
+        },
+        new Department
+        {
+            Guid = System.Guid.NewGuid().ToString(),
+            Name = "Department of Computing",
+            Description = "Handles academic programs, teaching, and research related to computing and information technology.",
+            IsActive = true
+        },
+        new Department
+        {
+            Guid = System.Guid.NewGuid().ToString(),
+            Name = "Department of Engineering",
+            Description = "Handles academic programs, teaching, and research related to engineering disciplines.",
+            IsActive = true
+        },
+        new Department
+        {
+            Guid = System.Guid.NewGuid().ToString(),
+            Name = "Department of Management & Law",
+            Description = "Handles academic programs, teaching, and research related to management and law.",
+            IsActive = true
+        }
+    };
+
+            var newDepartments = departmentsToSeed
+                .Where(d => !existingDepartmentNames.Contains(d.Name))
+                .ToList();
+
+            if (newDepartments.Any())
+            {
+                await context.Departments.AddRangeAsync(newDepartments);
+                await context.SaveChangesAsync();
+
+                foreach (var dept in newDepartments)
+                {
+                    logger.LogInformation("Seeded department: {DepartmentName}", dept.Name);
+                }
+            }
+            else
+            {
+                logger.LogInformation("All departments already exist.");
             }
         }
     }

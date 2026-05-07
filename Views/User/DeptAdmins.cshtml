@@ -1,0 +1,360 @@
+﻿@{
+    ViewData["Title"] = "Department Admins";
+}
+
+<section class="mx-auto w-full max-w-[1700px] space-y-6 px-1 sm:px-2">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Department Administration</p>
+            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Department Admin List</h1>
+            <p class="mt-2 text-sm text-slate-500">View, filter, and manage department administrator records.</p>
+        </div>
+    </div>
+
+    <div class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-panel sm:p-6">
+        <div class="flex flex-col gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-filter"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Filter Department Admins</h2>
+                    <p class="text-sm text-slate-500">Search department admins by department, name, or registration number.</p>
+                </div>
+            </div>
+
+            <button id="clearFiltersButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-200">
+                <i class="fa-solid fa-rotate-left"></i>
+                Clear Filters
+            </button>
+        </div>
+
+        <form class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-12">
+            <div class="sm:col-span-2 xl:col-span-4">
+                <label class="block text-xs font-bold text-slate-700">Department</label>
+                <div class="relative mt-2">
+                    <button id="departmentDropdownButton" type="button" class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <span id="selectedDepartmentText" class="truncate text-slate-400">Searchable Department Dropdown</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                    </button>
+
+                    <div id="departmentDropdownPanel" class="absolute z-40 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                        <div class="border-b border-slate-100 p-3">
+                            <div class="relative">
+                                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                                <input id="departmentSearchInput" type="text" placeholder="Search department" class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                            </div>
+                        </div>
+                        <div id="departmentOptions" class="max-h-64 overflow-y-auto p-2"></div>
+                    </div>
+                </div>
+                <input id="selectedDepartmentInput" type="hidden" />
+            </div>
+
+            <div class="sm:col-span-1 xl:col-span-3">
+                <label for="adminNameFilter" class="block text-xs font-bold text-slate-700">Name</label>
+                <input id="adminNameFilter" type="text" placeholder="Search by admin name" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div class="sm:col-span-1 xl:col-span-3">
+                <label for="regNumberFilter" class="block text-xs font-bold text-slate-700">Reg Number</label>
+                <input id="regNumberFilter" type="text" placeholder="Search by registration number" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div class="flex items-end sm:col-span-2 xl:col-span-2">
+                <button id="applyFiltersButton" type="button" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-700 px-4 py-3 text-xs font-bold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                    <i class="fa-solid fa-filter"></i>
+                    Apply Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-panel">
+        <div class="flex flex-col gap-3 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-extrabold text-slate-900">Department Admins Table</h2>
+                    <p id="adminCountText" class="mt-1 text-sm text-slate-500">Showing all department admins</p>
+                </div>
+            </div>
+            <span id="activeFilterBadge" class="hidden rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700">Filters active</span>
+        </div>
+
+        <div id="adminTableContainer" class="w-full overflow-x-auto">
+            <table class="w-full min-w-[1500px] divide-y divide-slate-200 text-xs sm:text-sm">
+                <thead class="bg-slate-50 text-left text-sm font-bold text-slate-700">
+                    <tr>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Title</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Full Name</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Reg No.</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Department</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Designation</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Status</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Email Address</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Contact Number</th>
+                        <th class="px-3 py-3 text-right sm:px-5 sm:py-4">Profile</th>
+                        <th class="px-3 py-3 text-right sm:px-5 sm:py-4">Edit</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <div id="pagination" class="flex flex-wrap items-center justify-center gap-2 border-t border-slate-100 px-5 py-5"></div>
+
+        <div id="noResultsBox" class="hidden px-6 py-12 text-center">
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">No department admins found</h3>
+            <p class="mt-2 text-sm text-slate-500">Try changing the department, name, or registration number filters.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const departments = [
+            'Department of Languages',
+            'Department of Art & Design',
+            'Department of Life Science',
+            'Department of Computing',
+            'Department of Engineering',
+            'Department of Management & Law'
+        ];
+
+        const departmentAdmins = [
+            { id: 1, title: 'Mr.', fullName: 'Dinesh Madushanka', regNo: 'ADM-2026-001', department: 'Department of Computing', designation: 'Department Coordinator', status: 'Active', email: 'dinesh.madushanka@unimanage.edu', contactNumber: '+94 71 245 8891' },
+            { id: 2, title: 'Ms.', fullName: 'Nethmi Fernando', regNo: 'ADM-2026-002', department: 'Department of Computing', designation: 'Academic Administrator', status: 'Active', email: 'nethmi.fernando@unimanage.edu', contactNumber: '+94 77 564 2281' },
+            { id: 5, title: 'Mr.', fullName: 'Dinuka Wijesinghe', regNo: 'ADM-2026-005', department: 'Department of Engineering', designation: 'Department Coordinator', status: 'Active', email: 'dinuka.wijesinghe@unimanage.edu', contactNumber: '+94 75 889 3412' },
+            { id: 7, title: 'Mr.', fullName: 'Avishka Senanayake', regNo: 'ADM-2026-007', department: 'Department of Engineering', designation: 'Programme Officer', status: 'Active', email: 'avishka.senanayake@unimanage.edu', contactNumber: '+94 71 908 7762' },
+            { id: 9, title: 'Mr.', fullName: 'Ravindu Kumara', regNo: 'ADM-2026-009', department: 'Department of Art & Design', designation: 'Department Coordinator', status: 'Inactive', email: 'ravindu.kumara@unimanage.edu', contactNumber: '+94 77 301 5528' },
+            { id: 12, title: 'Ms.', fullName: 'Kavindi Herath', regNo: 'ADM-2026-012', department: 'Department of Languages', designation: 'Department Coordinator', status: 'Inactive', email: 'kavindi.herath@unimanage.edu', contactNumber: '+94 74 213 9981' },
+            { id: 13, title: 'Mr.', fullName: 'Thisara Bandara', regNo: 'ADM-2026-013', department: 'Department of Languages', designation: 'Academic Administrator', status: 'Active', email: 'thisara.bandara@unimanage.edu', contactNumber: '+94 76 118 7345' },
+            { id: 15, title: 'Mr.', fullName: 'Malith Dissanayake', regNo: 'ADM-2026-015', department: 'Department of Life Science', designation: 'Department Coordinator', status: 'Inactive', email: 'malith.dissanayake@unimanage.edu', contactNumber: '+94 70 984 5521' },
+            { id: 16, title: 'Ms.', fullName: 'Sanduni Ranasinghe', regNo: 'ADM-2026-016', department: 'Department of Life Science', designation: 'Academic Administrator', status: 'Active', email: 'sanduni.ranasinghe@unimanage.edu', contactNumber: '+94 71 345 7812' },
+            { id: 18, title: 'Ms.', fullName: 'Anjali Wickramasinghe', regNo: 'ADM-2026-018', department: 'Department of Management & Law', designation: 'Department Coordinator', status: 'Inactive', email: 'anjali.wickramasinghe@unimanage.edu', contactNumber: '+94 78 432 1198' },
+            { id: 20, title: 'Ms.', fullName: 'Dilini Jayawardena', regNo: 'ADM-2026-020', department: 'Department of Management & Law', designation: 'Programme Officer', status: 'Active', email: 'dilini.jayawardena@unimanage.edu', contactNumber: '+94 70 552 6432' }
+        ];
+
+        const departmentDropdownButton = document.getElementById('departmentDropdownButton');
+        const departmentDropdownPanel = document.getElementById('departmentDropdownPanel');
+        const departmentSearchInput = document.getElementById('departmentSearchInput');
+        const departmentOptions = document.getElementById('departmentOptions');
+        const selectedDepartmentText = document.getElementById('selectedDepartmentText');
+        const selectedDepartmentInput = document.getElementById('selectedDepartmentInput');
+        const adminNameFilter = document.getElementById('adminNameFilter');
+        const regNumberFilter = document.getElementById('regNumberFilter');
+        const applyFiltersButton = document.getElementById('applyFiltersButton');
+        const clearFiltersButton = document.getElementById('clearFiltersButton');
+        const adminTableBody = document.getElementById('adminTableBody');
+        const adminCountText = document.getElementById('adminCountText');
+        const activeFilterBadge = document.getElementById('activeFilterBadge');
+        const noResultsBox = document.getElementById('noResultsBox');
+        const pagination = document.getElementById('pagination');
+        const adminTableContainer = document.getElementById('adminTableContainer');
+
+        const itemsPerPage = 5;
+        let currentPage = 1;
+        let selectedDepartment = '';
+        let currentFilteredAdmins = [];
+
+        function renderDepartmentOptions(keyword = '') {
+            const normalizedKeyword = keyword.trim().toLowerCase();
+            const filteredDepartments = departments.filter(department => department.toLowerCase().includes(normalizedKeyword));
+            departmentOptions.innerHTML = '';
+
+            const allButton = document.createElement('button');
+            allButton.type = 'button';
+            allButton.className = 'w-full rounded-xl px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:bg-brand-50';
+            allButton.textContent = 'All departments';
+            allButton.addEventListener('click', () => selectDepartment(''));
+            departmentOptions.appendChild(allButton);
+
+            if (filteredDepartments.length === 0) {
+                const emptyItem = document.createElement('div');
+                emptyItem.className = 'px-4 py-6 text-center text-sm font-semibold text-slate-400';
+                emptyItem.textContent = 'No departments found.';
+                departmentOptions.appendChild(emptyItem);
+                return;
+            }
+
+            filteredDepartments.forEach(department => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'w-full rounded-xl px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:bg-brand-50';
+                button.textContent = department;
+                button.addEventListener('click', () => selectDepartment(department));
+                departmentOptions.appendChild(button);
+            });
+        }
+
+        function selectDepartment(department) {
+            selectedDepartment = department;
+            selectedDepartmentInput.value = department;
+            selectedDepartmentText.textContent = department || 'All departments';
+            selectedDepartmentText.classList.toggle('text-slate-400', department === '');
+            selectedDepartmentText.classList.toggle('text-slate-900', department !== '');
+            departmentDropdownPanel.classList.add('hidden');
+        }
+
+        function getStatusBadge(status) {
+            const statusStyles = {
+                Active: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+                Inactive: 'bg-rose-50 text-rose-700 ring-rose-200'
+            };
+            return `<span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold ring-1 ${statusStyles[status]}">${status}</span>`;
+        }
+
+        function applyFilters(resetPage = true) {
+            const adminNameKeyword = adminNameFilter.value.trim().toLowerCase();
+            const regNumberKeyword = regNumberFilter.value.trim().toLowerCase();
+
+            currentFilteredAdmins = departmentAdmins.filter(admin => {
+                const matchesDepartment = !selectedDepartment || admin.department === selectedDepartment;
+                const matchesName = !adminNameKeyword || admin.fullName.toLowerCase().includes(adminNameKeyword);
+                const matchesRegNo = !regNumberKeyword || admin.regNo.toLowerCase().includes(regNumberKeyword);
+                return matchesDepartment && matchesName && matchesRegNo;
+            });
+
+            if (resetPage) {
+                currentPage = 1;
+            }
+
+            renderTable(currentFilteredAdmins);
+            renderPagination(currentFilteredAdmins.length);
+            updateFilterStatus(currentFilteredAdmins.length);
+        }
+
+        function renderTable(data) {
+            adminTableBody.innerHTML = '';
+            noResultsBox.classList.toggle('hidden', data.length > 0);
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedData = data.slice(startIndex, endIndex);
+
+            paginatedData.forEach(admin => {
+                const row = document.createElement('tr');
+                row.className = 'transition hover:bg-slate-50';
+                row.innerHTML = `
+                    <td class="px-3 py-3 font-semibold text-slate-700 sm:px-5 sm:py-4">${admin.title}</td>
+                    <td class="px-3 py-3 font-semibold text-slate-900 sm:px-5 sm:py-4">${admin.fullName}</td>
+                    <td class="px-3 py-3 text-slate-600 sm:px-5 sm:py-4">${admin.regNo}</td>
+                    <td class="px-3 py-3 text-slate-700 sm:px-5 sm:py-4">${admin.department}</td>
+                    <td class="px-3 py-3 text-slate-700 sm:px-5 sm:py-4">${admin.designation}</td>
+                    <td class="px-3 py-3 sm:px-5 sm:py-4">${getStatusBadge(admin.status)}</td>
+                    <td class="px-3 py-3 text-slate-700 sm:px-5 sm:py-4">${admin.email}</td>
+                    <td class="px-3 py-3 text-slate-700 sm:px-5 sm:py-4">${admin.contactNumber}</td>
+                    <td class="px-3 py-3 text-right sm:px-5 sm:py-4">
+                        <a href="/DepartmentAdmin/Profile/${admin.id}" class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-xs font-bold text-brand-700 transition hover:bg-brand-100">
+                            <i class="fa-solid fa-id-card"></i>
+                            Profile
+                        </a>
+                    </td>
+                    <td class="px-3 py-3 text-right sm:px-5 sm:py-4">
+                        <a href="/DepartmentAdmin/Edit/${admin.id}" class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-50 text-amber-700 transition hover:bg-amber-100">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </td>
+                `;
+                adminTableBody.appendChild(row);
+            });
+        }
+
+        function renderPagination(totalItems) {
+            pagination.innerHTML = '';
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            if (totalPages <= 1) {
+                return;
+            }
+
+            const createButton = (label, page, disabled = false, active = false) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = label;
+                button.disabled = disabled;
+                button.className = active
+                    ? 'h-10 min-w-10 rounded-full bg-blue-700 px-4 text-sm font-extrabold text-white shadow-md'
+                    : 'h-10 min-w-10 rounded-full border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40';
+
+                button.addEventListener('click', () => {
+                    if (!disabled) {
+                        currentPage = page;
+                        renderTable(currentFilteredAdmins);
+                        renderPagination(currentFilteredAdmins.length);
+                        adminTableContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+                pagination.appendChild(button);
+            };
+
+            createButton('Prev', Math.max(1, currentPage - 1), currentPage === 1);
+
+            for (let page = 1; page <= totalPages; page++) {
+                createButton(page, page, false, page === currentPage);
+            }
+
+            createButton('Next', Math.min(totalPages, currentPage + 1), currentPage === totalPages);
+        }
+
+        function updateFilterStatus(count) {
+            const filtersActive = Boolean(selectedDepartment || adminNameFilter.value.trim() || regNumberFilter.value.trim());
+            activeFilterBadge.classList.toggle('hidden', !filtersActive);
+            adminCountText.textContent = `${count} department admin${count === 1 ? '' : 's'} found`;
+        }
+
+        function clearFilters() {
+            selectedDepartment = '';
+            selectedDepartmentInput.value = '';
+            selectedDepartmentText.textContent = 'Searchable Department Dropdown';
+            selectedDepartmentText.classList.add('text-slate-400');
+            selectedDepartmentText.classList.remove('text-slate-900');
+            departmentSearchInput.value = '';
+            adminNameFilter.value = '';
+            regNumberFilter.value = '';
+            renderDepartmentOptions();
+            applyFilters(true);
+        }
+
+        departmentDropdownButton.addEventListener('click', () => {
+            departmentDropdownPanel.classList.toggle('hidden');
+            departmentSearchInput.value = '';
+            renderDepartmentOptions();
+            setTimeout(() => departmentSearchInput.focus(), 0);
+        });
+
+        document.addEventListener('click', event => {
+            if (!departmentDropdownPanel.contains(event.target) && !departmentDropdownButton.contains(event.target)) {
+                departmentDropdownPanel.classList.add('hidden');
+            }
+        });
+
+        departmentSearchInput.addEventListener('input', event => renderDepartmentOptions(event.target.value));
+        applyFiltersButton.addEventListener('click', () => applyFilters(true));
+        clearFiltersButton.addEventListener('click', clearFilters);
+
+        adminNameFilter.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyFilters(true);
+            }
+        });
+
+        regNumberFilter.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyFilters(true);
+            }
+        });
+
+        renderDepartmentOptions();
+        applyFilters(true);
+    });
+</script>

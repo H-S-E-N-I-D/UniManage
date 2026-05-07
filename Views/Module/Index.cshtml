@@ -1,0 +1,253 @@
+﻿@{
+    ViewData["Title"] = "Landing Page";
+    //Layout = "~/Views/Shared/_LandingPageLayout.cshtml";
+}
+
+
+
+<section class="w-full space-y-6 px-1 sm:px-2">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Module Management</p>
+            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Module List</h1>
+            <p class="mt-2 text-sm text-slate-500">View, filter, and manage academic modules.</p>
+        </div>
+    </div>
+
+    <div class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-panel sm:p-6">
+        <div class="flex flex-col gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-filter"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Filter Modules</h2>
+                    <p class="text-sm text-slate-500">Search modules by name or module code.</p>
+                </div>
+            </div>
+
+            <button id="clearFiltersButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-200">
+                <i class="fa-solid fa-rotate-left"></i>
+                Clear Filters
+            </button>
+        </div>
+
+        <form class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-12">
+            <div class="md:col-span-5">
+                <label for="moduleNameFilter" class="block text-xs font-bold text-slate-700">Module Name</label>
+                <input id="moduleNameFilter" type="text" placeholder="Search by module name" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div class="md:col-span-5">
+                <label for="moduleCodeFilter" class="block text-xs font-bold text-slate-700">Module Code</label>
+                <input id="moduleCodeFilter" type="text" placeholder="Search by module code" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div class="flex items-end md:col-span-2">
+                <button id="applyFiltersButton" type="button" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-700 px-4 py-3 text-xs font-bold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                    <i class="fa-solid fa-filter"></i>
+                    Apply Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-panel">
+        <div class="flex flex-col gap-3 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-extrabold text-slate-900">Modules Table</h2>
+                    <p id="moduleCountText" class="mt-1 text-sm text-slate-500">Showing all modules</p>
+                </div>
+            </div>
+            <span id="activeFilterBadge" class="hidden rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700">Filters active</span>
+        </div>
+
+        <div id="moduleTableContainer" class="w-full overflow-x-auto">
+            <table class="w-full min-w-[900px] divide-y divide-slate-200 text-xs sm:text-sm">
+                <thead class="bg-slate-50 text-left text-sm font-bold text-slate-700">
+                    <tr>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Module Name</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Module Code</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Number of Credits</th>
+                        <th class="px-3 py-3 sm:px-5 sm:py-4">Duration (Weeks)</th>
+                        <th class="px-3 py-3 text-right sm:px-5 sm:py-4">View</th>
+                        <th class="px-3 py-3 text-right sm:px-5 sm:py-4">Edit</th>
+                    </tr>
+                </thead>
+                <tbody id="moduleTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <div id="pagination" class="flex flex-wrap items-center justify-center gap-2 border-t border-slate-100 px-5 py-5"></div>
+
+        <div id="noResultsBox" class="hidden px-6 py-12 text-center">
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">No modules found</h3>
+            <p class="mt-2 text-sm text-slate-500">Try changing the module name or module code filters.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modules = [
+            { id: 1, name: 'Programming Fundamentals', code: 'MOD-CSE-001', credits: 15, durationWeeks: 12 },
+            { id: 2, name: 'Database Management Systems', code: 'MOD-CSE-002', credits: 15, durationWeeks: 12 },
+            { id: 3, name: 'Web Application Development', code: 'MOD-CSE-003', credits: 15, durationWeeks: 12 },
+            { id: 4, name: 'Software Engineering Principles', code: 'MOD-CSE-004', credits: 20, durationWeeks: 14 },
+            { id: 5, name: 'Object Oriented Programming', code: 'MOD-CSE-005', credits: 15, durationWeeks: 12 },
+            { id: 6, name: 'Data Structures and Algorithms', code: 'MOD-CSE-006', credits: 20, durationWeeks: 14 },
+            { id: 7, name: 'Cloud Computing', code: 'MOD-CSE-007', credits: 15, durationWeeks: 10 },
+            { id: 8, name: 'Mobile Application Development', code: 'MOD-CSE-008', credits: 15, durationWeeks: 10 },
+            { id: 9, name: 'Software Quality Assurance', code: 'MOD-CSE-009', credits: 15, durationWeeks: 12 },
+            { id: 10, name: 'Final Year Project', code: 'MOD-CSE-010', credits: 30, durationWeeks: 24 },
+            { id: 11, name: 'Cyber Security Fundamentals', code: 'MOD-CSE-011', credits: 15, durationWeeks: 12 },
+            { id: 12, name: 'Human Computer Interaction', code: 'MOD-CSE-012', credits: 10, durationWeeks: 8 },
+            { id: 13, name: 'Business Communication', code: 'MOD-LAN-013', credits: 10, durationWeeks: 8 },
+            { id: 14, name: 'Digital Graphic Design', code: 'MOD-ART-014', credits: 15, durationWeeks: 12 },
+            { id: 15, name: 'Engineering Mathematics', code: 'MOD-ENG-015', credits: 20, durationWeeks: 14 },
+            { id: 16, name: 'Business Management Principles', code: 'MOD-MGT-016', credits: 15, durationWeeks: 12 }
+        ];
+
+        const moduleNameFilter = document.getElementById('moduleNameFilter');
+        const moduleCodeFilter = document.getElementById('moduleCodeFilter');
+        const applyFiltersButton = document.getElementById('applyFiltersButton');
+        const clearFiltersButton = document.getElementById('clearFiltersButton');
+        const moduleTableBody = document.getElementById('moduleTableBody');
+        const moduleCountText = document.getElementById('moduleCountText');
+        const activeFilterBadge = document.getElementById('activeFilterBadge');
+        const noResultsBox = document.getElementById('noResultsBox');
+        const pagination = document.getElementById('pagination');
+        const moduleTableContainer = document.getElementById('moduleTableContainer');
+
+        const itemsPerPage = 5;
+        let currentPage = 1;
+        let currentFilteredModules = [];
+
+        function applyFilters(resetPage = true) {
+            const moduleNameKeyword = moduleNameFilter.value.trim().toLowerCase();
+            const moduleCodeKeyword = moduleCodeFilter.value.trim().toLowerCase();
+
+            currentFilteredModules = modules.filter(module => {
+                const matchesModuleName = !moduleNameKeyword || module.name.toLowerCase().includes(moduleNameKeyword);
+                const matchesModuleCode = !moduleCodeKeyword || module.code.toLowerCase().includes(moduleCodeKeyword);
+                return matchesModuleName && matchesModuleCode;
+            });
+
+            if (resetPage) {
+                currentPage = 1;
+            }
+
+            renderTable(currentFilteredModules);
+            renderPagination(currentFilteredModules.length);
+            updateFilterStatus(currentFilteredModules.length);
+        }
+
+        function renderTable(data) {
+            moduleTableBody.innerHTML = '';
+            noResultsBox.classList.toggle('hidden', data.length > 0);
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedData = data.slice(startIndex, endIndex);
+
+            paginatedData.forEach(module => {
+                const row = document.createElement('tr');
+                row.className = 'transition hover:bg-slate-50';
+                row.innerHTML = `
+                    <td class="px-3 py-3 font-semibold text-slate-900 sm:px-5 sm:py-4">${module.name}</td>
+                    <td class="px-3 py-3 text-slate-600 sm:px-5 sm:py-4">${module.code}</td>
+                    <td class="px-3 py-3 text-slate-700 sm:px-5 sm:py-4">${module.credits}</td>
+                    <td class="px-3 py-3 text-slate-700 sm:px-5 sm:py-4">${module.durationWeeks}</td>
+                    <td class="px-3 py-3 text-right sm:px-5 sm:py-4">
+                        <a href="/Module/Details/${module.id}" class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-xs font-bold text-brand-700 transition hover:bg-brand-100">
+                            <i class="fa-solid fa-eye"></i>
+                            View
+                        </a>
+                    </td>
+                    <td class="px-3 py-3 text-right sm:px-5 sm:py-4">
+                        <a href="/Module/Edit/${module.id}" class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-50 text-amber-700 transition hover:bg-amber-100">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </td>
+                `;
+                moduleTableBody.appendChild(row);
+            });
+        }
+
+        function renderPagination(totalItems) {
+            pagination.innerHTML = '';
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            if (totalPages <= 1) {
+                return;
+            }
+
+            const createButton = (label, page, disabled = false, active = false) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = label;
+                button.disabled = disabled;
+                button.className = active
+                    ? 'h-10 min-w-10 rounded-full bg-blue-700 px-4 text-sm font-extrabold text-white shadow-md'
+                    : 'h-10 min-w-10 rounded-full border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40';
+
+                button.addEventListener('click', () => {
+                    if (!disabled) {
+                        currentPage = page;
+                        renderTable(currentFilteredModules);
+                        renderPagination(currentFilteredModules.length);
+                        moduleTableContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+                pagination.appendChild(button);
+            };
+
+            createButton('Prev', Math.max(1, currentPage - 1), currentPage === 1);
+
+            for (let page = 1; page <= totalPages; page++) {
+                createButton(page, page, false, page === currentPage);
+            }
+
+            createButton('Next', Math.min(totalPages, currentPage + 1), currentPage === totalPages);
+        }
+
+        function updateFilterStatus(count) {
+            const filtersActive = Boolean(moduleNameFilter.value.trim() || moduleCodeFilter.value.trim());
+            activeFilterBadge.classList.toggle('hidden', !filtersActive);
+            moduleCountText.textContent = `${count} module${count === 1 ? '' : 's'} found`;
+        }
+
+        function clearFilters() {
+            moduleNameFilter.value = '';
+            moduleCodeFilter.value = '';
+            applyFilters(true);
+        }
+
+        applyFiltersButton.addEventListener('click', () => applyFilters(true));
+        clearFiltersButton.addEventListener('click', clearFilters);
+
+        moduleNameFilter.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyFilters(true);
+            }
+        });
+
+        moduleCodeFilter.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyFilters(true);
+            }
+        });
+
+        applyFilters(true);
+    });
+</script>

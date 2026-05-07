@@ -1,0 +1,625 @@
+﻿@{
+    ViewData["Title"] = "Course Enrollment";
+
+    // Replace these with logged-in student values from your controller/ViewModel if available.
+    var studentName = User?.Identity?.Name ?? "Student Name";
+    var studentId = "STU-2026-001";
+}
+
+<section class="space-y-6">
+    <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Course Enrollment</p>
+            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Submit Course Enrollment Request</h1>
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+                Select your preferred programme, review the entry requirements, upload available documents, and submit your enrollment request.
+            </p>
+        </div>
+    </div>
+
+    <form id="enrollmentForm" asp-controller="Enrollment" asp-action="Create" method="post" enctype="multipart/form-data" class="grid gap-6 xl:grid-cols-12">
+        @Html.AntiForgeryToken()
+
+        <div class="xl:col-span-8 2xl:col-span-9">
+            <div class="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-panel">
+                <div class="border-b border-slate-100 bg-slate-50/70 px-6 py-5">
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <h2 id="stepTitle" class="text-xl font-bold text-slate-900">Page 1: Select Course</h2>
+                            <p id="stepDescription" class="mt-1 text-sm text-slate-500">Choose the programme you wish to enroll in.</p>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div id="stepOneIndicator" class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-700 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20">1</div>
+                            <div class="h-1 w-12 rounded-full bg-slate-200">
+                                <div id="progressLine" class="h-1 w-0 rounded-full bg-brand-700 transition-all duration-300"></div>
+                            </div>
+                            <div id="stepTwoIndicator" class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 text-sm font-extrabold text-slate-500">2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 lg:p-8">
+                    <div id="pageOne" class="space-y-7">
+                        <div>
+                            <label for="courseSearchInput" class="block text-sm font-bold text-slate-800">Please Select the Course</label>
+                            <p class="mt-1 text-xs font-semibold text-slate-500">Program Name <span class="text-rose-600">*</span></p>
+
+                            <div class="relative mt-3">
+                                <button id="courseDropdownButton" type="button" class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                                    <span id="selectedCourseText" class="truncate text-slate-400">Search and select available course</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                                </button>
+
+                                <div id="courseDropdownPanel" class="absolute z-40 mt-2 hidden max-h-96 w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                                    <div class="border-b border-slate-100 p-3">
+                                        <div class="relative">
+                                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                                            <input id="courseSearchInput" type="text" placeholder="Search course by name, department, or level" class="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                                        </div>
+                                    </div>
+
+                                    <div id="courseOptions" class="max-h-72 overflow-y-auto p-2"></div>
+                                </div>
+                            </div>
+
+                            <input id="selectedCourseInput" name="SelectedCourse" type="hidden" />
+                            <p id="courseError" class="mt-2 hidden text-sm font-semibold text-rose-600">Please select a course before continuing.</p>
+                        </div>
+
+                        <div id="coursePreview" class="hidden rounded-3xl border border-brand-100 bg-brand-50 p-5">
+                            <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                                <div>
+                                    <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-700">Selected Course</p>
+                                    <h3 id="previewCourseTitle" class="mt-2 text-xl font-extrabold text-slate-900"></h3>
+                                    <p id="previewCourseMeta" class="mt-2 text-sm font-semibold text-slate-600"></p>
+                                </div>
+                                <span id="previewCourseLevel" class="inline-flex rounded-full bg-white px-4 py-2 text-xs font-extrabold text-brand-700 shadow-sm"></span>
+                            </div>
+                        </div>
+
+                        <div class="rounded-3xl border border-slate-200 bg-white p-5">
+                            <div class="flex items-center gap-3">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                                    <i class="fa-solid fa-list-check"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-900">Entry Requirements</h3>
+                                    <p class="text-sm text-slate-500">These requirements will update based on the selected course.</p>
+                                </div>
+                            </div>
+
+                            <ul id="entryRequirementsList" class="mt-5 space-y-3 text-sm leading-6 text-slate-600">
+                                <li class="flex gap-3"><span class="font-extrabold text-brand-700">•</span><span>Select a course to view the relevant entry requirements.</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="flex justify-end border-t border-slate-100 pt-6">
+                            <button id="nextButton" type="button" class="inline-flex items-center gap-2 rounded-full bg-brand-700 px-7 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                                Next
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="pageTwo" class="hidden space-y-7">
+                        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                            <div class="flex items-center gap-3">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-brand-700 shadow-sm">
+                                    <i class="fa-solid fa-file-circle-check"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-extrabold text-slate-900">Document Checklist</h3>
+                                    <p class="text-sm text-slate-500">Please upload the available documents for now. You can submit any additional documents later.</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                                <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm"><i class="fa-solid fa-check text-emerald-600"></i> Curriculum Vitae</label>
+                                <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm"><i class="fa-solid fa-check text-emerald-600"></i> Academic and professional qualifications</label>
+                                <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm"><i class="fa-solid fa-check text-emerald-600"></i> Passport or National Identity Card</label>
+                                <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm"><i class="fa-solid fa-check text-emerald-600"></i> Service letter</label>
+                                <label class="flex items-center gap-3 rounded-xl bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm sm:col-span-2"><i class="fa-solid fa-check text-emerald-600"></i> Approval evidence for the non-standard application</label>
+                            </div>
+                        </div>
+
+                        <div class="rounded-3xl border border-slate-200 bg-white p-5">
+                            <h3 class="text-lg font-extrabold text-slate-900">Upload Documents</h3>
+                            <div class="mt-5 space-y-5">
+                                <div>
+                                    <label for="documentType" class="block text-sm font-extrabold text-slate-700">Document Type</label>
+                                    <select id="documentType" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                                        <option value="">Select document type</option>
+                                        <option value="Curriculum Vitae">Curriculum Vitae</option>
+                                        <option value="Academic and professional qualifications">Academic and professional qualifications</option>
+                                        <option value="Passport or National Identity Card">Passport or National Identity Card</option>
+                                        <option value="Service letter">Service letter</option>
+                                        <option value="Approval evidence for the non-standard application">Approval evidence for the non-standard application</option>
+                                    </select>
+                                    <p id="documentTypeError" class="mt-2 hidden text-xs font-semibold text-rose-600">Please select a document type.</p>
+                                </div>
+
+                                <div>
+                                    <label for="documentFile" class="block text-sm font-extrabold text-slate-700">Document</label>
+                                    <input id="documentFile" type="file" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-brand-50 file:px-4 file:py-2 file:text-sm file:font-bold file:text-brand-700 hover:file:bg-brand-100 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                                    <p id="documentFileError" class="mt-2 hidden text-xs font-semibold text-rose-600">Please choose a document file.</p>
+                                </div>
+
+                                <div class="pt-2">
+                                    <button id="addDocumentButton" type="button" class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-slate-700">
+                                        Add Document
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white">
+                            <div class="border-b border-slate-100 px-5 py-4">
+                                <h3 class="text-lg font-extrabold text-slate-900">Uploaded Documents</h3>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                                    <thead class="bg-slate-50 text-left text-xs font-extrabold uppercase tracking-wider text-slate-500">
+                                        <tr>
+                                            <th class="px-5 py-4">Document</th>
+                                            <th class="px-5 py-4">File Name</th>
+                                            <th class="px-5 py-4">Type</th>
+                                            <th class="px-5 py-4 text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="uploadedDocumentsTable" class="divide-y divide-slate-100 bg-white">
+                                        <tr id="emptyDocumentRow">
+                                            <td colspan="4" class="px-5 py-8 text-center text-sm font-semibold text-slate-400">No documents uploaded yet.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col-reverse gap-3 border-t border-slate-100 pt-6 sm:flex-row sm:justify-between">
+                            <button id="backButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-7 py-3 text-sm font-extrabold text-slate-700 transition hover:-translate-y-0.5 hover:bg-slate-200">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                Back
+                            </button>
+
+                            <button id="submitEnrollmentButton" type="submit" class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 px-7 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                                Submit Enrollment
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside class="xl:col-span-4 2xl:col-span-3">
+            <div class="sticky top-24 space-y-5">
+                <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-panel">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-100 text-brand-700">
+                            <i class="fa-solid fa-user-graduate text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-700">Student Summary</p>
+                            <h3 class="mt-1 text-lg font-semibold text-slate-900">Enrollment Details</h3>
+                        </div>
+                    </div>
+
+                    <dl class="mt-6 space-y-4 text-sm">
+                        <div class="grid grid-cols-2 gap-4 border-b border-slate-100 pb-4">
+                            <dt class="font-medium text-slate-500">Student Name</dt>
+                            <dd id="summaryStudentName" class="text-right font-semibold text-slate-900">@studentName</dd>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 border-b border-slate-100 pb-4">
+                            <dt class="font-medium text-slate-500">Student ID</dt>
+                            <dd id="summaryStudentId" class="text-right font-semibold text-slate-900">@studentId</dd>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <dt class="font-medium text-slate-500">Selected Course</dt>
+                            <dd id="summarySelectedCourse" class="text-right font-semibold text-slate-400">Not selected</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div class="rounded-[28px] border border-brand-100 bg-brand-50 p-6">
+                    <h3 class="text-lg font-semibold text-slate-900">Need help?</h3>
+                    <p class="mt-2 text-sm leading-6 text-slate-600">
+                        Contact the academic office if you are not sure which documents are required for your selected course.
+                    </p>
+                    <a href="mailto:academic@smartedu.lk" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-800 hover:text-brand-900">
+                        academic@smartedu.lk
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </aside>
+    </form>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const courses = [
+                {
+                    title: 'BSc (Hons) in Software Engineering',
+                    department: 'Department of Computing',
+                    level: 'Undergraduate Level',
+                    requirements: [
+                        'Successful completion of Advanced Level, foundation, diploma, or equivalent qualification.',
+                        'Basic English communication and academic writing ability.',
+                        'Basic computer literacy is recommended for computing-related modules.'
+                    ]
+                },
+                {
+                    title: 'HND in Computing',
+                    department: 'Department of Computing',
+                    level: 'Higher National Diploma Level',
+                    requirements: [
+                        'Successful completion of Advanced Level, foundation programme, or equivalent qualification.',
+                        'Basic ICT literacy and interest in software, networking, or database systems.',
+                        'English language competency suitable for academic study.'
+                    ]
+                },
+                {
+                    title: 'Certificate in Cyber Security',
+                    department: 'Department of Computing',
+                    level: 'Certificate Level',
+                    requirements: [
+                        'Basic computer literacy.',
+                        'Interest in networking, security, and digital risk management.',
+                        'School leavers and working professionals may apply.'
+                    ]
+                },
+                {
+                    title: 'Foundation in Information Technology',
+                    department: 'Department of Computing',
+                    level: 'Foundation Level',
+                    requirements: [
+                        'Completion of ordinary level or equivalent qualification.',
+                        'Interest in progressing into IT diploma or degree programmes.',
+                        'Basic English and mathematics knowledge is recommended.'
+                    ]
+                },
+                {
+                    title: 'Diploma in Graphic Design',
+                    department: 'Department of Art & Design',
+                    level: 'Diploma Level',
+                    requirements: [
+                        'Completion of ordinary level or equivalent qualification.',
+                        'Creative portfolio is recommended but not compulsory.',
+                        'Basic computer literacy is preferred.'
+                    ]
+                },
+                {
+                    title: 'Higher National Certificate in Multimedia Design',
+                    department: 'Department of Art & Design',
+                    level: 'Higher National Certificate',
+                    requirements: [
+                        'Completion of ordinary level, foundation, or equivalent qualification.',
+                        'Interest in multimedia, animation, or digital content creation.',
+                        'Basic design software knowledge is an added advantage.'
+                    ]
+                },
+                {
+                    title: 'BA in Fashion Design',
+                    department: 'Department of Art & Design',
+                    level: 'Undergraduate Level',
+                    requirements: [
+                        'Successful completion of Advanced Level or equivalent qualification.',
+                        'Creative portfolio or design interest is recommended.',
+                        'English language competency suitable for degree-level study.'
+                    ]
+                },
+                {
+                    title: 'Diploma in English Language',
+                    department: 'Department of Languages',
+                    level: 'Diploma Level',
+                    requirements: [
+                        'Completion of ordinary level or equivalent qualification.',
+                        'Basic English knowledge is recommended.',
+                        'Placement assessment may be required for level identification.'
+                    ]
+                },
+                {
+                    title: 'Certificate in Business English',
+                    department: 'Department of Languages',
+                    level: 'Certificate Level',
+                    requirements: [
+                        'Basic English language ability.',
+                        'Suitable for students and working professionals.',
+                        'Interest in workplace communication and presentation skills.'
+                    ]
+                },
+                {
+                    title: 'Foundation in Academic English',
+                    department: 'Department of Languages',
+                    level: 'Foundation Level',
+                    requirements: [
+                        'Basic English literacy.',
+                        'Interest in preparing for higher education.',
+                        'Placement assessment may be used to recommend support level.'
+                    ]
+                },
+                {
+                    title: 'BSc Biomedical Science',
+                    department: 'Department of Life Science',
+                    level: 'Undergraduate Level',
+                    requirements: [
+                        'Successful completion of Advanced Level in science stream or equivalent qualification.',
+                        'Biology and chemistry background is recommended.',
+                        'English language competency suitable for laboratory-based study.'
+                    ]
+                },
+                {
+                    title: 'Diploma in Psychology',
+                    department: 'Department of Life Science',
+                    level: 'Diploma Level',
+                    requirements: [
+                        'Completion of ordinary level, advanced level, or equivalent qualification.',
+                        'Interest in human behavior, counselling, or social sciences.',
+                        'English reading and writing ability is recommended.'
+                    ]
+                },
+                {
+                    title: 'Certificate in Laboratory Practice',
+                    department: 'Department of Life Science',
+                    level: 'Certificate Level',
+                    requirements: [
+                        'Basic science knowledge.',
+                        'Ability to follow laboratory safety instructions.',
+                        'Suitable for beginners entering laboratory-based study.'
+                    ]
+                },
+                {
+                    title: 'HND in Civil Engineering',
+                    department: 'Department of Engineering',
+                    level: 'Higher National Diploma Level',
+                    requirements: [
+                        'Completion of Advanced Level, foundation, or equivalent qualification.',
+                        'Mathematics or technical subject background is recommended.',
+                        'Interest in construction, surveying, and engineering practice.'
+                    ]
+                },
+                {
+                    title: 'HND in Electrical and Electronic Engineering',
+                    department: 'Department of Engineering',
+                    level: 'Higher National Diploma Level',
+                    requirements: [
+                        'Completion of Advanced Level, foundation, or equivalent qualification.',
+                        'Mathematics, physics, or technical subject background is recommended.',
+                        'Interest in electrical systems and electronics.'
+                    ]
+                },
+                {
+                    title: 'Certificate in AutoCAD for Engineering',
+                    department: 'Department of Engineering',
+                    level: 'Certificate Level',
+                    requirements: [
+                        'Basic computer literacy.',
+                        'Interest in engineering drawing or design.',
+                        'Suitable for students and technical professionals.'
+                    ]
+                },
+                {
+                    title: 'Diploma in Business Management',
+                    department: 'Department of Management & Law',
+                    level: 'Diploma Level',
+                    requirements: [
+                        'Completion of ordinary level, advanced level, or equivalent qualification.',
+                        'Interest in business, management, or entrepreneurship.',
+                        'English communication skills are recommended.'
+                    ]
+                },
+                {
+                    title: 'BA (Hons) in Business Administration',
+                    department: 'Department of Management & Law',
+                    level: 'Undergraduate Level',
+                    requirements: [
+                        'Successful completion of Advanced Level, foundation, diploma, or equivalent qualification.',
+                        'Basic knowledge of business studies is recommended.',
+                        'English language competency suitable for degree-level study.'
+                    ]
+                },
+                {
+                    title: 'MBA in Project Management',
+                    department: 'Department of Management & Law',
+                    level: 'Postgraduate Level',
+                    requirements: [
+                        'Recognised bachelor’s degree or equivalent professional qualification.',
+                        'Work experience in management, technology, or project-related roles is recommended.',
+                        'Applicants may be evaluated through prior learning and professional experience.'
+                    ]
+                },
+                {
+                    title: 'Doctor of Business Administration',
+                    department: 'Department of Management & Law',
+                    level: 'Doctorate Level',
+                    requirements: [
+                        'Recognised master’s degree or equivalent qualification.',
+                        'Research interest aligned with business, management, or leadership practice.',
+                        'Professional experience is strongly recommended.'
+                    ]
+                }
+            ];
+
+            const pageOne = document.getElementById('pageOne');
+            const pageTwo = document.getElementById('pageTwo');
+            const nextButton = document.getElementById('nextButton');
+            const backButton = document.getElementById('backButton');
+            const stepTitle = document.getElementById('stepTitle');
+            const stepDescription = document.getElementById('stepDescription');
+            const stepOneIndicator = document.getElementById('stepOneIndicator');
+            const stepTwoIndicator = document.getElementById('stepTwoIndicator');
+            const progressLine = document.getElementById('progressLine');
+            const courseDropdownButton = document.getElementById('courseDropdownButton');
+            const courseDropdownPanel = document.getElementById('courseDropdownPanel');
+            const courseSearchInput = document.getElementById('courseSearchInput');
+            const courseOptions = document.getElementById('courseOptions');
+            const selectedCourseText = document.getElementById('selectedCourseText');
+            const selectedCourseInput = document.getElementById('selectedCourseInput');
+            const courseError = document.getElementById('courseError');
+            const entryRequirementsList = document.getElementById('entryRequirementsList');
+            const coursePreview = document.getElementById('coursePreview');
+            const previewCourseTitle = document.getElementById('previewCourseTitle');
+            const previewCourseMeta = document.getElementById('previewCourseMeta');
+            const previewCourseLevel = document.getElementById('previewCourseLevel');
+            const summarySelectedCourse = document.getElementById('summarySelectedCourse');
+            const documentType = document.getElementById('documentType');
+            const documentFile = document.getElementById('documentFile');
+            const addDocumentButton = document.getElementById('addDocumentButton');
+            const uploadedDocumentsTable = document.getElementById('uploadedDocumentsTable');
+            const emptyDocumentRow = document.getElementById('emptyDocumentRow');
+            const documentTypeError = document.getElementById('documentTypeError');
+            const documentFileError = document.getElementById('documentFileError');
+
+            let selectedCourse = null;
+            let uploadedDocuments = [];
+
+            function renderCourseOptions(keyword = '') {
+                const normalizedKeyword = keyword.trim().toLowerCase();
+                const filteredCourses = courses.filter(course =>
+                    `${course.title} ${course.department} ${course.level}`.toLowerCase().includes(normalizedKeyword)
+                );
+
+                courseOptions.innerHTML = '';
+
+                if (filteredCourses.length === 0) {
+                    courseOptions.innerHTML = '<div class="px-4 py-6 text-center text-sm font-semibold text-slate-400">No courses found.</div>';
+                    return;
+                }
+
+                filteredCourses.forEach(course => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'w-full rounded-xl px-4 py-3 text-left transition hover:bg-brand-50';
+                    button.innerHTML = `
+                        <span class="block text-sm font-extrabold text-slate-900">${course.title}</span>
+                        <span class="mt-1 block text-xs font-semibold text-slate-500">${course.department} • ${course.level}</span>
+                    `;
+                    button.addEventListener('click', () => selectCourse(course));
+                    courseOptions.appendChild(button);
+                });
+            }
+
+            function selectCourse(course) {
+                selectedCourse = course;
+                selectedCourseText.textContent = course.title;
+                selectedCourseText.classList.remove('text-slate-400');
+                selectedCourseText.classList.add('text-slate-900');
+                selectedCourseInput.value = course.title;
+                courseDropdownPanel.classList.add('hidden');
+                courseError.classList.add('hidden');
+
+                previewCourseTitle.textContent = course.title;
+                previewCourseMeta.textContent = `${course.department} • ${course.level}`;
+                previewCourseLevel.textContent = course.level;
+                coursePreview.classList.remove('hidden');
+                summarySelectedCourse.textContent = course.title;
+                summarySelectedCourse.classList.remove('text-slate-400');
+                summarySelectedCourse.classList.add('text-slate-900');
+
+                entryRequirementsList.innerHTML = course.requirements
+                    .map(item => `<li class="flex gap-3"><span class="font-extrabold text-brand-700">•</span><span>${item}</span></li>`)
+                    .join('');
+            }
+
+            function showPageTwo() {
+                if (!selectedCourse) {
+                    courseError.classList.remove('hidden');
+                    return;
+                }
+
+                pageOne.classList.add('hidden');
+                pageTwo.classList.remove('hidden');
+                stepTitle.textContent = 'Page 2: Upload Documents';
+                stepDescription.textContent = 'Upload the available supporting documents for your enrollment.';
+                stepOneIndicator.className = 'flex h-10 w-10 items-center justify-center rounded-full bg-emerald-600 text-sm font-extrabold text-white shadow-lg shadow-emerald-600/20';
+                stepTwoIndicator.className = 'flex h-10 w-10 items-center justify-center rounded-full bg-brand-700 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20';
+                progressLine.classList.remove('w-0');
+                progressLine.classList.add('w-full');
+            }
+
+            function showPageOne() {
+                pageTwo.classList.add('hidden');
+                pageOne.classList.remove('hidden');
+                stepTitle.textContent = 'Page 1: Select Course';
+                stepDescription.textContent = 'Choose the programme you wish to enroll in.';
+                stepOneIndicator.className = 'flex h-10 w-10 items-center justify-center rounded-full bg-brand-700 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20';
+                stepTwoIndicator.className = 'flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 text-sm font-extrabold text-slate-500';
+                progressLine.classList.remove('w-full');
+                progressLine.classList.add('w-0');
+            }
+
+            function addDocument() {
+                const selectedType = documentType.value;
+                const file = documentFile.files[0];
+
+                documentTypeError.classList.toggle('hidden', Boolean(selectedType));
+                documentFileError.classList.toggle('hidden', Boolean(file));
+
+                if (!selectedType || !file) {
+                    return;
+                }
+
+                uploadedDocuments.push({
+                    type: selectedType,
+                    fileName: file.name,
+                    fileType: file.type || 'Unknown'
+                });
+
+                renderUploadedDocuments();
+                documentType.value = '';
+                documentFile.value = '';
+            }
+
+            function renderUploadedDocuments() {
+                uploadedDocumentsTable.innerHTML = '';
+
+                if (uploadedDocuments.length === 0) {
+                    uploadedDocumentsTable.appendChild(emptyDocumentRow);
+                    return;
+                }
+
+                uploadedDocuments.forEach((doc, index) => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-slate-50';
+                    row.innerHTML = `
+                        <td class="px-5 py-4 font-bold text-slate-900">${doc.type}</td>
+                        <td class="px-5 py-4 text-slate-600">${doc.fileName}</td>
+                        <td class="px-5 py-4 text-slate-500">${doc.fileType}</td>
+                        <td class="px-5 py-4 text-right">
+                            <button type="button" class="remove-document rounded-full bg-rose-50 px-3 py-1.5 text-xs font-extrabold text-rose-600 hover:bg-rose-100" data-index="${index}">Remove</button>
+                        </td>
+                    `;
+                    uploadedDocumentsTable.appendChild(row);
+                });
+            }
+
+            courseDropdownButton.addEventListener('click', () => {
+                courseDropdownPanel.classList.toggle('hidden');
+                courseSearchInput.focus();
+            });
+
+            document.addEventListener('click', event => {
+                if (!courseDropdownPanel.contains(event.target) && !courseDropdownButton.contains(event.target)) {
+                    courseDropdownPanel.classList.add('hidden');
+                }
+            });
+
+            courseSearchInput.addEventListener('input', event => renderCourseOptions(event.target.value));
+            nextButton.addEventListener('click', showPageTwo);
+            backButton.addEventListener('click', showPageOne);
+            addDocumentButton.addEventListener('click', addDocument);
+
+            uploadedDocumentsTable.addEventListener('click', event => {
+                if (event.target.classList.contains('remove-document')) {
+                    const index = Number(event.target.dataset.index);
+                    uploadedDocuments.splice(index, 1);
+                    renderUploadedDocuments();
+                }
+            });
+
+            renderCourseOptions();
+        });
+    </script>
+}

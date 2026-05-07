@@ -1,0 +1,212 @@
+﻿@{
+    ViewData["Title"] = "Register New User";
+}
+
+<section class="space-y-6 px-1 sm:px-2">
+    <div>
+        <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">User Management</p>
+        <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">User Creation</h1>
+        <p class="mt-2 text-sm text-slate-500">Create a new system user account and assign the relevant user role.</p>
+    </div>
+
+    <form id="userCreationForm" class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-panel sm:p-6">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold text-slate-900">Account Information</h2>
+                <p class="text-sm text-slate-500">Enter login credentials, role, and account status.</p>
+            </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div>
+                <label for="name" class="block text-xs font-bold text-slate-700">Name</label>
+                <input id="name" name="name" type="text" placeholder="Enter full name" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div>
+                <label for="userRole" class="block text-xs font-bold text-slate-700">User Role</label>
+                <select id="userRole" name="userRole" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                    <option value="">Select user role</option>
+                    <option value="Student">Student</option>
+                    <option value="Lecturer">Lecturer</option>
+                    <option value="Department Admin">Department Admin</option>
+                    <option value="System Admin">System Admin</option>
+                </select>
+            </div>
+
+            <div class="md:col-span-2">
+                <label for="email" class="block text-xs font-bold text-slate-700">Email</label>
+                <input id="email" name="email" type="email" placeholder="example@unimanage.edu" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div>
+                <label for="password" class="block text-xs font-bold text-slate-700">Password</label>
+                <div class="relative mt-2">
+                    <input id="password" name="password" type="password" placeholder="Enter password" class="w-full rounded-2xl border border-slate-200 px-4 py-3 pr-12 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                    <button id="togglePasswordButton" type="button" class="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700">
+                        <i id="passwordIcon" class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <label for="confirmPassword" class="block text-xs font-bold text-slate-700">Confirm Password</label>
+                <div class="relative mt-2">
+                    <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Re-enter password" class="w-full rounded-2xl border border-slate-200 px-4 py-3 pr-12 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                    <button id="toggleConfirmPasswordButton" type="button" class="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700">
+                        <i id="confirmPasswordIcon" class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="md:col-span-2">
+                <div class="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wide text-slate-500">Account Status</p>
+                        <p id="statusText" class="mt-1 text-sm font-extrabold text-emerald-700">Active</p>
+                    </div>
+
+                    <label class="relative inline-flex cursor-pointer items-center">
+                        <input id="isActiveToggle" name="isActive" type="checkbox" checked class="peer sr-only" />
+                        <div class="peer h-7 w-14 rounded-full bg-slate-300 after:absolute after:left-1 after:top-1 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition peer-checked:bg-brand-700 peer-checked:after:translate-x-7"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="validationBox" class="mt-5 hidden rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700"></div>
+        <div id="successBox" class="mt-5 hidden rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700"></div>
+
+        <div class="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-end">
+            <button id="resetButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-6 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">
+                <i class="fa-solid fa-rotate-left"></i>
+                Reset
+            </button>
+
+            <button type="submit" class="inline-flex min-w-[180px] items-center justify-center gap-2 rounded-full bg-brand-700 px-8 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                <i class="fa-solid fa-user-check"></i>
+                Register
+            </button>
+        </div>
+    </form>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('userCreationForm');
+        const nameInput = document.getElementById('name');
+        const userRole = document.getElementById('userRole');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const isActiveToggle = document.getElementById('isActiveToggle');
+        const statusText = document.getElementById('statusText');
+        const validationBox = document.getElementById('validationBox');
+        const successBox = document.getElementById('successBox');
+        const resetButton = document.getElementById('resetButton');
+        const togglePasswordButton = document.getElementById('togglePasswordButton');
+        const toggleConfirmPasswordButton = document.getElementById('toggleConfirmPasswordButton');
+        const passwordIcon = document.getElementById('passwordIcon');
+        const confirmPasswordIcon = document.getElementById('confirmPasswordIcon');
+
+        function showValidation(message) {
+            successBox.classList.add('hidden');
+            validationBox.textContent = message;
+            validationBox.classList.remove('hidden');
+        }
+
+        function showSuccess(message) {
+            validationBox.classList.add('hidden');
+            successBox.textContent = message;
+            successBox.classList.remove('hidden');
+        }
+
+        function clearMessages() {
+            validationBox.textContent = '';
+            successBox.textContent = '';
+            validationBox.classList.add('hidden');
+            successBox.classList.add('hidden');
+        }
+
+        function updateStatusText() {
+            statusText.textContent = isActiveToggle.checked ? 'Active' : 'Inactive';
+            statusText.className = isActiveToggle.checked
+                ? 'mt-1 text-sm font-extrabold text-emerald-700'
+                : 'mt-1 text-sm font-extrabold text-rose-700';
+        }
+
+        function togglePasswordVisibility(input, icon) {
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            icon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+        }
+
+
+        function resetForm() {
+            form.reset();
+            isActiveToggle.checked = true;
+            password.type = 'password';
+            confirmPassword.type = 'password';
+            passwordIcon.className = 'fa-solid fa-eye';
+            confirmPasswordIcon.className = 'fa-solid fa-eye';
+            updateStatusText();
+            clearMessages();
+        }
+
+        isActiveToggle.addEventListener('change', updateStatusText);
+        resetButton.addEventListener('click', resetForm);
+        togglePasswordButton.addEventListener('click', () => togglePasswordVisibility(password, passwordIcon));
+        toggleConfirmPasswordButton.addEventListener('click', () => togglePasswordVisibility(confirmPassword, confirmPasswordIcon));
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            clearMessages();
+
+            if (!nameInput.value.trim()) {
+                showValidation('Please enter the user name.');
+                return;
+            }
+
+            if (!userRole.value) {
+                showValidation('Please select a user role.');
+                return;
+            }
+
+            if (!email.value.trim()) {
+                showValidation('Please enter the email address.');
+                return;
+            }
+
+            if (!isValidEmail(email.value.trim())) {
+                showValidation('Please enter a valid email address.');
+                return;
+            }
+
+            if (!password.value) {
+                showValidation('Please enter the password.');
+                return;
+            }
+
+            if (password.value.length < 8) {
+                showValidation('Password must contain at least 8 characters.');
+                return;
+            }
+
+            if (!confirmPassword.value) {
+                showValidation('Please confirm the password.');
+                return;
+            }
+
+            if (password.value !== confirmPassword.value) {
+                showValidation('Password and confirm password do not match.');
+                return;
+            }
+
+            showSuccess('User registered successfully. Connect this form action to your ASP.NET Core controller.');
+        });
+
+        updateStatusText();
+    });
+</script>

@@ -1,0 +1,434 @@
+﻿@{
+    ViewData["Title"] = "Courses Details";
+    Layout = "";
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Details | Smart Edu Higher Education Institute</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-bg {
+            background: linear-gradient(120deg, rgba(15, 23, 42, 0.94), rgba(30, 64, 175, 0.84)), url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+            .tab-panel.active {
+                display: block;
+            }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <header class="bg-white/95 backdrop-blur sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="h-11 w-11 rounded-2xl bg-blue-700 text-white flex items-center justify-center font-extrabold text-xl">SE</div>
+                    <div>
+                        <p class="text-xl font-extrabold text-slate-900 leading-tight">Smart Edu</p>
+                        <p class="text-xs font-medium text-slate-500">Higher Education Institute</p>
+                    </div>
+                </a>
+
+                <nav class="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-700">
+                    <a href="index.html" class="hover:text-blue-700">Home</a>
+                    <a href="#about" class="hover:text-blue-700">About</a>
+                    <a href="courses.html" class="text-blue-700">Courses</a>
+                    <a href="#schools" class="hover:text-blue-700">Schools</a>
+                    <a href="#student-life" class="hover:text-blue-700">Student Life</a>
+                    <a href="#contact" class="hover:text-blue-700">Contact</a>
+                </nav>
+
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="/Account/Login" class="px-5 py-2.5 rounded-full bg-white text-blue-700 text-sm font-bold shadow hover:bg-blue-50 transition transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">Login</a>
+                    <a href="/Account/Register" class="px-5 py-2.5 rounded-full bg-blue-700 text-white text-sm font-bold hover:bg-blue-800 shadow-lg shadow-blue-700/20 transition transform hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-300">Register</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-bg text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+                <div class="max-w-4xl">
+                    <a href="courses.html" class="inline-flex items-center gap-2 text-sm font-bold text-blue-100 hover:text-white">← Back to Courses</a>
+                    <div class="mt-6 flex flex-wrap items-center gap-3">
+                        <span class="inline-flex px-4 py-2 rounded-full bg-white/15 ring-1 ring-white/20 text-sm font-bold">Department of Computing</span>
+                        <span class="inline-flex px-4 py-2 rounded-full bg-blue-500/80 text-sm font-bold">Undergraduate Level</span>
+                    </div>
+                    <h1 class="mt-4 text-xl sm:text-2xl lg:text-3xl font-extrabold leading-snug">BSc (Hons) in Software Engineering</h1>
+                    <p class="mt-3 text-sm text-blue-50 leading-6 max-w-2xl">Build strong software engineering capability through programming, database systems, web application development, cloud concepts, software architecture, and final-year project experience.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 lg:py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-8 items-start">
+                    <aside class="lg:col-span-4 xl:col-span-3">
+                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden sticky top-28">
+                            <img class="h-52 w-full object-cover" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80" alt="Software engineering course" />
+                            <div class="p-6">
+                                <h2 class="text-xl font-extrabold text-slate-900">Course Summary</h2>
+                                <div class="mt-5 space-y-4 text-sm">
+                                    <div class="grid grid-cols-2 items-center gap-4 border-b border-slate-100 pb-3">
+                                        <span class="text-slate-500">Course Code</span>
+                                        <span class="font-bold text-slate-900 text-right">SE-UG-2026</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 items-center gap-4 border-b border-slate-100 pb-3">
+                                        <span class="text-slate-500">Duration</span>
+                                        <span class="font-bold text-slate-900 text-right">3 Years</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 items-center gap-4 border-b border-slate-100 pb-3">
+                                        <span class="text-slate-500">Study Mode</span>
+                                        <span class="font-bold text-slate-900 text-right">Full Time / Weekend</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 items-center gap-4 border-b border-slate-100 pb-3">
+                                        <span class="text-slate-500">Assessment</span>
+                                        <span class="font-bold text-slate-900 text-right">Coursework + Project</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 items-center gap-4">
+                                        <span class="text-slate-500">Award Type</span>
+                                        <span class="font-bold text-slate-900 text-right">Degree</span>
+                                    </div>
+                                </div>
+
+                                <button id="openInquiry" type="button" class="mt-6 w-full px-5 py-3 rounded-full bg-slate-100 text-slate-900 text-sm font-extrabold hover:bg-slate-200 transition transform hover:-translate-y-0.5">Request More Info</button>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <section class="lg:col-span-8 xl:col-span-9 space-y-8">
+                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 sm:p-6">
+                            <div class="flex flex-wrap gap-3" role="tablist" aria-label="Course details tabs">
+                                <button class="tab-button px-5 py-3 rounded-full bg-blue-700 text-white text-sm font-extrabold" data-tab="overview">Overview</button>
+                                <button class="tab-button px-5 py-3 rounded-full bg-slate-100 text-slate-700 text-sm font-extrabold hover:bg-blue-50 hover:text-blue-700" data-tab="outline">Course Outline</button>
+                                <button class="tab-button px-5 py-3 rounded-full bg-slate-100 text-slate-700 text-sm font-extrabold hover:bg-blue-50 hover:text-blue-700" data-tab="entry">Entry Requirements</button>
+                                <button class="tab-button px-5 py-3 rounded-full bg-slate-100 text-slate-700 text-sm font-extrabold hover:bg-blue-50 hover:text-blue-700" data-tab="documents">Required Documents</button>
+                                <button class="tab-button px-5 py-3 rounded-full bg-slate-100 text-slate-700 text-sm font-extrabold hover:bg-blue-50 hover:text-blue-700" data-tab="career">Career Pathways</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                            <div id="overview" class="tab-panel active">
+                                <h2 class="text-2xl font-extrabold text-slate-900">Course Overview</h2>
+                                <p class="mt-4 text-slate-600 leading-8">This programme is designed for students who want to become skilled software engineering professionals. It combines theory, practical lab work, project-based learning, and real-world software development practices.</p>
+                                <div class="mt-8 grid md:grid-cols-3 gap-5">
+                                    <div class="rounded-3xl bg-blue-50 p-5 border border-blue-100">
+                                        <p class="text-2xl font-extrabold text-blue-700">12+</p>
+                                        <p class="mt-1 text-sm font-bold text-slate-700">Core Modules</p>
+                                    </div>
+                                    <div class="rounded-3xl bg-emerald-50 p-5 border border-emerald-100">
+                                        <p class="text-2xl font-extrabold text-emerald-700">1</p>
+                                        <p class="mt-1 text-sm font-bold text-slate-700">Final Project</p>
+                                    </div>
+                                    <div class="rounded-3xl bg-purple-50 p-5 border border-purple-100">
+                                        <p class="text-2xl font-extrabold text-purple-700">Hybrid</p>
+                                        <p class="mt-1 text-sm font-bold text-slate-700">Learning Support</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="outline" class="tab-panel">
+                                <h2 class="text-2xl font-extrabold text-slate-900">Course Outline</h2>
+                                <p class="mt-4 text-slate-600 leading-8">The course outline is structured to strengthen application development, software engineering knowledge, artificial intelligence understanding, project analysis, and practical project delivery.</p>
+                                <div class="mt-6 overflow-hidden rounded-3xl border border-slate-200">
+                                    <table class="w-full text-left text-sm">
+                                        <thead class="bg-slate-900 text-white">
+                                            <tr>
+                                                <th class="px-5 py-4 font-extrabold">Module</th>
+                                                <th class="px-5 py-4 font-extrabold">Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-200 bg-white">
+                                            <tr><td class="px-5 py-4 font-bold text-slate-900">Application Development</td><td class="px-5 py-4 text-slate-600">Mandatory</td></tr>
+                                            <tr><td class="px-5 py-4 font-bold text-slate-900">Advanced Software Engineering</td><td class="px-5 py-4 text-slate-600">Mandatory</td></tr>
+                                            <tr><td class="px-5 py-4 font-bold text-slate-900">Project Analysis and Practice</td><td class="px-5 py-4 text-slate-600">Mandatory</td></tr>
+                                            <tr><td class="px-5 py-4 font-bold text-slate-900">Artificial Intelligence</td><td class="px-5 py-4 text-slate-600">Mandatory</td></tr>
+                                            <tr><td class="px-5 py-4 font-bold text-slate-900">Final Software Project</td><td class="px-5 py-4 text-slate-600">Mandatory</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div id="entry" class="tab-panel">
+                                <h2 class="text-2xl font-extrabold text-slate-900">Entry Requirements</h2>
+                                <ul class="mt-5 space-y-4 text-slate-600 leading-7">
+                                    <li class="flex gap-3"><span class="text-blue-700 font-extrabold">✓</span> Pearson BTEC HND in Computing, IT, Information Systems, or an equivalent qualification.</li>
+                                    <li class="flex gap-3"><span class="text-blue-700 font-extrabold">✓</span> BCS Diploma, NCC IAD, or a recognised advanced or higher diploma in IT or Information Systems.</li>
+                                    <li class="flex gap-3"><span class="text-blue-700 font-extrabold">✓</span> Applicants with relevant academic and professional qualifications may be evaluated through prior learning review.</li>
+                                </ul>
+                            </div>
+
+                            <div id="documents" class="tab-panel">
+                                <h2 class="text-2xl font-extrabold text-slate-900">Required Documents</h2>
+                                <p class="mt-4 text-slate-600 leading-8">Applicants should prepare the following documents before starting the enrollment process.</p>
+                                <div class="mt-6 grid sm:grid-cols-2 gap-4">
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Curriculum Vitae</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Academic qualifications</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Professional qualifications</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">NIC or Passport copy</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Service letter, if applicable</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Approval evidence for non-standard applications</div>
+                                </div>
+                            </div>
+
+                            <div id="career" class="tab-panel">
+                                <h2 class="text-2xl font-extrabold text-slate-900">Career Pathways</h2>
+                                <p class="mt-4 text-slate-600 leading-8">Graduates can progress into software development, quality assurance, business analysis, systems support, cloud development, and postgraduate study.</p>
+                                <div class="mt-6 grid sm:grid-cols-2 gap-4">
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Software Engineer</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">QA Engineer</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Business Analyst</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Web Developer</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Cloud Application Developer</div>
+                                    <div class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-800">Systems Analyst</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                                <div>
+                                    <p class="text-sm font-extrabold tracking-wider text-blue-700 uppercase">Related Courses</p>
+                                    <h2 class="mt-2 text-2xl font-extrabold text-slate-900">You may also be interested in</h2>
+                                </div>
+                                <a href="courses.html" class="inline-flex justify-center px-5 py-3 rounded-full bg-slate-100 text-slate-900 text-sm font-bold hover:bg-slate-200 transition">Browse All Courses</a>
+                            </div>
+                            <div class="mt-6 grid md:grid-cols-3 gap-5">
+                                <article class="rounded-3xl border border-slate-200 p-5 hover:shadow-lg transition">
+                                    <p class="text-xs font-extrabold text-blue-700">Department of Computing</p>
+                                    <h3 class="mt-3 font-extrabold text-slate-900">BEng Computer Networking and Cloud Security</h3>
+                                    <p class="mt-2 text-sm text-slate-600">Undergraduate Level</p>
+                                </article>
+                                <article class="rounded-3xl border border-slate-200 p-5 hover:shadow-lg transition">
+                                    <p class="text-xs font-extrabold text-blue-700">Department of Computing</p>
+                                    <h3 class="mt-3 font-extrabold text-slate-900">BSc Computing Science in Software Engineering</h3>
+                                    <p class="mt-2 text-sm text-slate-600">Undergraduate Level</p>
+                                </article>
+                                <article class="rounded-3xl border border-slate-200 p-5 hover:shadow-lg transition">
+                                    <p class="text-xs font-extrabold text-blue-700">Department of Computing</p>
+                                    <h3 class="mt-3 font-extrabold text-slate-900">BSc Cyber Security and Digital Forensics</h3>
+                                    <p class="mt-2 text-sm text-slate-600">Undergraduate Level</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
+                                <h3 class="text-xl font-extrabold text-slate-900">Course Benefits</h3>
+                                <ul class="mt-5 space-y-3 text-sm text-slate-600 leading-6">
+                                    <li>✓ Develop high-demand software engineering skills for local and global careers.</li>
+                                    <li>✓ Progress from diploma-level learning into degree-level academic achievement.</li>
+                                    <li>✓ Strengthen practical skills in application development, UML, ASP.NET, AI, and project work.</li>
+                                    <li>✓ Build problem-solving ability through real-life software engineering practice.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
+                                <h3 class="text-xl font-extrabold text-slate-900">Our Lecture Panel</h3>
+                                <p class="mt-5 text-sm text-slate-600 leading-7">Smart Edu’s lecture panel includes experienced academics and industry practitioners who guide students through theoretical learning, practical labs, project supervision, and career-focused academic mentoring.</p>
+                                <div class="mt-5 flex -space-x-3">
+                                    <div class="h-11 w-11 rounded-full bg-blue-700 text-white flex items-center justify-center font-extrabold ring-4 ring-white">SE</div>
+                                    <div class="h-11 w-11 rounded-full bg-emerald-600 text-white flex items-center justify-center font-extrabold ring-4 ring-white">IT</div>
+                                    <div class="h-11 w-11 rounded-full bg-purple-600 text-white flex items-center justify-center font-extrabold ring-4 ring-white">AI</div>
+                                    <div class="h-11 w-11 rounded-full bg-slate-900 text-white flex items-center justify-center font-extrabold ring-4 ring-white">QA</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                                <div>
+                                    <p class="text-sm font-extrabold tracking-wider text-blue-700 uppercase">Student Reviews</p>
+                                    <h2 class="mt-2 text-2xl font-extrabold text-slate-900">What students say</h2>
+                                </div>
+                                <button id="toggleReview" type="button" class="px-5 py-3 rounded-full bg-blue-700 text-white text-sm font-bold hover:bg-blue-800 transition">Show Review</button>
+                            </div>
+                            <div id="reviewBox" class="hidden mt-6 rounded-3xl bg-slate-50 p-6 border border-slate-200">
+                                <p class="text-slate-600 leading-8">“The course helped me connect academic software engineering concepts with real development practices. The project guidance and lecturer support were especially useful.”</p>
+                                <div class="mt-5 flex items-center gap-4">
+                                    <div class="h-12 w-12 rounded-full bg-blue-700 text-white flex items-center justify-center font-extrabold">ST</div>
+                                    <div>
+                                        <p class="font-extrabold text-slate-900">Smart Edu Graduate</p>
+                                        <p class="text-sm text-slate-500">Department of Computing</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-700 rounded-3xl p-4 sm:p-4 text-white text-center shadow-xl shadow-blue-700/20">
+                            <h2 class="text-xl font-extrabold">Ready to start this course?</h2>
+                            <p class="mt-3 text-sm text-blue-50 max-w-2xl mx-auto leading-6">Enroll now and begin your academic journey with Smart Edu Higher Education Institute.</p>
+                            <button id="enrollButton" type="button" class="mt-4 inline-flex px-6 py-2.5 rounded-full bg-white text-blue-800 text-sm font-extrabold hover:bg-blue-50 transition transform hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-white">
+                                Enroll Course
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="enrollModal" class="hidden fixed inset-0 z-[110] bg-slate-950/70 backdrop-blur-sm p-4">
+        <div class="min-h-full flex items-center justify-center">
+            <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl text-center">
+                <div class="mx-auto h-16 w-16 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-3xl font-extrabold">SE</div>
+                <h2 class="mt-5 text-2xl font-extrabold text-slate-900">Continue Enrollment</h2>
+                <p class="mt-3 text-sm text-slate-600 leading-6">Please login to your Smart Edu account or create a new account to continue with the course enrollment process.</p>
+
+                <div class="mt-7 flex flex-col sm:flex-row gap-3">
+                    <a href="/Account/Login" class="flex-1 px-5 py-3 rounded-full bg-blue-700 text-white text-sm font-extrabold hover:bg-blue-800 transition transform hover:-translate-y-0.5">Login</a>
+                    <a href="/Account/Register" class="flex-1 px-5 py-3 rounded-full bg-slate-100 text-slate-900 text-sm font-extrabold hover:bg-slate-200 transition transform hover:-translate-y-0.5">Register</a>
+                </div>
+
+                <button id="closeEnrollModal" type="button" class="mt-5 text-sm font-bold text-slate-500 hover:text-slate-900">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="inquiryModal" class="hidden fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-sm p-4">
+        <div class="min-h-full flex items-center justify-center">
+            <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl">
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-900">Request Course Information</h2>
+                        <p class="mt-2 text-sm text-slate-600">Submit your details and our academic counseling team will contact you.</p>
+                    </div>
+                    <button id="closeInquiry" type="button" class="h-10 w-10 rounded-full bg-slate-100 hover:bg-slate-200 font-bold">×</button>
+                </div>
+                <form class="mt-6 space-y-4">
+                    <input type="text" placeholder="Full Name" class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                    <input type="email" placeholder="Email Address" class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                    <input type="tel" placeholder="Phone Number" class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                    <button type="button" id="submitInquiry" class="w-full rounded-full bg-blue-700 text-white py-3 font-extrabold hover:bg-blue-800 transition">Submit Inquiry</button>
+                    <p id="inquiryMessage" class="hidden text-center text-sm font-bold text-emerald-700">Thank you. Your inquiry has been recorded.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact" class="bg-slate-950 text-slate-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <p class="text-2xl font-extrabold text-white">Smart Edu Higher Education Institute</p>
+                <p class="mt-4 max-w-md leading-7">A student-centered higher education institute focused on quality teaching, employability, and lifelong learning.</p>
+            </div>
+            <div>
+                <p class="font-bold text-white">Quick Links</p>
+                <ul class="mt-4 space-y-2 text-sm">
+                    <li><a href="index.html" class="hover:text-white">Home</a></li>
+                    <li><a href="courses.html" class="hover:text-white">Courses</a></li>
+                    <li><a href="/Account/Login" class="hover:text-white">Login</a></li>
+                    <li><a href="/Account/Register" class="hover:text-white">Register</a></li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-bold text-white">Contact</p>
+                <ul class="mt-4 space-y-2 text-sm">
+                    <li>Colombo, Sri Lanka</li>
+                    <li>info@smartedu.lk</li>
+                    <li>+94 11 234 5678</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-white/10 py-5 text-center text-sm">© 2026 Smart Edu Higher Education Institute. All rights reserved.</div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            const accordions = document.querySelectorAll('.accordion');
+            const modal = document.getElementById('inquiryModal');
+            const enrollModal = document.getElementById('enrollModal');
+            const enrollButton = document.getElementById('enrollButton');
+            const closeEnrollModal = document.getElementById('closeEnrollModal');
+            const openInquiry = document.getElementById('openInquiry');
+            const closeInquiry = document.getElementById('closeInquiry');
+            const submitInquiry = document.getElementById('submitInquiry');
+            const inquiryMessage = document.getElementById('inquiryMessage');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const selectedTab = button.dataset.tab;
+
+                    tabButtons.forEach(btn => {
+                        btn.className = 'tab-button px-5 py-3 rounded-full bg-slate-100 text-slate-700 text-sm font-extrabold hover:bg-blue-50 hover:text-blue-700';
+                    });
+
+                    button.className = 'tab-button px-5 py-3 rounded-full bg-blue-700 text-white text-sm font-extrabold';
+
+                    tabPanels.forEach(panel => {
+                        panel.classList.toggle('active', panel.id === selectedTab);
+                    });
+                });
+            });
+
+            accordions.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    content.classList.toggle('hidden');
+                });
+            });
+
+            openInquiry.addEventListener('click', () => modal.classList.remove('hidden'));
+            closeInquiry.addEventListener('click', () => modal.classList.add('hidden'));
+            modal.addEventListener('click', event => {
+                if (event.target === modal) modal.classList.add('hidden');
+            });
+            submitInquiry.addEventListener('click', () => inquiryMessage.classList.remove('hidden'));
+
+            if (enrollButton && enrollModal) {
+                enrollButton.addEventListener('click', () => {
+                    enrollModal.classList.remove('hidden');
+                });
+            }
+
+            if (closeEnrollModal && enrollModal) {
+                closeEnrollModal.addEventListener('click', () => {
+                    enrollModal.classList.add('hidden');
+                });
+
+                enrollModal.addEventListener('click', event => {
+                    if (event.target === enrollModal) {
+                        enrollModal.classList.add('hidden');
+                    }
+                });
+            }
+
+            const toggleReview = document.getElementById('toggleReview');
+            const reviewBox = document.getElementById('reviewBox');
+            const ambassadorButton = document.getElementById('ambassadorButton');
+            const ambassadorMessage = document.getElementById('ambassadorMessage');
+
+            if (toggleReview && reviewBox) {
+                toggleReview.addEventListener('click', () => {
+                    reviewBox.classList.toggle('hidden');
+                    toggleReview.textContent = reviewBox.classList.contains('hidden') ? 'Show Review' : 'Hide Review';
+                });
+            }
+
+            if (ambassadorButton && ambassadorMessage) {
+                ambassadorButton.addEventListener('click', () => {
+                    ambassadorMessage.classList.remove('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

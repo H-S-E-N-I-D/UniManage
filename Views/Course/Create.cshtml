@@ -1,0 +1,459 @@
+﻿@{
+    ViewData["Title"] = "Register New Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<section class="mx-auto max-w-6xl space-y-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Course Management</p>
+            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Course Registration</h1>
+            <p class="mt-2 text-sm text-slate-500">Register a new academic course using the step-by-step course setup form.</p>
+        </div>
+        <span id="stepLabel" class="inline-flex w-fit rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700 ring-1 ring-brand-100">Step 1 of 5</span>
+    </div>
+
+    <div class="rounded-[28px] border border-slate-200 bg-white p-4 shadow-panel sm:p-6">
+        <div class="grid gap-3 sm:grid-cols-5">
+            <div class="step-indicator rounded-2xl bg-brand-700 px-4 py-3 text-white" data-step-indicator="1">
+                <p class="text-xs font-bold opacity-80">Page 1</p>
+                <p class="text-sm font-extrabold">Course Information</p>
+            </div>
+            <div class="step-indicator rounded-2xl bg-slate-100 px-4 py-3 text-slate-500" data-step-indicator="2">
+                <p class="text-xs font-bold">Page 2</p>
+                <p class="text-sm font-extrabold">Overview</p>
+            </div>
+            <div class="step-indicator rounded-2xl bg-slate-100 px-4 py-3 text-slate-500" data-step-indicator="3">
+                <p class="text-xs font-bold">Page 3</p>
+                <p class="text-sm font-extrabold">Course Outline</p>
+            </div>
+            <div class="step-indicator rounded-2xl bg-slate-100 px-4 py-3 text-slate-500" data-step-indicator="4">
+                <p class="text-xs font-bold">Page 4</p>
+                <p class="text-sm font-extrabold">Entry Requirements</p>
+            </div>
+            <div class="step-indicator rounded-2xl bg-slate-100 px-4 py-3 text-slate-500" data-step-indicator="5">
+                <p class="text-xs font-bold">Page 5</p>
+                <p class="text-sm font-extrabold">Career Pathways</p>
+            </div>
+        </div>
+    </div>
+
+    <form id="courseRegistrationForm" class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-panel sm:p-6">
+        <div class="form-page space-y-6" data-page="1">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Course Information</h2>
+                    <p class="text-sm text-slate-500">Basic academic and administrative information about the course.</p>
+                </div>
+            </div>
+
+            <div class="grid gap-5 md:grid-cols-2">
+                <div>
+                    <label for="courseTitle" class="block text-xs font-bold text-slate-700">Course Title</label>
+                    <input id="courseTitle" type="text" placeholder="BSc (Hons) in Software Engineering" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+
+                <div>
+                    <label for="courseCode" class="block text-xs font-bold text-slate-700">Course Code</label>
+                    <input id="courseCode" type="text" placeholder="CSE-UG-001" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+
+                <div>
+                    <label for="durationMonths" class="block text-xs font-bold text-slate-700">Duration (Months)</label>
+                    <input id="durationMonths" type="number" min="1" placeholder="36" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+
+                <div>
+                    <label for="department" class="block text-xs font-bold text-slate-700">Department</label>
+                    <select id="department" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <option value="">Select department</option>
+                        <option>Department of Languages</option>
+                        <option>Department of Art & Design</option>
+                        <option>Department of Life Science</option>
+                        <option>Department of Computing</option>
+                        <option>Department of Engineering</option>
+                        <option>Department of Management & Law</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="studyMode" class="block text-xs font-bold text-slate-700">Study Mode</label>
+                    <select id="studyMode" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <option value="">Select study mode</option>
+                        <option>Full Time</option>
+                        <option>Part Time</option>
+                        <option>Weekend</option>
+                        <option>Distance Learning</option>
+                        <option>Hybrid</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="assessment" class="block text-xs font-bold text-slate-700">Assessment</label>
+                    <input id="assessment" type="text" placeholder="Assignments, exams, presentations, final project" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+
+                <div>
+                    <label for="awardType" class="block text-xs font-bold text-slate-700">Award Type</label>
+                    <select id="awardType" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <option value="">Select award type</option>
+                        <option>Foundation Level</option>
+                        <option>Certificate Level</option>
+                        <option>Higher National Diploma Level</option>
+                        <option>Diploma Level</option>
+                        <option>Higher National Certificate</option>
+                        <option>Undergraduate Level</option>
+                        <option>Postgraduate Level</option>
+                        <option>Doctorate Level</option>
+                    </select>
+                </div>
+
+                <div class="flex items-end justify-between rounded-2xl border border-slate-200 px-4 py-3">
+                    <div>
+                        <p class="text-xs font-bold text-slate-700">Course Status</p>
+                        <p id="statusText" class="mt-1 text-sm font-semibold text-emerald-700">Active</p>
+                    </div>
+                    <label class="relative inline-flex cursor-pointer items-center">
+                        <input id="statusToggle" type="checkbox" checked class="peer sr-only" />
+                        <div class="peer h-7 w-14 rounded-full bg-slate-300 after:absolute after:left-1 after:top-1 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition peer-checked:bg-brand-700 peer-checked:after:translate-x-7"></div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+                <button type="button" class="next-button inline-flex items-center gap-2 rounded-full bg-brand-700 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:bg-brand-800">
+                    Next
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-page hidden space-y-6" data-page="2">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Course Overview and Benefits</h2>
+                    <p class="text-sm text-slate-500">Describe the course purpose, scope, and value for students.</p>
+                </div>
+            </div>
+
+            <div class="grid gap-5">
+                <div>
+                    <label for="overview" class="block text-xs font-bold text-slate-700">Overview</label>
+                    <textarea id="overview" rows="6" placeholder="Write a concise overview of the course..." class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600"></textarea>
+                </div>
+
+                <div>
+                    <label for="courseBenefits" class="block text-xs font-bold text-slate-700">Course Benefits</label>
+                    <textarea id="courseBenefits" rows="6" placeholder="Explain the key benefits students gain from this course..." class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600"></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-between pt-2">
+                <button type="button" class="prev-button rounded-full bg-slate-100 px-6 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">Back</button>
+                <button type="button" class="next-button inline-flex items-center gap-2 rounded-full bg-brand-700 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:bg-brand-800">
+                    Next
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-page hidden space-y-6" data-page="3">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Course Outline and Modules</h2>
+                    <p class="text-sm text-slate-500">Define the course outline and assign modules to the course.</p>
+                </div>
+            </div>
+
+            <div>
+                <label for="courseOutline" class="block text-xs font-bold text-slate-700">Course Outline</label>
+                <textarea id="courseOutline" rows="6" placeholder="Write the course outline..." class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600"></textarea>
+            </div>
+
+            <div class="rounded-3xl border border-slate-200 p-4">
+                <div class="flex items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-sm font-extrabold text-slate-900">Add Course Modules</h3>
+                        <p class="text-sm text-slate-500">Use the searchable dropdown to select one or more modules.</p>
+                    </div>
+                    <button type="button" id="addModuleButton" class="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700 transition hover:bg-brand-100">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Module
+                    </button>
+                </div>
+                <div id="moduleRows" class="mt-4 space-y-3"></div>
+            </div>
+
+            <div class="flex justify-between pt-2">
+                <button type="button" class="prev-button rounded-full bg-slate-100 px-6 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">Back</button>
+                <button type="button" class="next-button inline-flex items-center gap-2 rounded-full bg-brand-700 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:bg-brand-800">
+                    Next
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-page hidden space-y-6" data-page="4">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Entry Requirements</h2>
+                    <p class="text-sm text-slate-500">Select the entry requirements applicable to the course.</p>
+                </div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-200 p-4">
+                <div class="flex items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-sm font-extrabold text-slate-900">Add Entry Requirements</h3>
+                        <p class="text-sm text-slate-500">Add one or more entry requirements using searchable dropdown rows.</p>
+                    </div>
+                    <button type="button" id="addRequirementButton" class="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700 transition hover:bg-brand-100">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Requirement
+                    </button>
+                </div>
+                <div id="requirementRows" class="mt-4 space-y-3"></div>
+            </div>
+
+            <div class="flex justify-between pt-2">
+                <button type="button" class="prev-button rounded-full bg-slate-100 px-6 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">Back</button>
+                <button type="button" class="next-button inline-flex items-center gap-2 rounded-full bg-brand-700 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:bg-brand-800">
+                    Next
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-page hidden space-y-6" data-page="5">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Career Pathways</h2>
+                    <p class="text-sm text-slate-500">Summarise the career outcomes and assign relevant career pathways.</p>
+                </div>
+            </div>
+
+            <div>
+                <label for="careerSummary" class="block text-xs font-bold text-slate-700">Career Pathways Summary</label>
+                <textarea id="careerSummary" rows="6" placeholder="Describe possible employment and progression opportunities..." class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600"></textarea>
+            </div>
+
+            <div class="rounded-3xl border border-slate-200 p-4">
+                <div class="flex items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-sm font-extrabold text-slate-900">Add Career Pathways</h3>
+                        <p class="text-sm text-slate-500">Use the searchable dropdown to add career pathway rows.</p>
+                    </div>
+                    <button type="button" id="addCareerButton" class="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700 transition hover:bg-brand-100">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Career
+                    </button>
+                </div>
+                <div id="careerRows" class="mt-4 space-y-3"></div>
+            </div>
+
+            <div class="flex justify-between pt-2">
+                <button type="button" class="prev-button rounded-full bg-slate-100 px-6 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">Back</button>
+                <button type="submit" class="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-emerald-600/20 transition hover:bg-emerald-700">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Register Course
+                </button>
+            </div>
+        </div>
+    </form>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        const modules = [
+            'Programming Fundamentals',
+            'Database Management Systems',
+            'Web Application Development',
+            'Software Engineering Principles',
+            'Object Oriented Programming',
+            'Data Structures and Algorithms',
+            'Cloud Computing',
+            'Final Year Project'
+        ];
+
+        const entryRequirements = [
+            'GCE Advanced Level qualification',
+            'GCE Ordinary Level English pass',
+            'Foundation certificate in computing',
+            'Relevant diploma qualification',
+            'HND or equivalent qualification',
+            'Work experience in a related field',
+            'Portfolio review',
+            'Interview with academic panel'
+        ];
+
+        const careerPathways = [
+            'Software Engineer',
+            'Business Analyst',
+            'Quality Assurance Engineer',
+            'Systems Analyst',
+            'Database Administrator',
+            'Project Manager',
+            'Cloud Engineer',
+            'IT Consultant'
+        ];
+
+        const formPages = document.querySelectorAll('.form-page');
+        const stepIndicators = document.querySelectorAll('.step-indicator');
+        const stepLabel = document.getElementById('stepLabel');
+        const statusToggle = document.getElementById('statusToggle');
+        const statusText = document.getElementById('statusText');
+
+        function showStep(step) {
+            currentStep = step;
+
+            formPages.forEach(page => {
+                page.classList.toggle('hidden', Number(page.dataset.page) !== step);
+            });
+
+            stepIndicators.forEach(indicator => {
+                const indicatorStep = Number(indicator.dataset.stepIndicator);
+                const isActive = indicatorStep === step;
+                indicator.className = isActive
+                    ? 'step-indicator rounded-2xl bg-brand-700 px-4 py-3 text-white'
+                    : 'step-indicator rounded-2xl bg-slate-100 px-4 py-3 text-slate-500';
+            });
+
+            stepLabel.textContent = `Step ${step} of ${totalSteps}`;
+            document.getElementById('courseRegistrationForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        document.querySelectorAll('.next-button').forEach(button => {
+            button.addEventListener('click', () => {
+                if (currentStep < totalSteps) {
+                    showStep(currentStep + 1);
+                }
+            });
+        });
+
+        document.querySelectorAll('.prev-button').forEach(button => {
+            button.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    showStep(currentStep - 1);
+                }
+            });
+        });
+
+        statusToggle.addEventListener('change', () => {
+            statusText.textContent = statusToggle.checked ? 'Active' : 'Inactive';
+            statusText.className = statusToggle.checked
+                ? 'mt-1 text-sm font-semibold text-emerald-700'
+                : 'mt-1 text-sm font-semibold text-rose-700';
+        });
+
+        function createSearchableRow(containerId, items, placeholder, inputName) {
+            const container = document.getElementById(containerId);
+            const row = document.createElement('div');
+            row.className = 'grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3 md:grid-cols-[1fr_auto]';
+
+            row.innerHTML = `
+                <div class="relative">
+                    <input type="text" placeholder="${placeholder}" autocomplete="off" class="search-input w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                    <input type="hidden" name="${inputName}[]" class="selected-value" />
+                    <div class="search-options absolute z-30 mt-2 hidden max-h-56 w-full overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl"></div>
+                </div>
+                <button type="button" class="remove-row inline-flex items-center justify-center rounded-full bg-rose-50 px-4 py-3 text-sm font-extrabold text-rose-700 transition hover:bg-rose-100">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            `;
+
+            const searchInput = row.querySelector('.search-input');
+            const selectedValue = row.querySelector('.selected-value');
+            const searchOptions = row.querySelector('.search-options');
+            const removeButton = row.querySelector('.remove-row');
+
+            function renderOptions(keyword = '') {
+                const normalizedKeyword = keyword.trim().toLowerCase();
+                const filteredItems = items.filter(item => item.toLowerCase().includes(normalizedKeyword));
+                searchOptions.innerHTML = '';
+
+                if (filteredItems.length === 0) {
+                    const empty = document.createElement('div');
+                    empty.className = 'px-4 py-3 text-sm font-semibold text-slate-400';
+                    empty.textContent = 'No matching records found.';
+                    searchOptions.appendChild(empty);
+                    return;
+                }
+
+                filteredItems.forEach(item => {
+                    const optionButton = document.createElement('button');
+                    optionButton.type = 'button';
+                    optionButton.textContent = item;
+                    optionButton.className = 'w-full rounded-xl px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:bg-brand-50 hover:text-brand-700';
+                    optionButton.addEventListener('click', () => {
+                        searchInput.value = item;
+                        selectedValue.value = item;
+                        searchOptions.classList.add('hidden');
+                    });
+                    searchOptions.appendChild(optionButton);
+                });
+            }
+
+            searchInput.addEventListener('focus', () => {
+                renderOptions(searchInput.value);
+                searchOptions.classList.remove('hidden');
+            });
+
+            searchInput.addEventListener('input', () => {
+                selectedValue.value = '';
+                renderOptions(searchInput.value);
+                searchOptions.classList.remove('hidden');
+            });
+
+            removeButton.addEventListener('click', () => row.remove());
+
+            document.addEventListener('click', event => {
+                if (!row.contains(event.target)) {
+                    searchOptions.classList.add('hidden');
+                }
+            });
+
+            container.appendChild(row);
+        }
+
+        document.getElementById('addModuleButton').addEventListener('click', () => {
+            createSearchableRow('moduleRows', modules, 'Search and select a module', 'modules');
+        });
+
+        document.getElementById('addRequirementButton').addEventListener('click', () => {
+            createSearchableRow('requirementRows', entryRequirements, 'Search and select an entry requirement', 'entryRequirements');
+        });
+
+        document.getElementById('addCareerButton').addEventListener('click', () => {
+            createSearchableRow('careerRows', careerPathways, 'Search and select a career pathway', 'careerPathways');
+        });
+
+        document.getElementById('courseRegistrationForm').addEventListener('submit', event => {
+            event.preventDefault();
+            alert('Course registration form submitted successfully. Connect this action to the ASP.NET Core controller to save the course.');
+        });
+
+        createSearchableRow('moduleRows', modules, 'Search and select a module', 'modules');
+        createSearchableRow('requirementRows', entryRequirements, 'Search and select an entry requirement', 'entryRequirements');
+        createSearchableRow('careerRows', careerPathways, 'Search and select a career pathway', 'careerPathways');
+        showStep(1);
+    });
+</script>
