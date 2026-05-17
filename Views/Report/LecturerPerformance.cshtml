@@ -1,0 +1,377 @@
+﻿
+@{
+    ViewData["Title"] = "Lecturer Performance Analytics Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">
+                Reports and Analytics
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">
+                Lecturer Performance Analytics Report
+            </h1>
+            <p class="mt-1 text-sm text-slate-500">
+                Analyze lecturer workload, student performance, completion rate, grading progress, and feedback ratings.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <button class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+                <i class="fa-solid fa-file-excel"></i>
+                Export to Excel
+            </button>
+            <button class="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700">
+                <i class="fa-solid fa-file-pdf"></i>
+                Export to PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Total Lecturers</p>
+            <h3 class="mt-2 text-2xl font-bold text-slate-800">20</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Average Student GPA</p>
+            <h3 class="mt-2 text-2xl font-bold text-brand-700">3.34</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Average Completion Rate</p>
+            <h3 class="mt-2 text-2xl font-bold text-emerald-600">84%</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Average Feedback Rating</p>
+            <h3 class="mt-2 text-2xl font-bold text-indigo-600">4.3 / 5</h3>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-lg font-bold text-slate-800">Generate Report</h2>
+
+        <div class="grid gap-4 lg:grid-cols-4">
+
+            <!-- Searchable Department Dropdown -->
+            <div class="relative">
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Department</label>
+
+                <button id="departmentDropdownButton"
+                        type="button"
+                        class="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-left text-sm text-slate-600 outline-none transition hover:border-brand-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <span id="selectedDepartmentText">Select department</span>
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                </button>
+
+                <input type="hidden" id="selectedDepartmentValue" />
+
+                <div id="departmentDropdownPanel"
+                     class="absolute z-40 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                    <div class="border-b border-slate-100 p-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                            <input id="departmentSearchInput"
+                                   type="text"
+                                   placeholder="Search department"
+                                   class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                        </div>
+                    </div>
+                    <div id="departmentOptions" class="max-h-72 overflow-y-auto p-2"></div>
+                </div>
+            </div>
+
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Academic Year</label>
+                <select class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option>2026</option>
+                    <option>2025</option>
+                    <option>2024</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Semester</label>
+                <select class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option>Semester 1</option>
+                    <option>Semester 2</option>
+                    <option>Semester 3</option>
+                </select>
+            </div>
+
+            <div class="flex items-end">
+                <button class="w-full rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-800">
+                    <i class="fa-solid fa-chart-line mr-2"></i>
+                    Generate Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Table -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div class="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h2 class="text-lg font-bold text-slate-800">Lecturer Performance Details</h2>
+
+            <select id="sortOption"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-80">
+                <option value="lecturerName">Sort by Lecturer Name</option>
+                <option value="gpaDesc">Highest Average GPA</option>
+                <option value="gpaAsc">Lowest Average GPA</option>
+                <option value="completionDesc">Highest Completion Rate</option>
+                <option value="completionAsc">Lowest Completion Rate</option>
+                <option value="ratingDesc">Highest Feedback Rating</option>
+                <option value="ratingAsc">Lowest Feedback Rating</option>
+                <option value="workloadDesc">Highest Workload</option>
+                <option value="workloadAsc">Lowest Workload</option>
+            </select>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-100">
+            <table class="min-w-full divide-y divide-slate-100 text-sm">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Lecturer Name</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Lecturer ID</th>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Department</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Modules Assigned</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Students Handled</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Average GPA</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Completion Rate</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Grading Completion</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Feedback Rating</th>
+                    </tr>
+                </thead>
+
+                <tbody id="lecturerTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p id="paginationInfo" class="text-sm text-slate-500"></p>
+
+            <div class="flex items-center gap-2">
+                <button id="previousPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Previous
+                </button>
+
+                <div id="paginationButtons" class="flex items-center gap-2"></div>
+
+                <button id="nextPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const departments = [
+        { code: "DSE", name: "Department of Software Engineering" },
+        { code: "DCS", name: "Department of Computer Science" },
+        { code: "DIT", name: "Department of Information Technology" },
+        { code: "DCY", name: "Department of Cyber Security" },
+        { code: "DDS", name: "Department of Data Science" }
+    ];
+
+    const lecturers = [
+        { name: "Dr. Nuwan Perera", id: "LEC0001", department: "Software Engineering", modules: 4, students: 142, gpa: 3.56, completion: 91, grading: 96, rating: 4.7 },
+        { name: "Prof. Ishara Fernando", id: "LEC0002", department: "Computer Science", modules: 3, students: 118, gpa: 3.41, completion: 86, grading: 92, rating: 4.5 },
+        { name: "Dr. Kavindi Silva", id: "LEC0003", department: "Information Technology", modules: 5, students: 164, gpa: 3.22, completion: 79, grading: 88, rating: 4.2 },
+        { name: "Prof. Malith Jayasinghe", id: "LEC0004", department: "Software Engineering", modules: 4, students: 151, gpa: 3.48, completion: 88, grading: 94, rating: 4.6 },
+        { name: "Dr. Sanduni Peris", id: "LEC0005", department: "Artificial Intelligence", modules: 3, students: 97, gpa: 3.66, completion: 93, grading: 97, rating: 4.8 },
+        { name: "Dr. Tharindu Wijesinghe", id: "LEC0006", department: "Data Science", modules: 4, students: 126, gpa: 3.38, completion: 84, grading: 90, rating: 4.3 },
+        { name: "Prof. Dinuka Ekanayake", id: "LEC0007", department: "Computer Science", modules: 5, students: 172, gpa: 3.11, completion: 76, grading: 83, rating: 3.9 },
+        { name: "Dr. Yasasvi Gunawardena", id: "LEC0008", department: "Cyber Security", modules: 3, students: 104, gpa: 3.59, completion: 89, grading: 95, rating: 4.7 },
+        { name: "Prof. Chamodi Rathnayake", id: "LEC0009", department: "Cloud Computing", modules: 4, students: 132, gpa: 3.29, completion: 82, grading: 91, rating: 4.1 },
+        { name: "Dr. Lahiru Fernando", id: "LEC0010", department: "Mobile Computing", modules: 3, students: 89, gpa: 3.44, completion: 87, grading: 93, rating: 4.4 },
+        { name: "Dr. Minoli Abeysekara", id: "LEC0011", department: "Software Engineering", modules: 4, students: 121, gpa: 3.35, completion: 83, grading: 89, rating: 4.2 },
+        { name: "Prof. Kasun Bandara", id: "LEC0012", department: "Computer Science", modules: 5, students: 181, gpa: 3.18, completion: 78, grading: 85, rating: 4.0 },
+        { name: "Dr. Hiruni Samarasinghe", id: "LEC0013", department: "Information Technology", modules: 3, students: 94, gpa: 3.61, completion: 90, grading: 96, rating: 4.6 },
+        { name: "Dr. Pasindu Rathnayake", id: "LEC0014", department: "Cyber Security", modules: 4, students: 136, gpa: 3.26, completion: 80, grading: 87, rating: 4.1 },
+        { name: "Prof. Anjali Herath", id: "LEC0015", department: "Data Science", modules: 3, students: 101, gpa: 3.72, completion: 94, grading: 98, rating: 4.9 },
+        { name: "Dr. Chamath De Silva", id: "LEC0016", department: "Software Engineering", modules: 5, students: 169, gpa: 3.09, completion: 74, grading: 81, rating: 3.8 },
+        { name: "Dr. Isuri Gunasekara", id: "LEC0017", department: "Artificial Intelligence", modules: 4, students: 117, gpa: 3.53, completion: 88, grading: 94, rating: 4.5 },
+        { name: "Prof. Avishka Madushan", id: "LEC0018", department: "Computer Networks", modules: 3, students: 86, gpa: 3.31, completion: 85, grading: 90, rating: 4.3 },
+        { name: "Dr. Dulani Liyanage", id: "LEC0019", department: "Business Information Systems", modules: 4, students: 129, gpa: 3.24, completion: 81, grading: 86, rating: 4.0 },
+        { name: "Prof. Roshan Madusanka", id: "LEC0020", department: "Project Management", modules: 3, students: 76, gpa: 3.68, completion: 92, grading: 97, rating: 4.8 }
+    ];
+
+    let currentPage = 1;
+    const rowsPerPage = 10;
+    let sortedLecturers = [...lecturers];
+
+    const lecturerTableBody = document.getElementById("lecturerTableBody");
+    const paginationButtons = document.getElementById("paginationButtons");
+    const paginationInfo = document.getElementById("paginationInfo");
+
+    function renderDepartments(searchText = "") {
+        const departmentOptions = document.getElementById("departmentOptions");
+        departmentOptions.innerHTML = "";
+
+        const filtered = departments.filter(dept =>
+            dept.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            dept.code.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        filtered.forEach(dept => {
+            const option = document.createElement("button");
+            option.type = "button";
+            option.className = "flex w-full flex-col rounded-xl px-4 py-3 text-left hover:bg-brand-50";
+            option.innerHTML = `
+                <span class="font-semibold text-slate-700">${dept.name}</span>
+                <span class="text-xs text-slate-400">${dept.code}</span>
+            `;
+
+            option.addEventListener("click", () => {
+                document.getElementById("selectedDepartmentText").textContent = `${dept.name} (${dept.code})`;
+                document.getElementById("selectedDepartmentValue").value = dept.code;
+                document.getElementById("departmentDropdownPanel").classList.add("hidden");
+            });
+
+            departmentOptions.appendChild(option);
+        });
+    }
+
+    document.getElementById("departmentDropdownButton").addEventListener("click", function (event) {
+        event.stopPropagation();
+        document.getElementById("departmentDropdownPanel").classList.toggle("hidden");
+        renderDepartments();
+
+        setTimeout(() => {
+            document.getElementById("departmentSearchInput").focus();
+        }, 50);
+    });
+
+    document.getElementById("departmentSearchInput").addEventListener("input", function () {
+        renderDepartments(this.value);
+    });
+
+    document.getElementById("departmentDropdownPanel").addEventListener("click", function (event) {
+        event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+        document.getElementById("departmentDropdownPanel").classList.add("hidden");
+    });
+
+    function renderTable() {
+        lecturerTableBody.innerHTML = "";
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        sortedLecturers.slice(start, end).forEach(lecturer => {
+            lecturerTableBody.innerHTML += `
+                <tr class="transition hover:bg-brand-50/40">
+                    <td class="px-4 py-3 font-medium text-slate-800">${lecturer.name}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${lecturer.id}</td>
+                    <td class="px-4 py-3 text-slate-600">${lecturer.department}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${lecturer.modules}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${lecturer.students}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-brand-50 px-3 py-1 font-semibold text-brand-700">
+                            ${lecturer.gpa.toFixed(2)}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700">
+                            ${lecturer.completion}%
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-indigo-50 px-3 py-1 font-semibold text-indigo-700">
+                            ${lecturer.grading}%
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-amber-50 px-3 py-1 font-semibold text-amber-700">
+                            ${lecturer.rating.toFixed(1)}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(sortedLecturers.length / rowsPerPage);
+        paginationButtons.innerHTML = "";
+
+        const startRecord = (currentPage - 1) * rowsPerPage + 1;
+        const endRecord = Math.min(currentPage * rowsPerPage, sortedLecturers.length);
+
+        paginationInfo.textContent = `Showing ${startRecord} to ${endRecord} of ${sortedLecturers.length} records`;
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement("button");
+            button.textContent = i;
+
+            button.className = i === currentPage
+                ? "rounded-lg bg-brand-700 px-3 py-2 text-sm font-semibold text-white"
+                : "rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50";
+
+            button.addEventListener("click", () => {
+                currentPage = i;
+                renderTable();
+            });
+
+            paginationButtons.appendChild(button);
+        }
+
+        document.getElementById("previousPage").disabled = currentPage === 1;
+        document.getElementById("nextPage").disabled = currentPage === totalPages;
+    }
+
+    document.getElementById("previousPage").addEventListener("click", function () {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", function () {
+        const totalPages = Math.ceil(sortedLecturers.length / rowsPerPage);
+
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    document.getElementById("sortOption").addEventListener("change", function () {
+        const value = this.value;
+
+        sortedLecturers.sort((a, b) => {
+            if (value === "lecturerName") return a.name.localeCompare(b.name);
+            if (value === "gpaDesc") return b.gpa - a.gpa;
+            if (value === "gpaAsc") return a.gpa - b.gpa;
+            if (value === "completionDesc") return b.completion - a.completion;
+            if (value === "completionAsc") return a.completion - b.completion;
+            if (value === "ratingDesc") return b.rating - a.rating;
+            if (value === "ratingAsc") return a.rating - b.rating;
+            if (value === "workloadDesc") return b.modules - a.modules;
+            if (value === "workloadAsc") return a.modules - b.modules;
+            return 0;
+        });
+
+        currentPage = 1;
+        renderTable();
+    });
+
+    renderDepartments();
+    renderTable();
+</script>

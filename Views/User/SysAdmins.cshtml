@@ -5,8 +5,8 @@
 <section class="mx-auto w-full max-w-[1500px] space-y-6 px-1 sm:px-2">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">System Administration</p>
-            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">System Admin List</h1>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">System Administration</p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">System Admin List</h1>
             <p class="mt-2 text-sm text-slate-500">View, filter, and manage system administrator records.</p>
         </div>
     </div>
@@ -97,16 +97,16 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const systemAdmins = [
-            { id: 1, title: 'Mr.', fullName: 'Dinesh Madushanka', regNo: 'SYS-2026-001', designation: 'System Administrator', status: 'Active', email: 'dinesh.madushanka@unimanage.edu', contactNumber: '+94 71 245 8891' },
-            { id: 2, title: 'Ms.', fullName: 'Nethmi Fernando', regNo: 'SYS-2026-002', designation: 'Senior System Administrator', status: 'Active', email: 'nethmi.fernando@unimanage.edu', contactNumber: '+94 77 564 2281' },
-            { id: 3, title: 'Mr.', fullName: 'Kasun Wijesinghe', regNo: 'SYS-2026-003', designation: 'IT Administrator', status: 'Inactive', email: 'kasun.wijesinghe@unimanage.edu', contactNumber: '+94 76 882 7741' },
-            { id: 4, title: 'Ms.', fullName: 'Sachini Silva', regNo: 'SYS-2026-004', designation: 'Security Administrator', status: 'Active', email: 'sachini.silva@unimanage.edu', contactNumber: '+94 70 334 1128' },
-            { id: 5, title: 'Mr.', fullName: 'Dinuka Wijesinghe', regNo: 'SYS-2026-005', designation: 'Infrastructure Administrator', status: 'Active', email: 'dinuka.wijesinghe@unimanage.edu', contactNumber: '+94 75 889 3412' },
-            { id: 6, title: 'Ms.', fullName: 'Chamodi Rathnayake', regNo: 'SYS-2026-006', designation: 'Network Administrator', status: 'Inactive', email: 'chamodi.rathnayake@unimanage.edu', contactNumber: '+94 78 672 4490' },
-            { id: 7, title: 'Mr.', fullName: 'Avishka Senanayake', regNo: 'SYS-2026-007', designation: 'Database Administrator', status: 'Active', email: 'avishka.senanayake@unimanage.edu', contactNumber: '+94 71 908 7762' },
-            { id: 8, title: 'Ms.', fullName: 'Hiruni Gunawardena', regNo: 'SYS-2026-008', designation: 'Application Administrator', status: 'Active', email: 'hiruni.gunawardena@unimanage.edu', contactNumber: '+94 76 521 9983' },
-            { id: 9, title: 'Mr.', fullName: 'Ravindu Kumara', regNo: 'SYS-2026-009', designation: 'Cloud Administrator', status: 'Inactive', email: 'ravindu.kumara@unimanage.edu', contactNumber: '+94 77 301 5528' },
-            { id: 10, title: 'Ms.', fullName: 'Ishara Madushani', regNo: 'SYS-2026-010', designation: 'System Operations Administrator', status: 'Active', email: 'ishara.madushani@unimanage.edu', contactNumber: '+94 72 654 4421' }
+            { id: 1, title: 'Mr.', fullName: 'Dinesh Madushanka', regNo: 'SYS-2026-001', designation: 'System Administrator', status: 'Active', email: 'dinesh.madushanka@smartedu.lk', contactNumber: '+94 71 245 8891' },
+            { id: 2, title: 'Ms.', fullName: 'Nethmi Fernando', regNo: 'SYS-2026-002', designation: 'Senior System Administrator', status: 'Active', email: 'nethmi.fernando@smartedu.lk', contactNumber: '+94 77 564 2281' },
+            { id: 3, title: 'Mr.', fullName: 'Kasun Wijesinghe', regNo: 'SYS-2026-003', designation: 'IT Administrator', status: 'Inactive', email: 'kasun.wijesinghe@smartedu.lk', contactNumber: '+94 76 882 7741' },
+            { id: 4, title: 'Ms.', fullName: 'Sachini Silva', regNo: 'SYS-2026-004', designation: 'Security Administrator', status: 'Active', email: 'sachini.silva@smartedu.lk', contactNumber: '+94 70 334 1128' },
+            { id: 5, title: 'Mr.', fullName: 'Dinuka Wijesinghe', regNo: 'SYS-2026-005', designation: 'Infrastructure Administrator', status: 'Active', email: 'dinuka.wijesinghe@smartedu.lk', contactNumber: '+94 75 889 3412' },
+            { id: 6, title: 'Ms.', fullName: 'Chamodi Rathnayake', regNo: 'SYS-2026-006', designation: 'Network Administrator', status: 'Inactive', email: 'chamodi.rathnayake@smartedu.lk', contactNumber: '+94 78 672 4490' },
+            { id: 7, title: 'Mr.', fullName: 'Avishka Senanayake', regNo: 'SYS-2026-007', designation: 'Database Administrator', status: 'Active', email: 'avishka.senanayake@smartedu.lk', contactNumber: '+94 71 908 7762' },
+            { id: 8, title: 'Ms.', fullName: 'Hiruni Gunawardena', regNo: 'SYS-2026-008', designation: 'Application Administrator', status: 'Active', email: 'hiruni.gunawardena@smartedu.lk', contactNumber: '+94 76 521 9983' },
+            { id: 9, title: 'Mr.', fullName: 'Ravindu Kumara', regNo: 'SYS-2026-009', designation: 'Cloud Administrator', status: 'Inactive', email: 'ravindu.kumara@smartedu.lk', contactNumber: '+94 77 301 5528' },
+            { id: 10, title: 'Ms.', fullName: 'Ishara Madushani', regNo: 'SYS-2026-010', designation: 'System Operations Administrator', status: 'Active', email: 'ishara.madushani@smartedu.lk', contactNumber: '+94 72 654 4421' }
         ];
 
         const adminNameFilter = document.getElementById('adminNameFilter');

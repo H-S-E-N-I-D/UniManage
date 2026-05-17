@@ -1,0 +1,280 @@
+﻿@{
+    ViewData["Title"] = "My Modules";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-700">
+                    Lecturer Portal
+                </p>
+
+                <h1 class="mtmt-2 text-2xl font-bold text-slate-800">
+                    My Modules
+                </h1>
+
+                <p class="mt-2 text-sm text-slate-500">
+                    View and manage all assigned teaching modules.
+                </p>
+            </div>
+
+            <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-brand-100 text-brand-700">
+                <i class="fa-solid fa-book-open-reader text-3xl"></i>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Module List -->
+    <div class="rounded-3xl border border-slate-200 bg-white shadow-panel overflow-hidden">
+
+        <!-- Table Header -->
+        <div class="hidden bg-slate-50 px-6 py-4 lg:grid lg:grid-cols-12 lg:gap-4">
+            <div class="col-span-4 text-xs font-bold uppercase tracking-wide text-slate-500">
+                Module
+            </div>
+
+            <div class="col-span-2 text-xs font-bold uppercase tracking-wide text-slate-500">
+                Module Code
+            </div>
+
+            <div class="col-span-2 text-xs font-bold uppercase tracking-wide text-slate-500">
+                Students
+            </div>
+
+            <div class="col-span-2 text-xs font-bold uppercase tracking-wide text-slate-500">
+                Status
+            </div>
+
+            <div class="col-span-2 text-right text-xs font-bold uppercase tracking-wide text-slate-500">
+                Action
+            </div>
+        </div>
+
+        <!-- Module Item -->
+        <div class="border-t border-slate-200 px-6 py-5 transition hover:bg-slate-50">
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:items-center">
+
+                <!-- Module -->
+                <div class="lg:col-span-4">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-100 text-brand-700">
+                            <i class="fa-solid fa-code text-xl"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800">
+                                Software Engineering Fundamentals
+                            </h3>
+
+                            <p class="mt-1 text-sm text-slate-500">
+                                BSc (Hons) in Software Engineering - 2026 - Semester 1
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module Code -->
+                <div class="lg:col-span-2">
+                    <p class="text-sm font-semibold text-slate-700">
+                        SE101
+                    </p>
+                </div>
+
+                <!-- Students -->
+                <div class="lg:col-span-2">
+                    <p class="text-sm font-semibold text-slate-700">
+                        124 Students
+                    </p>
+                </div>
+
+                <!-- Status -->
+                <div class="lg:col-span-2">
+                    <span class="inline-flex rounded-full bg-green-100 px-4 py-1.5 text-xs font-bold text-green-700">
+                        Active
+                    </span>
+                </div>
+
+                <!-- Action -->
+                <div class="lg:col-span-2 lg:text-right">
+                    <button onclick="viewModule('SE101')"
+                            class="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800">
+                        <i class="fa-regular fa-eye"></i>
+                        View
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Module Item -->
+        <div class="border-t border-slate-200 px-6 py-5 transition hover:bg-slate-50">
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:items-center">
+
+                <div class="lg:col-span-4">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-700">
+                            <i class="fa-solid fa-laptop-code text-xl"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800">
+                                Web Application Development
+                            </h3>
+
+                            <p class="mt-1 text-sm text-slate-500">
+                                HND in Computing - Batch 0015
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <p class="text-sm font-semibold text-slate-700">
+                        SE205
+                    </p>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <p class="text-sm font-semibold text-slate-700">
+                        98 Students
+                    </p>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <span class="inline-flex rounded-full bg-green-100 px-4 py-1.5 text-xs font-bold text-green-700">
+                        Active
+                    </span>
+                </div>
+
+                <div class="lg:col-span-2 lg:text-right">
+                    <button onclick="viewModule('SE205')"
+                            class="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800">
+                        <i class="fa-regular fa-eye"></i>
+                        View
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Module Item -->
+        <div class="border-t border-slate-200 px-6 py-5 transition hover:bg-slate-50">
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:items-center">
+
+                <div class="lg:col-span-4">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-700">
+                            <i class="fa-solid fa-shield-halved text-xl"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800">
+                                Software Testing and QA
+                            </h3>
+
+                            <p class="mt-1 text-sm text-slate-500">
+                                BSc (Hons) in Computer Science - Batch 0015
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <p class="text-sm font-semibold text-slate-700">
+                        SE202
+                    </p>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <p class="text-sm font-semibold text-slate-700">
+                        112 Students
+                    </p>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <span class="inline-flex rounded-full bg-yellow-100 px-4 py-1.5 text-xs font-bold text-yellow-700">
+                        Ongoing
+                    </span>
+                </div>
+
+                <div class="lg:col-span-2 lg:text-right">
+                    <button onclick="viewModule('SE202')"
+                            class="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800">
+                        <i class="fa-regular fa-eye"></i>
+                        View
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Module Item -->
+        <div class="border-t border-slate-200 px-6 py-5 transition hover:bg-slate-50">
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:items-center">
+
+                <div class="lg:col-span-4">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+                            <i class="fa-solid fa-cloud text-xl"></i>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800">
+                                Cloud Application Development
+                            </h3>
+
+                            <p class="mt-1 text-sm text-slate-500">
+                                BSc (Hons) in Software Engineering - Batch 0012
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <p class="text-sm font-semibold text-slate-700">
+                        SE310
+                    </p>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <p class="text-sm font-semibold text-slate-700">
+                        86 Students
+                    </p>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <span class="inline-flex rounded-full bg-blue-100 px-4 py-1.5 text-xs font-bold text-blue-700">
+                        Upcoming
+                    </span>
+                </div>
+
+                <div class="lg:col-span-2 lg:text-right">
+                    <button onclick="viewModule('SE310')"
+                            class="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-800">
+                        <i class="fa-regular fa-eye"></i>
+                        View
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        function viewModule(moduleCode) {
+            console.log("Navigate to module:", moduleCode);
+
+            // Future Navigation
+            // window.location.href = "/Lecturer/ModuleView?moduleCode=" + moduleCode;
+        }
+    </script>
+}

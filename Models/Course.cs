@@ -1,57 +1,64 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UniManage.Models
 {
+    /// <summary>
+    /// Maps to the <c>courses</c> table.
+    /// Represents a degree or diploma programme offered by a department.
+    /// </summary>
     [Table("courses")]
     public class Course
     {
         [Key]
-        [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         [Required]
-        [Column("guid")]
-        [StringLength(255)]
+        [MaxLength(255)]
         public string Guid { get; set; } = string.Empty;
 
         [Required]
-        [Column("title")]
-        [StringLength(200)]
+        [MaxLength(200)]
         public string Title { get; set; } = string.Empty;
 
+        [Required]
+        public long DepartmentId { get; set; }
 
-        [Column("description")]
         public string? Description { get; set; }
 
-        [Required]
-        [Column("course_code")]
-        [StringLength(200)]
-        public string CourseCode { get; set; } = string.Empty;
+        /// <summary>
+        /// Unique short code, e.g. "BSc-CS". Nullable — assigned after creation.
+        /// </summary>
+        [MaxLength(20)]
+        public string? CourseCode { get; set; }
+
+        /// <summary>
+        /// Duration expressed in years (e.g. 3.0, 3.5).
+        /// </summary>
+        [Column(TypeName = "decimal(3,1)")]
+        public decimal? Duration { get; set; }
+
+        public long? ProgramLevelId { get; set; }
 
         [Required]
-        [Column("duration")]
-        [StringLength(200)]
-        public Decimal Duration { get; set; }
+        public bool IsActive { get; set; } = true;
 
-        [Column("department_id")]
-        public long? DepartmentId { get; set; }
-
-        // Navigation property (Many-to-One)
-        [ForeignKey(nameof(DepartmentId))]
-        public virtual Department Department { get; set; }
-
-        [Required]
-        [Column("is_active")]
-        public bool IsActive { get; set; }
-
-        [Column("created_at")]
         public DateTime? CreatedAt { get; set; }
 
-        [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
 
-        public virtual ICollection<CoursePrerequisite> CoursePrerequisites { get; set; }
+        // Navigation properties
+        [ForeignKey(nameof(DepartmentId))]
+        public virtual Department? Department { get; set; }
 
+        [ForeignKey(nameof(ProgramLevelId))]
+        public virtual ProgramLevel? ProgramLevel { get; set; }
+
+        public virtual ICollection<CourseModule> CourseModules { get; set; } = [];
+        public virtual ICollection<CourseOffering> CourseOfferings { get; set; } = [];
+        public virtual ICollection<CoursePrerequisite> CoursePrerequisites { get; set; } = [];
     }
 }

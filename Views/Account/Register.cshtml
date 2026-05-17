@@ -6,56 +6,360 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<div class="account-container">
-    <div class="account-box">
-        <h2 class="text-center mb-4">Register</h2>
-        <form asp-action="Register" method="post">
-            @Html.AntiForgeryToken()
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="mb-3">
-                <label asp-for="Name" class="form-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="SelectedRole" class="form-label">User Role</label>
-                <select asp-for="SelectedRole" class="form-control">
-                    <option value="">-- Select Role --</option>
-                    @foreach (var role in Model.Roles)
-                    {
-                        <option value="@role">@role</option>
-                    }
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Password" class="form-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="ConfirmPassword" class="form-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <input type="submit" value="Register" class="btn btn-success w-100 p-2" />
-            <p class="text-center mt-2">
-                Already have an account? <a asp-controller="Account" asp-action="Login" class="text-decoration-none">Login</a>
-            </p>
-            <div class="text-center">
-                <a asp-controller="Home" asp-action="Index" class="text-decoration-none mt-3">Back</a>
-            </div>
-        </form>
-    </div>
+<a asp-controller="Account"
+   asp-action="Login"
+   class="inline-flex items-center gap-2 rounded-xl border border-white/40 bg-white/40 px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm backdrop-blur transition hover:bg-white hover:text-blue-700">
+    <i class="fa-solid fa-user-plus"></i>
+    Login
+</a>
 </div>
+</header>
+<!-- Main -->
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
-    }
-}
+    <main class="relative z-10">
+
+        <div class="mx-auto max-w-6xl px-4 py-8">
+
+            <!-- Glass Container -->
+            <div class="glass-panel relative grid min-h-[calc(100vh-110px)] items-center gap-8 overflow-hidden rounded-[40px] border border-white/40 px-5 py-8 shadow-2xl lg:grid-cols-2">
+
+                <!-- Glass Effects -->
+                <div class="pointer-events-none absolute inset-0 rounded-[40px] border border-white/20"></div>
+
+                <div class="pointer-events-none absolute -top-20 left-10 h-60 w-60 rounded-full bg-white/30 blur-3xl"></div>
+
+                <div class="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-blue-200/30 blur-3xl"></div>
+
+                <!-- Welcome Section -->
+                <section class="relative hidden h-full items-center justify-center lg:flex">
+
+                    <div class="w-full max-w-md">
+
+                        <!-- Badge -->
+                        <div class="inline-flex items-center gap-2 rounded-full bg-blue-100/80 px-4 py-2 text-sm font-semibold text-blue-700 shadow-sm backdrop-blur">
+                            <i class="fa-solid fa-sparkles"></i>
+                            Modern Learning Management Platform
+                        </div>
+
+                        <!-- Title -->
+                        <h2 class="mt-3 text-2xl font-extrabold leading-tight text-slate-800">
+                            Welcome to SmartEdu Course Management System
+                        </h2>
+
+                        <!-- Summary -->
+                    <p class="mt-3 max-w-sm text-sm text-slate-600">
+                            Manage enrollments, learning, assessments, communication and academic progress through a modern, role-based university LMS platform.
+                        </p>
+
+                        <!-- Stats -->
+                        <div class="mt-7 grid grid-cols-3 gap-3">
+
+                            <div class="glass-card rounded-2xl border border-blue-100 p-4 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+
+                                <h3 class="text-2xl font-extrabold text-blue-700">
+                                    250+
+                                </h3>
+
+                                <p class="mt-1 text-xs font-semibold text-slate-500">
+                                    Courses
+                                </p>
+
+                            </div>
+
+                            <div class="glass-card rounded-2xl border border-emerald-100 p-4 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+
+                                <h3 class="text-2xl font-extrabold text-emerald-700">
+                                    1.2k
+                                </h3>
+
+                                <p class="mt-1 text-xs font-semibold text-slate-500">
+                                    Students
+                                </p>
+
+                            </div>
+
+                            <div class="glass-card rounded-2xl border border-amber-100 p-4 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+
+                                <h3 class="text-2xl font-extrabold text-amber-700">
+                                    98%
+                                </h3>
+
+                                <p class="mt-1 text-xs font-semibold text-slate-500">
+                                    Activity
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Feature Cards -->
+                        <div class="mt-6 grid grid-cols-1 gap-4">
+
+                            <!-- Feature -->
+                            <div class="glass-card group flex cursor-pointer items-start gap-4 rounded-2xl border border-white/40 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+
+                                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700 transition group-hover:bg-blue-700 group-hover:text-white">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
+
+                                <div>
+
+                                    <div class="flex items-center gap-2">
+
+                                        <h3 class="font-bold text-slate-800">
+                                            Course & Module Management
+                                        </h3>
+
+                                        <i class="fa-solid fa-arrow-right text-xs text-blue-600 opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100"></i>
+
+                                    </div>
+
+                                    <p class="mt-1 text-sm leading-6 text-slate-500">
+                                        Access structured module content, learning resources and academic materials.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Feature -->
+                            <div class="glass-card group flex cursor-pointer items-start gap-4 rounded-2xl border border-white/40 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+
+                                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 transition group-hover:bg-emerald-600 group-hover:text-white">
+                                    <i class="fa-solid fa-file-pen"></i>
+                                </div>
+
+                                <div>
+
+                                    <div class="flex items-center gap-2">
+
+                                        <h3 class="font-bold text-slate-800">
+                                            Assessments & Grading
+                                        </h3>
+
+                                        <i class="fa-solid fa-arrow-right text-xs text-emerald-600 opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100"></i>
+
+                                    </div>
+
+                                    <p class="mt-1 text-sm leading-6 text-slate-500">
+                                        Submit assignments, track assessment deadlines and view grading feedback.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Feature -->
+                            <div class="glass-card group flex cursor-pointer items-start gap-4 rounded-2xl border border-white/40 p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+
+                                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-700 transition group-hover:bg-amber-500 group-hover:text-white">
+                                    <i class="fa-solid fa-comments"></i>
+                                </div>
+
+                                <div>
+
+                                    <div class="flex items-center gap-2">
+
+                                        <h3 class="font-bold text-slate-800">
+                                            Academic Communication
+                                        </h3>
+
+                                        <i class="fa-solid fa-arrow-right text-xs text-amber-600 opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100"></i>
+
+                                    </div>
+
+                                    <p class="mt-1 text-sm leading-6 text-slate-500">
+                                        Communicate with lecturers, students and academic staff using integrated chat tools.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- Register Card -->
+                <section class="relative mx-auto w-full max-w-md">
+
+                    <div class="overflow-hidden rounded-[28px] border border-white/40 bg-white/70 shadow-2xl backdrop-blur-xl">
+
+                        <!-- Header -->
+                        <div class="brand-gradient relative px-6 py-6 text-white">
+
+                            <div class="absolute right-0 top-0 h-40 w-40 rounded-full bg-white/20 blur-3xl"></div>
+
+                            <div class="relative">
+
+                                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 backdrop-blur">
+                                    <i class="fa-solid fa-user-plus text-xl"></i>
+                                </div>
+
+                                <h2 class="mt-3 text-2xl font-extrabold">
+                                    Create Account
+                                </h2>
+
+                                <p class="mt-2 text-sm leading-6 text-white/80">
+                                    Register to access the SmartEdu Learning Management System.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Form -->
+                        <div class="p-6">
+
+                            <form asp-action="Register" method="post" class="space-y-4">
+
+                                @Html.AntiForgeryToken()
+
+                                <!-- Name -->
+                                <div>
+
+                                    <label asp-for="Name"
+                                           class="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <i class="fa-regular fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+
+                                        <input asp-for="Name"
+                                               placeholder="Enter your full name"
+                                               class="w-full rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-4 text-sm text-slate-700 backdrop-blur transition focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100" />
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Role -->
+                                @* <div>
+
+                                    <label asp-for="SelectedRole"
+                                           class="mb-1.5 block text-sm font-semibold text-slate-700">
+                                        User Role
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <i class="fa-solid fa-user-shield absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+
+                                        <select asp-for="SelectedRole"
+                                                class="w-full appearance-none rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-10 text-sm text-slate-700 backdrop-blur transition focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100">
+
+                                            <option value="">-- Select Role --</option>
+
+                                            @foreach (var role in Model.Roles)
+                                            {
+                                                <option value="@role">@role</option>
+                                            }
+
+                                        </select>
+
+                                        <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+
+                                    </div>
+
+                                </div> *@
+
+                                <!-- Email -->
+                                <div>
+
+                                    <label asp-for="Email"
+                                           class="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <i class="fa-regular fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+
+                                        <input asp-for="Email"
+                                               placeholder="Enter your email address"
+                                               class="w-full rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-4 text-sm text-slate-700 backdrop-blur transition focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100" />
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Password -->
+                                <div>
+
+                                    <label asp-for="Password"
+                                           class="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+
+                                        <input asp-for="Password"
+                                               type="password"
+                                               placeholder="Enter password"
+                                               class="w-full rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-4 text-sm text-slate-700 backdrop-blur transition focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100" />
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div>
+
+                                    <label asp-for="ConfirmPassword"
+                                           class="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    </label>
+
+                                    <div class="relative">
+
+                                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+
+                                        <input asp-for="ConfirmPassword"
+                                               type="password"
+                                               placeholder="Confirm password"
+                                               class="w-full rounded-xl border border-slate-200 bg-white/70 py-2.5 pl-10 pr-4 text-sm text-slate-700 backdrop-blur transition focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100" />
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Button -->
+                                <button type="submit"
+                                        class="group flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-800">
+
+                                    <i class="fa-solid fa-user-plus transition group-hover:scale-110"></i>
+
+                                    Create Account
+
+                                </button>
+
+                                <!-- Login -->
+                                <p class="text-center text-sm text-slate-500">
+
+                                    Already have an account?
+
+                                    <a asp-controller="Account"
+                                       asp-action="Login"
+                                       class="font-bold text-blue-700 hover:text-blue-800">
+
+                                        Login
+
+                                    </a>
+
+                                </p>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>

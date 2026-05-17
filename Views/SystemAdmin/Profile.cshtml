@@ -1,0 +1,451 @@
+﻿@{
+    ViewData["Title"] = "Enrollment Requests";
+}
+
+<section class="space-y-6">
+    <div>
+        <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Enrollment Management</p>
+        <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Enrollment Request List</h1>
+    </div>
+
+    <div class="rounded-[24px] border border-slate-200 bg-white p-4 shadow-panel sm:p-5">
+        <div class="flex flex-col gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h2 class="text-base font-bold text-slate-900">Filter Requests</h2>
+            </div>
+            <button id="clearFiltersButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-200">
+                <i class="fa-solid fa-rotate-left"></i>
+                Clear Filters
+            </button>
+        </div>
+
+        <form id="filterForm" class="mt-4 grid gap-4 lg:grid-cols-12">
+            <div class="lg:col-span-3">
+                <label class="block text-xs font-bold text-slate-700">Department</label>
+                <div class="relative mt-2">
+                    <button id="departmentDropdownButton" type="button" class="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <span id="selectedDepartmentText" class="truncate text-slate-400">All departments</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                    </button>
+
+                    <div id="departmentDropdownPanel" class="absolute z-40 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                        <div class="border-b border-slate-100 p-3">
+                            <div class="relative">
+                                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                                <input id="departmentSearchInput" type="text" placeholder="Search department" class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                            </div>
+                        </div>
+                        <div id="departmentOptions" class="max-h-64 overflow-y-auto p-2"></div>
+                    </div>
+                </div>
+                <input id="selectedDepartmentInput" type="hidden" />
+            </div>
+
+            <div class="lg:col-span-3">
+                <label class="block text-xs font-bold text-slate-700">Course Name</label>
+                <div class="relative mt-2">
+                    <button id="courseDropdownButton" type="button" class="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <span id="selectedCourseText" class="truncate text-slate-400">All courses</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                    </button>
+
+                    <div id="courseDropdownPanel" class="absolute z-40 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                        <div class="border-b border-slate-100 p-3">
+                            <div class="relative">
+                                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                                <input id="courseSearchInput" type="text" placeholder="Search course" class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                            </div>
+                        </div>
+                        <div id="courseOptions" class="max-h-64 overflow-y-auto p-2"></div>
+                    </div>
+                </div>
+                <input id="selectedCourseInput" type="hidden" />
+            </div>
+
+            <div class="lg:col-span-2">
+                <label for="fromDateInput" class="block text-xs font-bold text-slate-700">From Date</label>
+                <input id="fromDateInput" type="date" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div class="lg:col-span-2">
+                <label for="toDateInput" class="block text-xs font-bold text-slate-700">To Date</label>
+                <input id="toDateInput" type="date" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-600" />
+            </div>
+
+            <div class="flex items-end lg:col-span-2">
+                <button id="applyFiltersButton" type="button" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-700 px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                    <i class="fa-solid fa-filter"></i>
+                    Apply Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-panel">
+        <div class="flex flex-col gap-3 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <div>
+                <h2 class="text-base font-bold text-slate-900">Requests</h2>
+                <p id="requestCountText" class="mt-1 text-sm text-slate-500">Showing all enrollment requests</p>
+            </div>
+            <span id="activeFilterBadge" class="hidden rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700">Filters active</span>
+        </div>
+
+        <div id="requestTableContainer" class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200 text-sm">
+                <thead class="bg-slate-50 text-left text-sm font-bold text-slate-700">
+                    <tr>
+                        <th class="px-5 py-4">Student Name</th>
+                        <th class="px-5 py-4">Student Id</th>
+                        <th class="px-5 py-4">Course Name</th>
+                        <th class="px-5 py-4">Request Date</th>
+                        <th class="px-5 py-4">Status</th>
+                        <th class="px-5 py-4 text-right">View</th>
+                    </tr>
+                </thead>
+                <tbody id="requestTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <div id="pagination" class="flex flex-wrap items-center justify-center gap-2 border-t border-slate-100 px-5 py-5"></div>
+
+        <div id="noResultsBox" class="hidden px-6 py-12 text-center">
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+                <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            </div>
+            <h3 class="mt-4 text-lg font-extrabold text-slate-900">No enrollment requests found</h3>
+            <p class="mt-2 text-sm text-slate-500">Try changing the department, course name, or date range filters.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const departments = [
+            'Department of Languages',
+            'Department of Art & Design',
+            'Department of Life Science',
+            'Department of Computing',
+            'Department of Engineering',
+            'Department of Management & Law'
+        ];
+
+        const requests = [
+            { id: 1, studentName: 'Kasun Perera', studentId: 'STU-2026-001', department: 'Department of Computing', courseName: 'BSc (Hons) in Software Engineering', requestDate: '2026-05-01', status: 'pending' },
+            { id: 2, studentName: 'Nethmi Fernando', studentId: 'STU-2026-002', department: 'Department of Computing', courseName: 'HND in Computing', requestDate: '2026-05-02', status: 'approved' },
+            { id: 3, studentName: 'Tharindu Jayasinghe', studentId: 'STU-2026-003', department: 'Department of Computing', courseName: 'Certificate in Cyber Security', requestDate: '2026-05-03', status: 'rejected' },
+            { id: 4, studentName: 'Sachini Silva', studentId: 'STU-2026-004', department: 'Department of Computing', courseName: 'Foundation in Information Technology', requestDate: '2026-05-04', status: 'waitlisted' },
+            { id: 5, studentName: 'Dinuka Wijesinghe', studentId: 'STU-2026-005', department: 'Department of Art & Design', courseName: 'Diploma in Graphic Design', requestDate: '2026-05-05', status: 'pending' },
+            { id: 6, studentName: 'Chamodi Rathnayake', studentId: 'STU-2026-006', department: 'Department of Art & Design', courseName: 'Higher National Certificate in Multimedia Design', requestDate: '2026-05-06', status: 'approved' },
+            { id: 7, studentName: 'Avishka Senanayake', studentId: 'STU-2026-007', department: 'Department of Art & Design', courseName: 'BA in Fashion Design', requestDate: '2026-05-07', status: 'rejected' },
+            { id: 8, studentName: 'Hiruni Gunawardena', studentId: 'STU-2026-008', department: 'Department of Languages', courseName: 'Diploma in English Language', requestDate: '2026-05-08', status: 'waitlisted' },
+            { id: 9, studentName: 'Ravindu Kumara', studentId: 'STU-2026-009', department: 'Department of Languages', courseName: 'Certificate in Business English', requestDate: '2026-05-09', status: 'pending' },
+            { id: 10, studentName: 'Ishara Madushani', studentId: 'STU-2026-010', department: 'Department of Languages', courseName: 'Foundation in Academic English', requestDate: '2026-05-10', status: 'approved' },
+            { id: 11, studentName: 'Pasan De Silva', studentId: 'STU-2026-011', department: 'Department of Life Science', courseName: 'BSc Biomedical Science', requestDate: '2026-05-11', status: 'rejected' },
+            { id: 12, studentName: 'Kavindi Herath', studentId: 'STU-2026-012', department: 'Department of Life Science', courseName: 'Diploma in Psychology', requestDate: '2026-05-12', status: 'waitlisted' },
+            { id: 13, studentName: 'Thisara Bandara', studentId: 'STU-2026-013', department: 'Department of Life Science', courseName: 'Certificate in Laboratory Practice', requestDate: '2026-05-13', status: 'pending' },
+            { id: 14, studentName: 'Lakshan Karunaratne', studentId: 'STU-2026-014', department: 'Department of Engineering', courseName: 'HND in Civil Engineering', requestDate: '2026-05-14', status: 'approved' },
+            { id: 15, studentName: 'Hashini Ekanayake', studentId: 'STU-2026-015', department: 'Department of Engineering', courseName: 'HND in Electrical and Electronic Engineering', requestDate: '2026-05-15', status: 'rejected' },
+            { id: 16, studentName: 'Malith Dissanayake', studentId: 'STU-2026-016', department: 'Department of Engineering', courseName: 'Certificate in AutoCAD for Engineering', requestDate: '2026-05-16', status: 'waitlisted' },
+            { id: 17, studentName: 'Sanduni Ranasinghe', studentId: 'STU-2026-017', department: 'Department of Management & Law', courseName: 'Diploma in Business Management', requestDate: '2026-05-17', status: 'pending' },
+            { id: 18, studentName: 'Lahiru Abeysekara', studentId: 'STU-2026-018', department: 'Department of Management & Law', courseName: 'BA (Hons) in Business Administration', requestDate: '2026-05-18', status: 'approved' },
+            { id: 19, studentName: 'Yasith Samarasinghe', studentId: 'STU-2026-019', department: 'Department of Management & Law', courseName: 'MBA in Project Management', requestDate: '2026-05-19', status: 'rejected' },
+            { id: 20, studentName: 'Anjali Wickramasinghe', studentId: 'STU-2026-020', department: 'Department of Management & Law', courseName: 'Doctor of Business Administration', requestDate: '2026-05-20', status: 'waitlisted' }
+        ];
+
+        const departmentDropdownButton = document.getElementById('departmentDropdownButton');
+        const departmentDropdownPanel = document.getElementById('departmentDropdownPanel');
+        const departmentSearchInput = document.getElementById('departmentSearchInput');
+        const departmentOptions = document.getElementById('departmentOptions');
+        const selectedDepartmentText = document.getElementById('selectedDepartmentText');
+        const selectedDepartmentInput = document.getElementById('selectedDepartmentInput');
+        const courseDropdownButton = document.getElementById('courseDropdownButton');
+        const courseDropdownPanel = document.getElementById('courseDropdownPanel');
+        const courseSearchInput = document.getElementById('courseSearchInput');
+        const courseOptions = document.getElementById('courseOptions');
+        const selectedCourseText = document.getElementById('selectedCourseText');
+        const selectedCourseInput = document.getElementById('selectedCourseInput');
+        const fromDateInput = document.getElementById('fromDateInput');
+        const toDateInput = document.getElementById('toDateInput');
+        const applyFiltersButton = document.getElementById('applyFiltersButton');
+        const clearFiltersButton = document.getElementById('clearFiltersButton');
+        const requestTableBody = document.getElementById('requestTableBody');
+        const requestCountText = document.getElementById('requestCountText');
+        const activeFilterBadge = document.getElementById('activeFilterBadge');
+        const noResultsBox = document.getElementById('noResultsBox');
+        const pagination = document.getElementById('pagination');
+        const requestTableContainer = document.getElementById('requestTableContainer');
+
+        const itemsPerPage = 5;
+        let currentPage = 1;
+        let currentFilteredRequests = [];
+        let selectedDepartment = '';
+        let selectedCourse = '';
+
+        function getSortedRequests(data) {
+            return [...data].sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate));
+        }
+
+        function getStatusBadge(status) {
+            const statusStyles = {
+                pending: 'bg-amber-50 text-amber-700 ring-amber-200',
+                approved: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+                rejected: 'bg-rose-50 text-rose-700 ring-rose-200',
+                waitlisted: 'bg-sky-50 text-sky-700 ring-sky-200'
+            };
+
+            const displayText = status.charAt(0).toUpperCase() + status.slice(1);
+            const classes = statusStyles[status] || 'bg-slate-50 text-slate-700 ring-slate-200';
+
+            return `<span class="inline-flex rounded-full px-3 py-1 text-xs font-extrabold capitalize ring-1 ${classes}">${displayText}</span>`;
+        }
+
+        function renderDepartmentOptions(keyword = '') {
+            const normalizedKeyword = keyword.trim().toLowerCase();
+            const filteredDepartments = departments.filter(department => department.toLowerCase().includes(normalizedKeyword));
+
+            departmentOptions.innerHTML = '';
+
+            const allButton = document.createElement('button');
+            allButton.type = 'button';
+            allButton.className = 'w-full rounded-xl px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:bg-brand-50';
+            allButton.textContent = 'All departments';
+            allButton.addEventListener('click', () => selectDepartment(''));
+            departmentOptions.appendChild(allButton);
+
+            if (filteredDepartments.length === 0) {
+                const emptyItem = document.createElement('div');
+                emptyItem.className = 'px-4 py-6 text-center text-sm font-semibold text-slate-400';
+                emptyItem.textContent = 'No departments found.';
+                departmentOptions.appendChild(emptyItem);
+                return;
+            }
+
+            filteredDepartments.forEach(department => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'w-full rounded-xl px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:bg-brand-50';
+                button.textContent = department;
+                button.addEventListener('click', () => selectDepartment(department));
+                departmentOptions.appendChild(button);
+            });
+        }
+
+        function selectDepartment(department) {
+            selectedDepartment = department;
+            selectedDepartmentInput.value = department;
+            selectedDepartmentText.textContent = department || 'All departments';
+            selectedDepartmentText.classList.toggle('text-slate-400', department === '');
+            selectedDepartmentText.classList.toggle('text-slate-900', department !== '');
+            departmentDropdownPanel.classList.add('hidden');
+            applyFilters();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString + 'T00:00:00');
+            return date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+        }
+
+        function applyFilters(resetPage = true) {
+            const courseKeyword = selectedCourse.trim().toLowerCase();
+            const fromDate = fromDateInput.value ? new Date(fromDateInput.value + 'T00:00:00') : null;
+            const toDate = toDateInput.value ? new Date(toDateInput.value + 'T23:59:59') : null;
+
+            const filteredRequests = requests.filter(request => {
+                const requestDate = new Date(request.requestDate + 'T12:00:00');
+                const matchesDepartment = !selectedDepartment || request.department === selectedDepartment;
+                const matchesCourse = !courseKeyword || request.courseName.toLowerCase() === courseKeyword;
+                const matchesFromDate = !fromDate || requestDate >= fromDate;
+                const matchesToDate = !toDate || requestDate <= toDate;
+
+                return matchesDepartment && matchesCourse && matchesFromDate && matchesToDate;
+            });
+
+            currentFilteredRequests = getSortedRequests(filteredRequests);
+
+            if (resetPage) {
+                currentPage = 1;
+            }
+
+            renderTable(currentFilteredRequests);
+            renderPagination(currentFilteredRequests.length);
+            updateFilterStatus(currentFilteredRequests.length);
+        }
+
+        function renderTable(data) {
+            requestTableBody.innerHTML = '';
+            noResultsBox.classList.toggle('hidden', data.length > 0);
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedData = data.slice(startIndex, endIndex);
+
+            paginatedData.forEach(request => {
+                const row = document.createElement('tr');
+                row.className = 'transition hover:bg-slate-50';
+                row.innerHTML = `
+                    <td class="px-5 py-4 font-semibold text-slate-900">${request.studentName}</td>
+                    <td class="px-5 py-4 text-slate-600">${request.studentId}</td>
+                    <td class="px-5 py-4 text-slate-700">${request.courseName}</td>
+                    <td class="px-5 py-4 text-slate-600">${formatDate(request.requestDate)}</td>
+                    <td class="px-5 py-4">${getStatusBadge(request.status)}</td>
+                    <td class="px-5 py-4 text-right">
+                        <a href="/Enrollment/Details/${request.id}" class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-xs font-bold text-brand-700 transition hover:bg-brand-100">
+                            <i class="fa-solid fa-eye"></i>
+                            View
+                        </a>
+                    </td>
+                `;
+
+                requestTableBody.appendChild(row);
+            });
+        }
+
+        function renderPagination(totalItems) {
+            pagination.innerHTML = '';
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            if (totalPages <= 1) {
+                return;
+            }
+
+            const createButton = (label, page, disabled = false, active = false) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = label;
+                button.disabled = disabled;
+                button.className = active
+                    ? 'h-10 min-w-10 rounded-full bg-blue-700 px-4 text-sm font-extrabold text-white shadow-md'
+                    : 'h-10 min-w-10 rounded-full border border-slate-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40';
+
+                button.addEventListener('click', () => {
+                    if (!disabled) {
+                        currentPage = page;
+                        renderTable(currentFilteredRequests);
+                        renderPagination(currentFilteredRequests.length);
+                        requestTableContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+                pagination.appendChild(button);
+            };
+
+            createButton('Prev', Math.max(1, currentPage - 1), currentPage === 1);
+
+            for (let page = 1; page <= totalPages; page++) {
+                createButton(page, page, false, page === currentPage);
+            }
+
+            createButton('Next', Math.min(totalPages, currentPage + 1), currentPage === totalPages);
+        }
+
+        function updateFilterStatus(count) {
+            const filtersActive = Boolean(selectedDepartment || selectedCourse || fromDateInput.value || toDateInput.value);
+            activeFilterBadge.classList.toggle('hidden', !filtersActive);
+            requestCountText.textContent = `${count} enrollment request${count === 1 ? '' : 's'} found`;
+        }
+
+        function renderCourseOptions(keyword = '') {
+            const normalizedKeyword = keyword.trim().toLowerCase();
+            const uniqueCourses = [...new Set(requests.map(x => x.courseName))];
+            const filteredCourses = uniqueCourses.filter(course => course.toLowerCase().includes(normalizedKeyword));
+
+            courseOptions.innerHTML = '';
+
+            const allButton = document.createElement('button');
+            allButton.type = 'button';
+            allButton.className = 'w-full rounded-xl px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:bg-brand-50';
+            allButton.textContent = 'All courses';
+            allButton.addEventListener('click', () => selectCourse(''));
+            courseOptions.appendChild(allButton);
+
+            if (filteredCourses.length === 0) {
+                const emptyItem = document.createElement('div');
+                emptyItem.className = 'px-4 py-6 text-center text-sm font-semibold text-slate-400';
+                emptyItem.textContent = 'No courses found.';
+                courseOptions.appendChild(emptyItem);
+                return;
+            }
+
+            filteredCourses.forEach(course => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'w-full rounded-xl px-4 py-3 text-left text-sm font-bold text-slate-700 transition hover:bg-brand-50';
+                button.textContent = course;
+                button.addEventListener('click', () => selectCourse(course));
+                courseOptions.appendChild(button);
+            });
+        }
+
+        function selectCourse(course) {
+            selectedCourse = course;
+            selectedCourseInput.value = course;
+            selectedCourseText.textContent = course || 'All courses';
+            selectedCourseText.classList.toggle('text-slate-400', course === '');
+            selectedCourseText.classList.toggle('text-slate-900', course !== '');
+            courseDropdownPanel.classList.add('hidden');
+            applyFilters();
+        }
+
+        function clearFilters() {
+            selectedDepartment = '';
+            selectedDepartmentInput.value = '';
+            selectedDepartmentText.textContent = 'All departments';
+            selectedDepartmentText.classList.add('text-slate-400');
+            selectedDepartmentText.classList.remove('text-slate-900');
+            departmentSearchInput.value = '';
+
+            selectedCourse = '';
+            selectedCourseInput.value = '';
+            selectedCourseText.textContent = 'All courses';
+            selectedCourseText.classList.add('text-slate-400');
+            selectedCourseText.classList.remove('text-slate-900');
+            courseSearchInput.value = '';
+
+            fromDateInput.value = '';
+            toDateInput.value = '';
+            renderDepartmentOptions();
+            renderCourseOptions();
+            applyFilters();
+        }
+
+        departmentDropdownButton.addEventListener('click', () => {
+            departmentDropdownPanel.classList.toggle('hidden');
+            departmentSearchInput.focus();
+        });
+
+        document.addEventListener('click', event => {
+            if (!departmentDropdownPanel.contains(event.target) && !departmentDropdownButton.contains(event.target)) {
+                departmentDropdownPanel.classList.add('hidden');
+            }
+        });
+
+        departmentSearchInput.addEventListener('input', event => renderDepartmentOptions(event.target.value));
+
+        courseDropdownButton.addEventListener('click', () => {
+            const isOpening = courseDropdownPanel.classList.contains('hidden');
+            courseDropdownPanel.classList.toggle('hidden');
+
+            if (isOpening) {
+                courseSearchInput.value = '';
+                renderCourseOptions();
+                setTimeout(() => courseSearchInput.focus(), 0);
+            }
+        });
+
+        document.addEventListener('click', event => {
+            if (!courseDropdownPanel.contains(event.target) && !courseDropdownButton.contains(event.target)) {
+                courseDropdownPanel.classList.add('hidden');
+            }
+        });
+
+        courseSearchInput.addEventListener('input', event => renderCourseOptions(event.target.value));
+        fromDateInput.addEventListener('change', () => applyFilters(true));
+        toDateInput.addEventListener('change', () => applyFilters(true));
+        applyFiltersButton.addEventListener('click', () => applyFilters(true));
+        clearFiltersButton.addEventListener('click', clearFilters);
+
+        renderDepartmentOptions();
+        renderCourseOptions();
+        applyFilters();
+    });
+</script>

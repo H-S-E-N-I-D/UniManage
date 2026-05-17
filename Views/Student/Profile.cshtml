@@ -1,0 +1,393 @@
+﻿@{
+    ViewData["Title"] = "Student Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">
+                Student Management
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">Student Profile</h1>
+            <p class="mt-1 text-sm text-slate-500">
+                View student personal details, multiple course enrollments, module progress, GPA summary, and uploaded documents.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <button class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
+                <i class="fa-solid fa-print"></i>
+                Print Profile
+            </button>
+
+            <button class="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-800">
+                <i class="fa-solid fa-pen-to-square"></i>
+                Edit Profile
+            </button>
+        </div>
+    </div>
+
+    <!-- Profile Summary -->
+    <div class="rounded-2xl border border-blue-300 bg-white p-6 shadow-sm">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex items-center gap-5">
+                <div class="flex h-24 w-24 items-center justify-center rounded-full bg-brand-100 text-3xl font-bold text-brand-700">
+                    KP
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">Kavindu Perera</h2>
+                    <p class="mt-1 text-sm text-slate-500">Student ID: STU0001</p>
+
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <span class="rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700">
+                            Active
+                        </span>
+                        <span class="rounded-full bg-brand-50 px-3 py-1 text-sm font-semibold text-brand-700">
+                            2 Active Courses
+                        </span>
+                        <span class="rounded-full bg-indigo-50 px-3 py-1 text-sm font-semibold text-indigo-700">
+                            Batch 0001 / Batch 0003
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-3 lg:w-[520px]">
+                <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4 text-center">
+                    <p class="text-sm text-slate-500">Overall GPA</p>
+                    <h3 class="mt-1 text-2xl font-bold text-brand-700">3.76</h3>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4 text-center">
+                    <p class="text-sm text-slate-500">Completed Modules</p>
+                    <h3 class="mt-1 text-2xl font-bold text-emerald-600">12</h3>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4 text-center">
+                    <p class="text-sm text-slate-500">Current Status</p>
+                    <h3 class="mt-1 text-2xl font-bold text-indigo-600">Active</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Tabs -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div class="mb-5 flex flex-wrap gap-2 border-b border-slate-100 pb-4">
+            <button class="tab-button rounded-xl bg-brand-700 px-4 py-2 text-sm font-semibold text-white" data-tab="personal">
+                Personal Details
+            </button>
+            <button class="tab-button rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50" data-tab="enrollments">
+                Course Enrollments
+            </button>
+            <button class="tab-button rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50" data-tab="modules">
+                Modules & Results
+            </button>
+            <button class="tab-button rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50" data-tab="documents">
+                Documents
+            </button>
+        </div>
+
+        <!-- Personal Details -->
+        <div id="personal" class="tab-content">
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Full Name</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">Kavindu Perera</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Email Address</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">kavindu.perera@student.edu.lk</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Contact Number</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">+94 77 456 8921</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">NIC / Passport</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">200112345678</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Date of Birth</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">12 March 2001</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Address</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">No. 24, Galle Road, Colombo</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Enrollments -->
+        <div id="enrollments" class="tab-content hidden">
+            <div class="grid gap-4 xl:grid-cols-2">
+
+                <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+                    <div class="mb-4 flex items-start justify-between gap-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800">BSc Software Engineering</h3>
+                            <p class="mt-1 text-sm text-slate-500">Department of Software Engineering</p>
+                        </div>
+
+                        <span class="rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700">
+                            Active
+                        </span>
+                    </div>
+
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        <div>
+                            <p class="text-sm text-slate-500">Course Code</p>
+                            <p class="font-semibold text-slate-800">SE101</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500">Batch</p>
+                            <p class="font-semibold text-slate-800">Batch 0001</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500">Enrollment Date</p>
+                            <p class="font-semibold text-slate-800">15 January 2026</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500">Current GPA</p>
+                            <p class="font-semibold text-brand-700">3.82</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="mb-1 flex justify-between text-sm">
+                            <span class="font-semibold text-slate-600">Course Progress</span>
+                            <span class="font-semibold text-brand-700">92%</span>
+                        </div>
+                        <div class="h-3 rounded-full bg-slate-100">
+                            <div class="h-3 rounded-full bg-brand-600" style="width:92%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+                    <div class="mb-4 flex items-start justify-between gap-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800">Diploma in Web Engineering</h3>
+                            <p class="mt-1 text-sm text-slate-500">Department of Information Technology</p>
+                        </div>
+
+                        <span class="rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700">
+                            Active
+                        </span>
+                    </div>
+
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        <div>
+                            <p class="text-sm text-slate-500">Course Code</p>
+                            <p class="font-semibold text-slate-800">DWE203</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500">Batch</p>
+                            <p class="font-semibold text-slate-800">Batch 0003</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500">Enrollment Date</p>
+                            <p class="font-semibold text-slate-800">02 March 2026</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500">Current GPA</p>
+                            <p class="font-semibold text-brand-700">3.68</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="mb-1 flex justify-between text-sm">
+                            <span class="font-semibold text-slate-600">Course Progress</span>
+                            <span class="font-semibold text-brand-700">74%</span>
+                        </div>
+                        <div class="h-3 rounded-full bg-slate-100">
+                            <div class="h-3 rounded-full bg-brand-600" style="width:74%"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modules and Results -->
+        <div id="modules" class="tab-content hidden">
+            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h3 class="text-lg font-bold text-slate-800">Modules & Results</h3>
+
+                <select id="courseModuleFilter"
+                        class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-72">
+                    <option value="all">All Courses</option>
+                    <option value="software">BSc Software Engineering</option>
+                    <option value="web">Diploma in Web Engineering</option>
+                </select>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-100">
+                <table class="min-w-full divide-y divide-slate-100 text-sm">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Course</th>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Module Name</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Module Code</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Marks</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Grade</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="moduleTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Documents -->
+        <div id="documents" class="tab-content hidden">
+            <div class="overflow-x-auto rounded-2xl border border-slate-100">
+                <table class="min-w-full divide-y divide-slate-100 text-sm">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Document</th>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Related Course</th>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">File Name</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Type</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Status</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-slate-100 bg-white">
+                        <tr>
+                            <td class="px-4 py-3 font-medium text-slate-800">NIC Copy</td>
+                            <td class="px-4 py-3 text-slate-600">General</td>
+                            <td class="px-4 py-3 text-slate-600">nic_kavindu.pdf</td>
+                            <td class="px-4 py-3 text-center text-slate-600">PDF</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700">Verified</span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <button class="rounded-lg bg-brand-50 px-3 py-1.5 text-sm font-semibold text-brand-700 hover:bg-brand-100">
+                                    Download
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-4 py-3 font-medium text-slate-800">Academic Transcript</td>
+                            <td class="px-4 py-3 text-slate-600">BSc Software Engineering</td>
+                            <td class="px-4 py-3 text-slate-600">transcript_se.pdf</td>
+                            <td class="px-4 py-3 text-center text-slate-600">PDF</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700">Verified</span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <button class="rounded-lg bg-brand-50 px-3 py-1.5 text-sm font-semibold text-brand-700 hover:bg-brand-100">
+                                    Download
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-4 py-3 font-medium text-slate-800">Entry Qualification</td>
+                            <td class="px-4 py-3 text-slate-600">Diploma in Web Engineering</td>
+                            <td class="px-4 py-3 text-slate-600">entry_qualification.pdf</td>
+                            <td class="px-4 py-3 text-center text-slate-600">PDF</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="rounded-full bg-amber-50 px-3 py-1 font-semibold text-amber-700">Pending</span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <button class="rounded-lg bg-brand-50 px-3 py-1.5 text-sm font-semibold text-brand-700 hover:bg-brand-100">
+                                    Download
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const selectedTab = this.getAttribute("data-tab");
+
+            tabButtons.forEach(btn => {
+                btn.classList.remove("bg-brand-700", "text-white");
+                btn.classList.add("text-slate-600", "hover:bg-slate-50");
+            });
+
+            this.classList.add("bg-brand-700", "text-white");
+            this.classList.remove("text-slate-600", "hover:bg-slate-50");
+
+            tabContents.forEach(content => {
+                content.classList.add("hidden");
+            });
+
+            document.getElementById(selectedTab).classList.remove("hidden");
+        });
+    });
+
+    const modules = [
+        { course: "BSc Software Engineering", courseKey: "software", module: "Programming Fundamentals", code: "PF101", marks: "86", grade: "A", status: "Completed" },
+        { course: "BSc Software Engineering", courseKey: "software", module: "Object Oriented Programming", code: "OOP102", marks: "82", grade: "A-", status: "Completed" },
+        { course: "BSc Software Engineering", courseKey: "software", module: "Database Management Systems", code: "DB103", marks: "78", grade: "B+", status: "Completed" },
+        { course: "BSc Software Engineering", courseKey: "software", module: "Software Engineering Principles", code: "SE104", marks: "Pending", grade: "-", status: "In Progress" },
+        { course: "Diploma in Web Engineering", courseKey: "web", module: "HTML and CSS Fundamentals", code: "WEB101", marks: "84", grade: "A", status: "Completed" },
+        { course: "Diploma in Web Engineering", courseKey: "web", module: "JavaScript Programming", code: "WEB102", marks: "79", grade: "B+", status: "Completed" },
+        { course: "Diploma in Web Engineering", courseKey: "web", module: "Responsive Web Design", code: "WEB103", marks: "Pending", grade: "-", status: "In Progress" }
+    ];
+
+    const moduleTableBody = document.getElementById("moduleTableBody");
+    const courseModuleFilter = document.getElementById("courseModuleFilter");
+
+    function getStatusClass(status) {
+        if (status === "Completed") return "bg-emerald-50 text-emerald-700";
+        if (status === "In Progress") return "bg-amber-50 text-amber-700";
+        return "bg-slate-100 text-slate-700";
+    }
+
+    function renderModules(filter = "all") {
+        moduleTableBody.innerHTML = "";
+
+        const filteredModules = filter === "all"
+            ? modules
+            : modules.filter(item => item.courseKey === filter);
+
+        filteredModules.forEach(item => {
+            moduleTableBody.innerHTML += `
+                <tr class="transition hover:bg-brand-50/40">
+                    <td class="px-4 py-3 text-slate-600">${item.course}</td>
+                    <td class="px-4 py-3 font-medium text-slate-800">${item.module}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${item.code}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${item.marks}</td>
+                    <td class="px-4 py-3 text-center font-semibold text-brand-700">${item.grade}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full px-3 py-1 font-semibold ${getStatusClass(item.status)}">
+                            ${item.status}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    courseModuleFilter.addEventListener("change", function () {
+        renderModules(this.value);
+    });
+
+    renderModules();
+</script>

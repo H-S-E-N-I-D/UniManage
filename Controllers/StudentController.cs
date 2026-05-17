@@ -38,6 +38,10 @@ namespace UniManage.Controllers
         {
             return View();
         }
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
 
 
         public ActionResult List()
@@ -56,6 +60,13 @@ namespace UniManage.Controllers
         {     
             return View();          
         }
+        public ActionResult Profile()
+        {     
+            return View();          
+        }
+
+
+        
 
         // POST: CourseController1/Create
         [HttpPost]

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using UniManage.Models;
 using UniManage.ViewModels;
 
@@ -33,10 +34,49 @@ namespace UniManage.Controllers
                 return View(model);
             }
 
-            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            // Find user by email
+            var user = await userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt.");
+                return View(model);
+            }
+
+            // Validate password
+            var result = await signInManager.CheckPasswordSignInAsync(
+                user,
+                model.Password,
+                lockoutOnFailure: false
+            );
 
             if (result.Succeeded)
             {
+                // Get user roles
+                var roles = await userManager.GetRolesAsync(user);
+
+                // Create claims
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.Name, user.UserName ?? ""),
+            new Claim(ClaimTypes.Email, user.Email ?? ""),
+            new Claim("FullName", user.FullName ?? "")
+        };
+
+                // Add roles as claims
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+
+                // Sign in with claims
+                await signInManager.SignInWithClaimsAsync(
+                    user,
+                    model.RememberMe,
+                    claims
+                );
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -160,7 +200,7 @@ namespace UniManage.Controllers
 
             var user = await userManager.FindByNameAsync(model.Email);
 
-            if(user == null)
+            if (user == null)
             {
                 ModelState.AddModelError("", "User not found!");
                 return View(model);
@@ -174,7 +214,7 @@ namespace UniManage.Controllers
             }
             else
             {
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }

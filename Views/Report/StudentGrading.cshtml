@@ -1,0 +1,483 @@
+﻿
+@{
+    ViewData["Title"] = "Student Grading Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">
+                Reports and Analytics
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">
+                Student Grading Report
+            </h1>
+            <p class="mt-1 text-sm text-slate-500">
+                Analyze student marks, grades, pass rate, grading status, and assessment performance by module and batch.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <button class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+                <i class="fa-solid fa-file-excel"></i>
+                Export to Excel
+            </button>
+
+            <button class="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700">
+                <i class="fa-solid fa-file-pdf"></i>
+                Export to PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Total Students</p>
+            <h3 class="mt-2 text-2xl font-bold text-slate-800">20</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Average Marks</p>
+            <h3 class="mt-2 text-2xl font-bold text-brand-700">72.8%</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Pass Rate</p>
+            <h3 class="mt-2 text-2xl font-bold text-emerald-600">85%</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Pending Grades</p>
+            <h3 class="mt-2 text-2xl font-bold text-amber-600">3</h3>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-lg font-bold text-slate-800">Generate Report</h2>
+
+        <div class="grid gap-4 lg:grid-cols-4">
+
+            <!-- Searchable Module Dropdown -->
+            <div class="relative">
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Module</label>
+
+                <button id="moduleDropdownButton"
+                        type="button"
+                        class="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-left text-sm text-slate-600 outline-none transition hover:border-brand-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <span id="selectedModuleText">Select module</span>
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                </button>
+
+                <input type="hidden" id="selectedModuleValue" name="Module" />
+
+                <div id="moduleDropdownPanel"
+                     class="absolute z-40 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                    <div class="border-b border-slate-100 p-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                            <input id="moduleSearchInput"
+                                   type="text"
+                                   placeholder="Search module name or code"
+                                   class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                        </div>
+                    </div>
+
+                    <div id="moduleOptions" class="max-h-72 overflow-y-auto p-2"></div>
+                </div>
+            </div>
+
+            <!-- Batch -->
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Batch</label>
+                <select id="batchFilter"
+                        class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option value="all">All Batches</option>
+                    <option value="Batch 0001">Batch 0001</option>
+                    <option value="Batch 0002">Batch 0002</option>
+                    <option value="Batch 0003">Batch 0003</option>
+                    <option value="Batch 0004">Batch 0004</option>
+                </select>
+            </div>
+
+            <!-- Assessment -->
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Assessment</label>
+                <select id="assessmentFilter"
+                        class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option value="all">All Assessments</option>
+                    <option value="Coursework 1">Coursework 1</option>
+                    <option value="Coursework 2">Coursework 2</option>
+                    <option value="Mid Term Exam">Mid Term Exam</option>
+                    <option value="Final Exam">Final Exam</option>
+                    <option value="Practical Assessment">Practical Assessment</option>
+                </select>
+            </div>
+
+            <!-- Generate -->
+            <div class="flex items-end">
+                <button id="generateReport"
+                        type="button"
+                        class="w-full rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-800">
+                    <i class="fa-solid fa-chart-line mr-2"></i>
+                    Generate Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Table -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div class="mb-4 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+            <div>
+                <h2 class="text-lg font-bold text-slate-800">Students and Grades</h2>
+                <p class="text-sm text-slate-500">Showing generated grading results based on selected filters.</p>
+            </div>
+
+            <div class="grid gap-3 sm:grid-cols-2 xl:w-[560px]">
+                <input id="studentSearchInput"
+                       type="text"
+                       placeholder="Search student name or ID"
+                       class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+
+                <select id="sortOption"
+                        class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option value="name">Sort by Student Name</option>
+                    <option value="marksDesc">Highest Marks</option>
+                    <option value="marksAsc">Lowest Marks</option>
+                    <option value="grade">Sort by Grade</option>
+                    <option value="status">Sort by Status</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-100">
+            <table class="min-w-full divide-y divide-slate-100 text-sm">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Student Name</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Student ID</th>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Module</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Batch</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Assessment</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Marks</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Grade</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Result</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Grading Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="gradingTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p id="paginationInfo" class="text-sm text-slate-500"></p>
+
+            <div class="flex items-center gap-2">
+                <button id="previousPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Previous
+                </button>
+
+                <div id="paginationButtons" class="flex items-center gap-2"></div>
+
+                <button id="nextPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modules = [
+        { code: "PF101", name: "Programming Fundamentals" },
+        { code: "OOP102", name: "Object Oriented Programming" },
+        { code: "DB103", name: "Database Management Systems" },
+        { code: "SE104", name: "Software Engineering Principles" },
+        { code: "SQA201", name: "Software Quality Assurance" },
+        { code: "MAD301", name: "Mobile Application Development" }
+    ];
+
+    const grades = [
+        { name: "Kavindu Perera", id: "STU0001", moduleCode: "PF101", module: "Programming Fundamentals", batch: "Batch 0001", assessment: "Coursework 1", marks: 86, grade: "A", result: "Pass", status: "Published" },
+        { name: "Nethmi Fernando", id: "STU0002", moduleCode: "PF101", module: "Programming Fundamentals", batch: "Batch 0001", assessment: "Coursework 1", marks: 78, grade: "B+", result: "Pass", status: "Published" },
+        { name: "Dinuka Silva", id: "STU0003", moduleCode: "PF101", module: "Programming Fundamentals", batch: "Batch 0001", assessment: "Coursework 1", marks: 64, grade: "B", result: "Pass", status: "Published" },
+        { name: "Tharushi Jayasinghe", id: "STU0004", moduleCode: "OOP102", module: "Object Oriented Programming", batch: "Batch 0002", assessment: "Coursework 2", marks: 82, grade: "A-", result: "Pass", status: "Published" },
+        { name: "Malith Wijesinghe", id: "STU0005", moduleCode: "OOP102", module: "Object Oriented Programming", batch: "Batch 0002", assessment: "Coursework 2", marks: 58, grade: "C+", result: "Pass", status: "Published" },
+        { name: "Sachini Gunawardena", id: "STU0006", moduleCode: "DB103", module: "Database Management Systems", batch: "Batch 0002", assessment: "Final Exam", marks: 91, grade: "A+", result: "Pass", status: "Published" },
+        { name: "Pasindu Rathnayake", id: "STU0007", moduleCode: "DB103", module: "Database Management Systems", batch: "Batch 0003", assessment: "Final Exam", marks: 47, grade: "C-", result: "Pass", status: "Published" },
+        { name: "Hiruni Bandara", id: "STU0008", moduleCode: "SE104", module: "Software Engineering Principles", batch: "Batch 0003", assessment: "Mid Term Exam", marks: 72, grade: "B+", result: "Pass", status: "Published" },
+        { name: "Chamath De Silva", id: "STU0009", moduleCode: "SE104", module: "Software Engineering Principles", batch: "Batch 0003", assessment: "Mid Term Exam", marks: 35, grade: "F", result: "Fail", status: "Published" },
+        { name: "Isuri Herath", id: "STU0010", moduleCode: "SQA201", module: "Software Quality Assurance", batch: "Batch 0004", assessment: "Practical Assessment", marks: 69, grade: "B", result: "Pass", status: "Published" },
+        { name: "Avishka Madushan", id: "STU0011", moduleCode: "SQA201", module: "Software Quality Assurance", batch: "Batch 0004", assessment: "Practical Assessment", marks: 0, grade: "-", result: "Pending", status: "Pending" },
+        { name: "Dulani Samarasinghe", id: "STU0012", moduleCode: "MAD301", module: "Mobile Application Development", batch: "Batch 0001", assessment: "Coursework 1", marks: 88, grade: "A", result: "Pass", status: "Published" },
+        { name: "Ravindu Karunaratne", id: "STU0013", moduleCode: "MAD301", module: "Mobile Application Development", batch: "Batch 0001", assessment: "Coursework 1", marks: 52, grade: "C", result: "Pass", status: "Published" },
+        { name: "Anjali Weerasinghe", id: "STU0014", moduleCode: "PF101", module: "Programming Fundamentals", batch: "Batch 0001", assessment: "Final Exam", marks: 0, grade: "-", result: "Pending", status: "Pending" },
+        { name: "Lahiru Dissanayake", id: "STU0015", moduleCode: "OOP102", module: "Object Oriented Programming", batch: "Batch 0002", assessment: "Final Exam", marks: 39, grade: "F", result: "Fail", status: "Published" },
+        { name: "Sanduni Senarath", id: "STU0016", moduleCode: "DB103", module: "Database Management Systems", batch: "Batch 0002", assessment: "Coursework 2", marks: 74, grade: "B+", result: "Pass", status: "Published" },
+        { name: "Kasun Ekanayake", id: "STU0017", moduleCode: "SE104", module: "Software Engineering Principles", batch: "Batch 0003", assessment: "Coursework 1", marks: 0, grade: "-", result: "Pending", status: "Pending" },
+        { name: "Miyuru Abeysekara", id: "STU0018", moduleCode: "SQA201", module: "Software Quality Assurance", batch: "Batch 0004", assessment: "Final Exam", marks: 81, grade: "A-", result: "Pass", status: "Published" },
+        { name: "Yasasi Liyanage", id: "STU0019", moduleCode: "MAD301", module: "Mobile Application Development", batch: "Batch 0001", assessment: "Practical Assessment", marks: 93, grade: "A+", result: "Pass", status: "Published" },
+        { name: "Roshan Madusanka", id: "STU0020", moduleCode: "PF101", module: "Programming Fundamentals", batch: "Batch 0001", assessment: "Coursework 2", marks: 61, grade: "B-", result: "Pass", status: "Published" }
+    ];
+
+    let currentPage = 1;
+    const rowsPerPage = 10;
+    let selectedModuleCode = "all";
+    let filteredGrades = [...grades];
+
+    const moduleDropdownButton = document.getElementById("moduleDropdownButton");
+    const moduleDropdownPanel = document.getElementById("moduleDropdownPanel");
+    const moduleSearchInput = document.getElementById("moduleSearchInput");
+    const moduleOptions = document.getElementById("moduleOptions");
+    const selectedModuleText = document.getElementById("selectedModuleText");
+    const selectedModuleValue = document.getElementById("selectedModuleValue");
+
+    function renderModules(searchText = "") {
+        moduleOptions.innerHTML = "";
+
+        const allOption = document.createElement("button");
+        allOption.type = "button";
+        allOption.className = "flex w-full flex-col rounded-xl px-4 py-3 text-left hover:bg-brand-50";
+        allOption.innerHTML = `
+            <span class="font-semibold text-slate-700">All Modules</span>
+            <span class="text-xs text-slate-400">Show grading results for all modules</span>
+        `;
+
+        allOption.addEventListener("click", function () {
+            selectedModuleText.textContent = "All Modules";
+            selectedModuleValue.value = "all";
+            selectedModuleCode = "all";
+            moduleDropdownPanel.classList.add("hidden");
+            moduleSearchInput.value = "";
+        });
+
+        moduleOptions.appendChild(allOption);
+
+        const filteredModules = modules.filter(module =>
+            module.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            module.code.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        filteredModules.forEach(module => {
+            const option = document.createElement("button");
+            option.type = "button";
+            option.className = "flex w-full flex-col rounded-xl px-4 py-3 text-left hover:bg-brand-50";
+            option.innerHTML = `
+                <span class="font-semibold text-slate-700">${module.name}</span>
+                <span class="text-xs text-slate-400">${module.code}</span>
+            `;
+
+            option.addEventListener("click", function () {
+                selectedModuleText.textContent = `${module.name} (${module.code})`;
+                selectedModuleValue.value = module.code;
+                selectedModuleCode = module.code;
+                moduleDropdownPanel.classList.add("hidden");
+                moduleSearchInput.value = "";
+            });
+
+            moduleOptions.appendChild(option);
+        });
+    }
+
+    moduleDropdownButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        moduleDropdownPanel.classList.toggle("hidden");
+        renderModules();
+
+        setTimeout(() => {
+            moduleSearchInput.focus();
+        }, 50);
+    });
+
+    moduleSearchInput.addEventListener("input", function () {
+        renderModules(this.value);
+    });
+
+    moduleDropdownPanel.addEventListener("click", function (event) {
+        event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+        moduleDropdownPanel.classList.add("hidden");
+    });
+
+    function getResultClass(result) {
+        if (result === "Pass") return "bg-emerald-50 text-emerald-700";
+        if (result === "Fail") return "bg-rose-50 text-rose-700";
+        return "bg-amber-50 text-amber-700";
+    }
+
+    function getStatusClass(status) {
+        return status === "Published"
+            ? "bg-emerald-50 text-emerald-700"
+            : "bg-amber-50 text-amber-700";
+    }
+
+    function applyFilters() {
+        const batch = document.getElementById("batchFilter").value;
+        const assessment = document.getElementById("assessmentFilter").value;
+        const searchText = document.getElementById("studentSearchInput").value.toLowerCase();
+
+        filteredGrades = grades.filter(item => {
+            const moduleMatch = selectedModuleCode === "all" || item.moduleCode === selectedModuleCode;
+            const batchMatch = batch === "all" || item.batch === batch;
+            const assessmentMatch = assessment === "all" || item.assessment === assessment;
+            const searchMatch =
+                item.name.toLowerCase().includes(searchText) ||
+                item.id.toLowerCase().includes(searchText);
+
+            return moduleMatch && batchMatch && assessmentMatch && searchMatch;
+        });
+
+        applySort(false);
+        currentPage = 1;
+        renderTable();
+    }
+
+    function applySort(resetPage = true) {
+        const value = document.getElementById("sortOption").value;
+
+        filteredGrades.sort((a, b) => {
+            if (value === "name") return a.name.localeCompare(b.name);
+            if (value === "marksDesc") return b.marks - a.marks;
+            if (value === "marksAsc") return a.marks - b.marks;
+            if (value === "grade") return a.grade.localeCompare(b.grade);
+            if (value === "status") return a.status.localeCompare(b.status);
+            return 0;
+        });
+
+        if (resetPage) {
+            currentPage = 1;
+            renderTable();
+        }
+    }
+
+    function renderTable() {
+        const tableBody = document.getElementById("gradingTableBody");
+        tableBody.innerHTML = "";
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginatedRows = filteredGrades.slice(start, end);
+
+        if (paginatedRows.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="9" class="px-4 py-8 text-center text-slate-500">
+                        No grading records found for the selected filters.
+                    </td>
+                </tr>
+            `;
+            renderPagination();
+            return;
+        }
+
+        paginatedRows.forEach(item => {
+            const marksText = item.status === "Pending" ? "-" : item.marks;
+
+            tableBody.innerHTML += `
+                <tr class="transition hover:bg-brand-50/40">
+                    <td class="px-4 py-3 font-medium text-slate-800">${item.name}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${item.id}</td>
+                    <td class="px-4 py-3 text-slate-600">${item.module}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${item.batch}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${item.assessment}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-brand-50 px-3 py-1 font-semibold text-brand-700">
+                            ${marksText}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-center font-semibold text-slate-700">${item.grade}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full px-3 py-1 font-semibold ${getResultClass(item.result)}">
+                            ${item.result}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full px-3 py-1 font-semibold ${getStatusClass(item.status)}">
+                            ${item.status}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(filteredGrades.length / rowsPerPage);
+        const paginationButtons = document.getElementById("paginationButtons");
+        const paginationInfo = document.getElementById("paginationInfo");
+
+        paginationButtons.innerHTML = "";
+
+        if (filteredGrades.length === 0) {
+            paginationInfo.textContent = "Showing 0 records";
+            document.getElementById("previousPage").disabled = true;
+            document.getElementById("nextPage").disabled = true;
+            return;
+        }
+
+        const startRecord = (currentPage - 1) * rowsPerPage + 1;
+        const endRecord = Math.min(currentPage * rowsPerPage, filteredGrades.length);
+
+        paginationInfo.textContent = `Showing ${startRecord} to ${endRecord} of ${filteredGrades.length} records`;
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement("button");
+            button.textContent = i;
+
+            button.className = i === currentPage
+                ? "rounded-lg bg-brand-700 px-3 py-2 text-sm font-semibold text-white"
+                : "rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50";
+
+            button.addEventListener("click", () => {
+                currentPage = i;
+                renderTable();
+            });
+
+            paginationButtons.appendChild(button);
+        }
+
+        document.getElementById("previousPage").disabled = currentPage === 1;
+        document.getElementById("nextPage").disabled = currentPage === totalPages;
+    }
+
+    document.getElementById("generateReport").addEventListener("click", applyFilters);
+    document.getElementById("studentSearchInput").addEventListener("input", applyFilters);
+    document.getElementById("batchFilter").addEventListener("change", applyFilters);
+    document.getElementById("assessmentFilter").addEventListener("change", applyFilters);
+
+    document.getElementById("sortOption").addEventListener("change", function () {
+        applySort(true);
+    });
+
+    document.getElementById("previousPage").addEventListener("click", function () {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", function () {
+        const totalPages = Math.ceil(filteredGrades.length / rowsPerPage);
+
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    renderModules();
+    applyFilters();
+</script>

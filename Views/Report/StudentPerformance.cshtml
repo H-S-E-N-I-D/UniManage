@@ -1,0 +1,341 @@
+﻿@{
+    ViewData["Title"] = "Student Performance Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">
+                Reports and Analytics
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">
+                Student Performance Report
+            </h1>
+            <p class="mt-1 text-sm text-slate-500">
+                Analyze student GPA, module completion, and academic progress by course and batch.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <button class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+                <i class="fa-solid fa-file-excel"></i>
+                Export to Excel
+            </button>
+            <button class="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700">
+                <i class="fa-solid fa-file-pdf"></i>
+                Export to PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Total Students</p>
+            <h3 class="mt-2 text-2xl font-bold text-slate-800">20</h3>
+        </div>
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Average GPA</p>
+            <h3 class="mt-2 text-2xl font-bold text-brand-700">3.42</h3>
+        </div>
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Average Progress</p>
+            <h3 class="mt-2 text-2xl font-bold text-indigo-600">78%</h3>
+        </div>
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">At-Risk Students</p>
+            <h3 class="mt-2 text-2xl font-bold text-rose-600">3</h3>
+        </div>
+    </div>
+
+    <!-- Report Filter Section -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-lg font-bold text-slate-800">Generate Report</h2>
+
+        <div class="grid gap-4 lg:grid-cols-3">
+
+            <!-- Searchable Course Dropdown -->
+            <div class="relative">
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Course</label>
+
+                <button id="courseDropdownButton"
+                        type="button"
+                        class="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-left text-sm text-slate-600 outline-none transition hover:border-brand-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <span id="selectedCourseText">Select course</span>
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                </button>
+
+                <input type="hidden" id="selectedCourseValue" name="Course" />
+
+                <div id="courseDropdownPanel" class="absolute z-40 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                    <div class="border-b border-slate-100 p-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                            <input id="courseSearchInput"
+                                   type="text"
+                                   placeholder="Search course name or code"
+                                   class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                        </div>
+                    </div>
+                    <div id="courseOptions" class="max-h-72 overflow-y-auto p-2"></div>
+                </div>
+            </div>
+
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Batch</label>
+                <select class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option>Batch 0001</option>
+                    <option>Batch 0002</option>
+                    <option>Batch 0003</option>
+                    <option>Batch 0004</option>
+                </select>
+            </div>
+
+            <div class="flex items-end">
+                <button class="w-full rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-800">
+                    <i class="fa-solid fa-chart-line mr-2"></i>
+                    Generate Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Table -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div class="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h2 class="text-lg font-bold text-slate-800">Student Performance Details</h2>
+
+            <select id="sortOption"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-64">
+                <option value="name">Sort by Name</option>
+                <option value="gpaDesc">Highest GPA</option>
+                <option value="gpaAsc">Lowest GPA</option>
+                <option value="progressDesc">Highest Progress</option>
+                <option value="progressAsc">Lowest Progress</option>
+            </select>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-100">
+            <table class="min-w-full divide-y divide-slate-100 text-sm">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Student Name</th>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Student ID</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Total Completed Modules</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Current GPA</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Current Progress (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p id="paginationInfo" class="text-sm text-slate-500"></p>
+
+            <div class="flex items-center gap-2">
+                <button id="previousPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50">
+                    Previous
+                </button>
+
+                <div id="paginationButtons" class="flex items-center gap-2"></div>
+
+                <button id="nextPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const courses = [
+        { code: "SE101", name: "BSc Software Engineering" },
+        { code: "CS102", name: "BSc Computer Science" },
+        { code: "IT103", name: "BSc Information Technology" },
+        { code: "CY104", name: "BSc Cyber Security" },
+        { code: "DS105", name: "BSc Data Science" },
+        { code: "AI106", name: "BSc Artificial Intelligence" }
+    ];
+
+    const students = [
+        { name: "Kavindu Perera", id: "STU0001", modules: 18, gpa: 3.82, progress: 92 },
+        { name: "Nethmi Fernando", id: "STU0002", modules: 17, gpa: 3.71, progress: 88 },
+        { name: "Dinuka Silva", id: "STU0003", modules: 15, gpa: 3.25, progress: 76 },
+        { name: "Tharushi Jayasinghe", id: "STU0004", modules: 16, gpa: 3.48, progress: 81 },
+        { name: "Malith Wijesinghe", id: "STU0005", modules: 14, gpa: 2.94, progress: 69 },
+        { name: "Sachini Gunawardena", id: "STU0006", modules: 18, gpa: 3.90, progress: 95 },
+        { name: "Pasindu Rathnayake", id: "STU0007", modules: 13, gpa: 2.72, progress: 64 },
+        { name: "Hiruni Bandara", id: "STU0008", modules: 17, gpa: 3.56, progress: 86 },
+        { name: "Chamath De Silva", id: "STU0009", modules: 12, gpa: 2.35, progress: 58 },
+        { name: "Isuri Herath", id: "STU0010", modules: 16, gpa: 3.41, progress: 80 },
+        { name: "Avishka Madushan", id: "STU0011", modules: 11, gpa: 2.10, progress: 49 },
+        { name: "Dulani Samarasinghe", id: "STU0012", modules: 18, gpa: 3.78, progress: 91 },
+        { name: "Ravindu Karunaratne", id: "STU0013", modules: 15, gpa: 3.18, progress: 74 },
+        { name: "Anjali Weerasinghe", id: "STU0014", modules: 17, gpa: 3.65, progress: 89 },
+        { name: "Lahiru Dissanayake", id: "STU0015", modules: 14, gpa: 2.88, progress: 67 },
+        { name: "Sanduni Senarath", id: "STU0016", modules: 16, gpa: 3.33, progress: 79 },
+        { name: "Kasun Ekanayake", id: "STU0017", modules: 10, gpa: 1.95, progress: 42 },
+        { name: "Miyuru Abeysekara", id: "STU0018", modules: 13, gpa: 2.64, progress: 61 },
+        { name: "Yasasi Liyanage", id: "STU0019", modules: 18, gpa: 3.86, progress: 94 },
+        { name: "Roshan Madusanka", id: "STU0020", modules: 15, gpa: 3.05, progress: 72 }
+    ];
+
+    let currentPage = 1;
+    const rowsPerPage = 10;
+    let sortedStudents = [...students];
+
+    const courseDropdownButton = document.getElementById("courseDropdownButton");
+    const courseDropdownPanel = document.getElementById("courseDropdownPanel");
+    const courseSearchInput = document.getElementById("courseSearchInput");
+    const courseOptions = document.getElementById("courseOptions");
+    const selectedCourseText = document.getElementById("selectedCourseText");
+    const selectedCourseValue = document.getElementById("selectedCourseValue");
+
+    function renderCourses(searchText = "") {
+        courseOptions.innerHTML = "";
+
+        const filteredCourses = courses.filter(course =>
+            course.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            course.code.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        filteredCourses.forEach(course => {
+            const option = document.createElement("button");
+            option.type = "button";
+            option.className = "flex w-full flex-col rounded-xl px-4 py-3 text-left hover:bg-brand-50";
+            option.innerHTML = `
+                <span class="font-semibold text-slate-700">${course.name}</span>
+                <span class="text-xs text-slate-400">${course.code}</span>
+            `;
+
+            option.addEventListener("click", () => {
+                selectedCourseText.textContent = `${course.name} (${course.code})`;
+                selectedCourseValue.value = course.code;
+                courseDropdownPanel.classList.add("hidden");
+            });
+
+            courseOptions.appendChild(option);
+        });
+    }
+
+    courseDropdownButton.addEventListener("click", () => {
+        courseDropdownPanel.classList.toggle("hidden");
+        courseSearchInput.focus();
+        renderCourses();
+    });
+
+    courseSearchInput.addEventListener("input", function () {
+        renderCourses(this.value);
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!courseDropdownButton.contains(event.target) && !courseDropdownPanel.contains(event.target)) {
+            courseDropdownPanel.classList.add("hidden");
+        }
+    });
+
+    function renderTable() {
+        const tableBody = document.getElementById("studentTableBody");
+        tableBody.innerHTML = "";
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginatedStudents = sortedStudents.slice(start, end);
+
+        paginatedStudents.forEach(student => {
+            tableBody.innerHTML += `
+                <tr class="transition hover:bg-brand-50/40">
+                    <td class="px-4 py-3 font-medium text-slate-800">${student.name}</td>
+                    <td class="px-4 py-3 text-slate-600">${student.id}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${student.modules}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-brand-50 px-3 py-1 font-semibold text-brand-700">
+                            ${student.gpa.toFixed(2)}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="h-2 w-24 rounded-full bg-slate-100">
+                                <div class="h-2 rounded-full bg-brand-600" style="width:${student.progress}%"></div>
+                            </div>
+                            <span class="w-10 text-right font-semibold text-slate-700">${student.progress}%</span>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(sortedStudents.length / rowsPerPage);
+        const paginationButtons = document.getElementById("paginationButtons");
+        const paginationInfo = document.getElementById("paginationInfo");
+
+        paginationButtons.innerHTML = "";
+
+        const startRecord = (currentPage - 1) * rowsPerPage + 1;
+        const endRecord = Math.min(currentPage * rowsPerPage, sortedStudents.length);
+
+        paginationInfo.textContent = `Showing ${startRecord} to ${endRecord} of ${sortedStudents.length} records`;
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement("button");
+            button.textContent = i;
+            button.className = i === currentPage
+                ? "rounded-lg bg-brand-700 px-3 py-2 text-sm font-semibold text-white"
+                : "rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50";
+
+            button.addEventListener("click", () => {
+                currentPage = i;
+                renderTable();
+            });
+
+            paginationButtons.appendChild(button);
+        }
+
+        document.getElementById("previousPage").disabled = currentPage === 1;
+        document.getElementById("nextPage").disabled = currentPage === totalPages;
+    }
+
+    document.getElementById("previousPage").addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", () => {
+        const totalPages = Math.ceil(sortedStudents.length / rowsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    document.getElementById("sortOption").addEventListener("change", function () {
+        const value = this.value;
+
+        sortedStudents.sort((a, b) => {
+            if (value === "name") return a.name.localeCompare(b.name);
+            if (value === "gpaDesc") return b.gpa - a.gpa;
+            if (value === "gpaAsc") return a.gpa - b.gpa;
+            if (value === "progressDesc") return b.progress - a.progress;
+            if (value === "progressAsc") return a.progress - b.progress;
+        });
+
+        currentPage = 1;
+        renderTable();
+    });
+
+    renderCourses();
+    renderTable();
+</script>

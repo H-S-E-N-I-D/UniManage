@@ -10,9 +10,9 @@
 
         public string CourseCode { get; set; } = string.Empty;
 
-        public Decimal Duration { get; set; }
+        public decimal? Duration { get; set; }
 
-        public long? DepartmentId { get; set; }
+        public long DepartmentId { get; set; }
 
         public virtual DepartmentVo Department { get; set; }
 

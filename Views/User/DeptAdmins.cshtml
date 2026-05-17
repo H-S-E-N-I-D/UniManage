@@ -5,8 +5,8 @@
 <section class="mx-auto w-full max-w-[1700px] space-y-6 px-1 sm:px-2">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Department Administration</p>
-            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Department Admin List</h1>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">Department Administration</p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">Department Admin List</h1>
             <p class="mt-2 text-sm text-slate-500">View, filter, and manage department administrator records.</p>
         </div>
     </div>
@@ -34,7 +34,7 @@
                 <label class="block text-xs font-bold text-slate-700">Department</label>
                 <div class="relative mt-2">
                     <button id="departmentDropdownButton" type="button" class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
-                        <span id="selectedDepartmentText" class="truncate text-slate-400">Searchable Department Dropdown</span>
+                        <span id="selectedDepartmentText" class="truncate text-slate-400">Search Departments</span>
                         <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
                     </button>
 
@@ -128,17 +128,17 @@
         ];
 
         const departmentAdmins = [
-            { id: 1, title: 'Mr.', fullName: 'Dinesh Madushanka', regNo: 'ADM-2026-001', department: 'Department of Computing', designation: 'Department Coordinator', status: 'Active', email: 'dinesh.madushanka@unimanage.edu', contactNumber: '+94 71 245 8891' },
-            { id: 2, title: 'Ms.', fullName: 'Nethmi Fernando', regNo: 'ADM-2026-002', department: 'Department of Computing', designation: 'Academic Administrator', status: 'Active', email: 'nethmi.fernando@unimanage.edu', contactNumber: '+94 77 564 2281' },
-            { id: 5, title: 'Mr.', fullName: 'Dinuka Wijesinghe', regNo: 'ADM-2026-005', department: 'Department of Engineering', designation: 'Department Coordinator', status: 'Active', email: 'dinuka.wijesinghe@unimanage.edu', contactNumber: '+94 75 889 3412' },
-            { id: 7, title: 'Mr.', fullName: 'Avishka Senanayake', regNo: 'ADM-2026-007', department: 'Department of Engineering', designation: 'Programme Officer', status: 'Active', email: 'avishka.senanayake@unimanage.edu', contactNumber: '+94 71 908 7762' },
-            { id: 9, title: 'Mr.', fullName: 'Ravindu Kumara', regNo: 'ADM-2026-009', department: 'Department of Art & Design', designation: 'Department Coordinator', status: 'Inactive', email: 'ravindu.kumara@unimanage.edu', contactNumber: '+94 77 301 5528' },
-            { id: 12, title: 'Ms.', fullName: 'Kavindi Herath', regNo: 'ADM-2026-012', department: 'Department of Languages', designation: 'Department Coordinator', status: 'Inactive', email: 'kavindi.herath@unimanage.edu', contactNumber: '+94 74 213 9981' },
-            { id: 13, title: 'Mr.', fullName: 'Thisara Bandara', regNo: 'ADM-2026-013', department: 'Department of Languages', designation: 'Academic Administrator', status: 'Active', email: 'thisara.bandara@unimanage.edu', contactNumber: '+94 76 118 7345' },
-            { id: 15, title: 'Mr.', fullName: 'Malith Dissanayake', regNo: 'ADM-2026-015', department: 'Department of Life Science', designation: 'Department Coordinator', status: 'Inactive', email: 'malith.dissanayake@unimanage.edu', contactNumber: '+94 70 984 5521' },
-            { id: 16, title: 'Ms.', fullName: 'Sanduni Ranasinghe', regNo: 'ADM-2026-016', department: 'Department of Life Science', designation: 'Academic Administrator', status: 'Active', email: 'sanduni.ranasinghe@unimanage.edu', contactNumber: '+94 71 345 7812' },
-            { id: 18, title: 'Ms.', fullName: 'Anjali Wickramasinghe', regNo: 'ADM-2026-018', department: 'Department of Management & Law', designation: 'Department Coordinator', status: 'Inactive', email: 'anjali.wickramasinghe@unimanage.edu', contactNumber: '+94 78 432 1198' },
-            { id: 20, title: 'Ms.', fullName: 'Dilini Jayawardena', regNo: 'ADM-2026-020', department: 'Department of Management & Law', designation: 'Programme Officer', status: 'Active', email: 'dilini.jayawardena@unimanage.edu', contactNumber: '+94 70 552 6432' }
+            { id: 1, title: 'Mr.', fullName: 'Dinesh Madushanka', regNo: 'ADM-2026-001', department: 'Department of Computing', designation: 'Department Coordinator', status: 'Active', email: 'dinesh.madushanka@smartedu.lk', contactNumber: '+94 71 245 8891' },
+            { id: 2, title: 'Ms.', fullName: 'Nethmi Fernando', regNo: 'ADM-2026-002', department: 'Department of Computing', designation: 'Academic Administrator', status: 'Active', email: 'nethmi.fernando@smartedu.lk', contactNumber: '+94 77 564 2281' },
+            { id: 5, title: 'Dr.', fullName: 'Dinuka Wijesinghe', regNo: 'ADM-2026-005', department: 'Department of Engineering', designation: 'Department Coordinator', status: 'Active', email: 'dinuka.wijesinghe@smartedu.lk', contactNumber: '+94 75 889 3412' },
+            { id: 7, title: 'Mr.', fullName: 'Avishka Senanayake', regNo: 'ADM-2026-007', department: 'Department of Engineering', designation: 'Programme Officer', status: 'Active', email: 'avishka.senanayake@smartedu.lk', contactNumber: '+94 71 908 7762' },
+            { id: 9, title: 'Dr.', fullName: 'Ravindu Kumara', regNo: 'ADM-2026-009', department: 'Department of Art & Design', designation: 'Department Coordinator', status: 'Inactive', email: 'ravindu.kumara@smartedu.lk', contactNumber: '+94 77 301 5528' },
+            { id: 12, title: 'Ms.', fullName: 'Kavindi Herath', regNo: 'ADM-2026-012', department: 'Department of Languages', designation: 'Department Coordinator', status: 'Inactive', email: 'kavindi.herath@smartedu.lk', contactNumber: '+94 74 213 9981' },
+            { id: 13, title: 'Mr.', fullName: 'Thisara Bandara', regNo: 'ADM-2026-013', department: 'Department of Languages', designation: 'Academic Administrator', status: 'Active', email: 'thisara.bandara@smartedu.lk', contactNumber: '+94 76 118 7345' },
+            { id: 15, title: 'Dr.', fullName: 'Malith Dissanayake', regNo: 'ADM-2026-015', department: 'Department of Life Science', designation: 'Department Coordinator', status: 'Inactive', email: 'malith.dissanayake@smartedu.lk', contactNumber: '+94 70 984 5521' },
+            { id: 16, title: 'Ms.', fullName: 'Sanduni Ranasinghe', regNo: 'ADM-2026-016', department: 'Department of Life Science', designation: 'Academic Administrator', status: 'Active', email: 'sanduni.ranasinghe@smartedu.lk', contactNumber: '+94 71 345 7812' },
+            { id: 18, title: 'Ms.', fullName: 'Anjali Wickramasinghe', regNo: 'ADM-2026-018', department: 'Department of Management & Law', designation: 'Department Coordinator', status: 'Inactive', email: 'anjali.wickramasinghe@smartedu.lk', contactNumber: '+94 78 432 1198' },
+            { id: 20, title: 'Ms.', fullName: 'Dilini Jayawardena', regNo: 'ADM-2026-020', department: 'Department of Management & Law', designation: 'Programme Officer', status: 'Active', email: 'dilini.jayawardena@smartedu.lk', contactNumber: '+94 70 552 6432' }
         ];
 
         const departmentDropdownButton = document.getElementById('departmentDropdownButton');
@@ -313,7 +313,7 @@
         function clearFilters() {
             selectedDepartment = '';
             selectedDepartmentInput.value = '';
-            selectedDepartmentText.textContent = 'Searchable Department Dropdown';
+            selectedDepartmentText.textContent = 'Search Department';
             selectedDepartmentText.classList.add('text-slate-400');
             selectedDepartmentText.classList.remove('text-slate-900');
             departmentSearchInput.value = '';

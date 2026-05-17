@@ -1,0 +1,322 @@
+﻿@{
+    ViewData["Title"] = "System Admin Audit Log Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">
+                System Administration
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">
+                Audit Log Report
+            </h1>
+            <p class="mt-1 text-sm text-slate-500">
+                Review user activities, security events, login attempts, role changes, and system-level actions.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <button class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+                <i class="fa-solid fa-file-excel"></i>
+                Export to Excel
+            </button>
+
+            <button class="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700">
+                <i class="fa-solid fa-file-pdf"></i>
+                Export to PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Total Audit Events</p>
+            <h3 class="mt-2 text-2xl font-bold text-slate-800">248</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Successful Logins</p>
+            <h3 class="mt-2 text-2xl font-bold text-emerald-600">126</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Failed Login Attempts</p>
+            <h3 class="mt-2 text-2xl font-bold text-rose-600">18</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">High Risk Events</p>
+            <h3 class="mt-2 text-2xl font-bold text-amber-600">7</h3>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-lg font-bold text-slate-800">
+            Generate Report
+        </h2>
+
+        <div class="grid gap-4 lg:grid-cols-5">
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">From Date</label>
+                <input type="date"
+                       class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+            </div>
+
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">To Date</label>
+                <input type="date"
+                       class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100" />
+            </div>
+
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">User Role</label>
+                <select class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option>All Roles</option>
+                    <option>System Admin</option>
+                    <option>Department Admin</option>
+                    <option>Lecturer</option>
+                    <option>Student</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Event Type</label>
+                <select class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option>All Events</option>
+                    <option>Login</option>
+                    <option>Logout</option>
+                    <option>Failed Login</option>
+                    <option>Password Reset</option>
+                    <option>Role Update</option>
+                    <option>Course Update</option>
+                    <option>Data Export</option>
+                    <option>Record Delete</option>
+                </select>
+            </div>
+
+            <div class="flex items-end">
+                <button class="w-full rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-800">
+                    <i class="fa-solid fa-shield-halved mr-2"></i>
+                    Generate Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Table -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div class="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h2 class="text-lg font-bold text-slate-800">
+                Audit Log Details
+            </h2>
+
+            <select id="sortOption"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-80">
+                <option value="timestampDesc">Sort by Newest</option>
+                <option value="timestampAsc">Sort by Oldest</option>
+                <option value="userName">Sort by User Name</option>
+                <option value="eventType">Sort by Event Type</option>
+                <option value="riskDesc">Highest Risk First</option>
+                <option value="riskAsc">Lowest Risk First</option>
+            </select>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-100">
+            <table class="min-w-full divide-y divide-slate-100 text-sm">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Date & Time</th>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">User</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Role</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Event Type</th>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Activity Description</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">IP Address</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Device</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Status</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Risk Level</th>
+                    </tr>
+                </thead>
+
+                <tbody id="auditLogTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p id="paginationInfo" class="text-sm text-slate-500"></p>
+
+            <div class="flex items-center gap-2">
+                <button id="previousPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Previous
+                </button>
+
+                <div id="paginationButtons" class="flex items-center gap-2"></div>
+
+                <button id="nextPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const auditLogs = [
+        { timestamp: "2026-05-09 09:12 AM", user: "Admin Dinesh", role: "System Admin", eventType: "Login", description: "User logged into the LMS admin dashboard", ip: "192.168.1.24", device: "Chrome / Windows", status: "Success", risk: "Low" },
+        { timestamp: "2026-05-09 09:18 AM", user: "Admin Dinesh", role: "System Admin", eventType: "Data Export", description: "Exported student performance report as PDF", ip: "192.168.1.24", device: "Chrome / Windows", status: "Success", risk: "Medium" },
+        { timestamp: "2026-05-09 09:25 AM", user: "Nuwan Perera", role: "Lecturer", eventType: "Grade Update", description: "Updated marks for Programming Fundamentals module", ip: "192.168.1.31", device: "Edge / Windows", status: "Success", risk: "Low" },
+        { timestamp: "2026-05-09 09:32 AM", user: "Unknown User", role: "Guest", eventType: "Failed Login", description: "Invalid password attempt for admin account", ip: "103.21.44.10", device: "Firefox / Linux", status: "Failed", risk: "High" },
+        { timestamp: "2026-05-09 09:44 AM", user: "Ishara Fernando", role: "Department Admin", eventType: "Role Update", description: "Updated lecturer access permissions", ip: "192.168.1.42", device: "Chrome / Windows", status: "Success", risk: "High" },
+        { timestamp: "2026-05-09 10:01 AM", user: "Kavindu Perera", role: "Student", eventType: "Login", description: "Student logged into learner dashboard", ip: "192.168.1.58", device: "Chrome / Android", status: "Success", risk: "Low" },
+        { timestamp: "2026-05-09 10:11 AM", user: "Kavindi Silva", role: "Lecturer", eventType: "File Upload", description: "Uploaded lecture material for Database Management Systems", ip: "192.168.1.63", device: "Safari / macOS", status: "Success", risk: "Low" },
+        { timestamp: "2026-05-09 10:22 AM", user: "System Scheduler", role: "System", eventType: "Backup", description: "Automated database backup completed", ip: "127.0.0.1", device: "Server Process", status: "Success", risk: "Low" },
+        { timestamp: "2026-05-09 10:38 AM", user: "Pasindu Rathnayake", role: "Student", eventType: "Password Reset", description: "Student requested password reset link", ip: "192.168.1.78", device: "Chrome / Android", status: "Success", risk: "Medium" },
+        { timestamp: "2026-05-09 10:49 AM", user: "Admin Dinesh", role: "System Admin", eventType: "Record Delete", description: "Deleted inactive test user account", ip: "192.168.1.24", device: "Chrome / Windows", status: "Success", risk: "High" },
+
+        { timestamp: "2026-05-09 11:02 AM", user: "Sanduni Peris", role: "Lecturer", eventType: "Logout", description: "User logged out from lecturer dashboard", ip: "192.168.1.70", device: "Chrome / Windows", status: "Success", risk: "Low" },
+        { timestamp: "2026-05-09 11:15 AM", user: "Tharushi Jayasinghe", role: "Student", eventType: "Assignment Submit", description: "Submitted coursework for Software Engineering Principles", ip: "192.168.1.88", device: "Chrome / Android", status: "Success", risk: "Low" },
+        { timestamp: "2026-05-09 11:28 AM", user: "Unknown User", role: "Guest", eventType: "Failed Login", description: "Multiple failed login attempts detected", ip: "45.76.32.18", device: "Unknown Device", status: "Failed", risk: "High" },
+        { timestamp: "2026-05-09 11:41 AM", user: "Malith Jayasinghe", role: "Department Admin", eventType: "Course Update", description: "Updated enrollment capacity for BSc Software Engineering", ip: "192.168.1.92", device: "Edge / Windows", status: "Success", risk: "Medium" },
+        { timestamp: "2026-05-09 12:05 PM", user: "Roshan Madusanka", role: "System Admin", eventType: "Permission Update", description: "Changed report access permission for department admins", ip: "192.168.1.25", device: "Chrome / Windows", status: "Success", risk: "High" },
+        { timestamp: "2026-05-09 12:22 PM", user: "Dinuka Silva", role: "Student", eventType: "Login", description: "Student logged into mobile LMS portal", ip: "192.168.1.101", device: "Safari / iOS", status: "Success", risk: "Low" },
+        { timestamp: "2026-05-09 12:45 PM", user: "System Scheduler", role: "System", eventType: "Security Scan", description: "Daily vulnerability scan completed", ip: "127.0.0.1", device: "Server Process", status: "Success", risk: "Low" },
+        { timestamp: "2026-05-09 01:07 PM", user: "Unknown User", role: "Guest", eventType: "Failed Login", description: "Account lockout triggered after repeated attempts", ip: "103.55.62.17", device: "Firefox / Linux", status: "Failed", risk: "High" },
+        { timestamp: "2026-05-09 01:29 PM", user: "Lahiru Fernando", role: "Lecturer", eventType: "Grade Update", description: "Published final grades for Mobile Application Development", ip: "192.168.1.116", device: "Chrome / Windows", status: "Success", risk: "Medium" },
+        { timestamp: "2026-05-09 01:50 PM", user: "Admin Dinesh", role: "System Admin", eventType: "Logout", description: "User logged out from admin dashboard", ip: "192.168.1.24", device: "Chrome / Windows", status: "Success", risk: "Low" }
+    ];
+
+    let currentPage = 1;
+    const rowsPerPage = 10;
+    let sortedLogs = [...auditLogs];
+
+    const auditLogTableBody = document.getElementById("auditLogTableBody");
+    const paginationButtons = document.getElementById("paginationButtons");
+    const paginationInfo = document.getElementById("paginationInfo");
+
+    function getStatusClass(status) {
+        return status === "Success"
+            ? "bg-emerald-50 text-emerald-700"
+            : "bg-rose-50 text-rose-700";
+    }
+
+    function getRiskClass(risk) {
+        if (risk === "High") return "bg-rose-50 text-rose-700";
+        if (risk === "Medium") return "bg-amber-50 text-amber-700";
+        return "bg-emerald-50 text-emerald-700";
+    }
+
+    function getRiskValue(risk) {
+        if (risk === "High") return 3;
+        if (risk === "Medium") return 2;
+        return 1;
+    }
+
+    function renderTable() {
+        auditLogTableBody.innerHTML = "";
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        sortedLogs.slice(start, end).forEach(log => {
+            auditLogTableBody.innerHTML += `
+                <tr class="transition hover:bg-brand-50/40">
+                    <td class="whitespace-nowrap px-4 py-3 text-slate-600">${log.timestamp}</td>
+                    <td class="px-4 py-3 font-medium text-slate-800">${log.user}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${log.role}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-brand-50 px-3 py-1 font-semibold text-brand-700">
+                            ${log.eventType}
+                        </span>
+                    </td>
+                    <td class="min-w-[280px] px-4 py-3 text-slate-600">${log.description}</td>
+                    <td class="whitespace-nowrap px-4 py-3 text-center text-slate-600">${log.ip}</td>
+                    <td class="whitespace-nowrap px-4 py-3 text-center text-slate-600">${log.device}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full px-3 py-1 font-semibold ${getStatusClass(log.status)}">
+                            ${log.status}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full px-3 py-1 font-semibold ${getRiskClass(log.risk)}">
+                            ${log.risk}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(sortedLogs.length / rowsPerPage);
+        paginationButtons.innerHTML = "";
+
+        const startRecord = (currentPage - 1) * rowsPerPage + 1;
+        const endRecord = Math.min(currentPage * rowsPerPage, sortedLogs.length);
+
+        paginationInfo.textContent = `Showing ${startRecord} to ${endRecord} of ${sortedLogs.length} records`;
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement("button");
+            button.textContent = i;
+
+            button.className = i === currentPage
+                ? "rounded-lg bg-brand-700 px-3 py-2 text-sm font-semibold text-white"
+                : "rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50";
+
+            button.addEventListener("click", () => {
+                currentPage = i;
+                renderTable();
+            });
+
+            paginationButtons.appendChild(button);
+        }
+
+        document.getElementById("previousPage").disabled = currentPage === 1;
+        document.getElementById("nextPage").disabled = currentPage === totalPages;
+    }
+
+    document.getElementById("previousPage").addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", () => {
+        const totalPages = Math.ceil(sortedLogs.length / rowsPerPage);
+
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    document.getElementById("sortOption").addEventListener("change", function () {
+        const value = this.value;
+
+        sortedLogs.sort((a, b) => {
+            if (value === "timestampDesc") return new Date(b.timestamp) - new Date(a.timestamp);
+            if (value === "timestampAsc") return new Date(a.timestamp) - new Date(b.timestamp);
+            if (value === "userName") return a.user.localeCompare(b.user);
+            if (value === "eventType") return a.eventType.localeCompare(b.eventType);
+            if (value === "riskDesc") return getRiskValue(b.risk) - getRiskValue(a.risk);
+            if (value === "riskAsc") return getRiskValue(a.risk) - getRiskValue(b.risk);
+            return 0;
+        });
+
+        currentPage = 1;
+        renderTable();
+    });
+
+    renderTable();
+</script>

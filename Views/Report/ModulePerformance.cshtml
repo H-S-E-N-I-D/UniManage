@@ -1,0 +1,448 @@
+﻿@{
+    ViewData["Title"] = "Module Performance Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">
+                Reports and Analytics
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">
+                Module Performance Report
+            </h1>
+            <p class="mt-1 text-sm text-slate-500">
+                Analyze module-wise student performance, completion, pass rate, and average marks.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <button class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+                <i class="fa-solid fa-file-excel"></i>
+                Export to Excel
+            </button>
+            <button class="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700">
+                <i class="fa-solid fa-file-pdf"></i>
+                Export to PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Total Modules</p>
+            <h3 class="mt-2 text-2xl font-bold text-slate-800">20</h3>
+        </div>
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Average Marks</p>
+            <h3 class="mt-2 text-2xl font-bold text-brand-700">72.4%</h3>
+        </div>
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Average Pass Rate</p>
+            <h3 class="mt-2 text-2xl font-bold text-emerald-600">81%</h3>
+        </div>
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Low Performing Modules</p>
+            <h3 class="mt-2 text-2xl font-bold text-rose-600">3</h3>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-lg font-bold text-slate-800">Generate Report</h2>
+
+        <div class="grid gap-4 lg:grid-cols-3">
+
+            <!-- Searchable Course Dropdown -->
+            <div class="relative">
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Course</label>
+
+                <button id="courseDropdownButton"
+                        type="button"
+                        class="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-left text-sm text-slate-600 outline-none transition hover:border-brand-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <span id="selectedCourseText">Select course</span>
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                </button>
+
+                <input type="hidden" id="selectedCourseValue" name="Course" />
+
+                <div id="courseDropdownPanel" class="absolute z-40 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                    <div class="border-b border-slate-100 p-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                            <input id="courseSearchInput"
+                                   type="text"
+                                   placeholder="Search course name or code"
+                                   class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                        </div>
+                    </div>
+                    <div id="courseOptions" class="max-h-72 overflow-y-auto p-2"></div>
+                </div>
+            </div>
+
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">Batch</label>
+                <select class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option>Batch 0001</option>
+                    <option>Batch 0002</option>
+                    <option>Batch 0003</option>
+                    <option>Batch 0004</option>
+                    <option>Batch 0005</option>
+                </select>
+            </div>
+
+            <div class="flex items-end">
+                <button class="w-full rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-800">
+                    <i class="fa-solid fa-chart-line mr-2"></i>
+                    Generate Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Table -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div class="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h2 class="text-lg font-bold text-slate-800">Module Performance Details</h2>
+
+            <select id="sortOption"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-72">
+                <option value="moduleName">Sort by Module Name</option>
+                <option value="averageMarksDesc">Highest Average Marks</option>
+                <option value="averageMarksAsc">Lowest Average Marks</option>
+                <option value="studentsDesc">Highest Number of Students</option>
+                <option value="studentsAsc">Lowest Number of Students</option>
+                <option value="completedDesc">Highest Completed Students</option>
+                <option value="completedAsc">Lowest Completed Students</option>
+                <option value="passRateDesc">Highest Pass Rate</option>
+                <option value="passRateAsc">Lowest Pass Rate</option>
+            </select>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-100">
+            <table class="min-w-full divide-y divide-slate-100 text-sm">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Module Name</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Module Code</th>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Lecturer</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Batch No</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Number of Students</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Average Marks</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Completed Students</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Pass Rate</th>
+                    </tr>
+                </thead>
+                <tbody id="moduleTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p id="paginationInfo" class="text-sm text-slate-500"></p>
+
+            <div class="flex items-center gap-2">
+                <button id="previousPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Previous
+                </button>
+
+                <div id="paginationButtons" class="flex items-center gap-2"></div>
+
+                <button id="nextPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const courses = [
+        { code: "SE101", name: "BSc Software Engineering" },
+        { code: "CS102", name: "BSc Computer Science" },
+        { code: "IT103", name: "BSc Information Technology" },
+        { code: "CY104", name: "BSc Cyber Security" },
+        { code: "DS105", name: "BSc Data Science" },
+        { code: "AI106", name: "BSc Artificial Intelligence" }
+    ];
+
+    const modules = [
+
+            {
+                moduleName: "Programming Fundamentals",
+                moduleCode: "PF101",
+                lecturer: "Dr. Nuwan Perera",
+                batchNo: "Batch 0001",
+                students: 64,
+                averageMarks: 78,
+                completed: 56,
+                passRate: 88
+            },
+
+            {
+                moduleName: "Object Oriented Programming",
+                moduleCode: "OOP102",
+                lecturer: "Prof. Ishara Fernando",
+                batchNo: "Batch 0001",
+                students: 61,
+                averageMarks: 74,
+                completed: 52,
+                passRate: 84
+            },
+
+            {
+                moduleName: "Database Management Systems",
+                moduleCode: "DB103",
+                lecturer: "Dr. Kavindi Silva",
+                batchNo: "Batch 0002",
+                students: 58,
+                averageMarks: 71,
+                completed: 48,
+                passRate: 82
+            },
+
+            {
+                moduleName: "Software Engineering Principles",
+                moduleCode: "SE104",
+                lecturer: "Prof. Malith Jayasinghe",
+                batchNo: "Batch 0002",
+                students: 66,
+                averageMarks: 80,
+                completed: 58,
+                passRate: 90
+            },
+
+            {
+                moduleName: "Artificial Intelligence",
+                moduleCode: "AI105",
+                lecturer: "Dr. Sanduni Peris",
+                batchNo: "Batch 0003",
+                students: 52,
+                averageMarks: 77,
+                completed: 45,
+                passRate: 86
+            },
+
+            {
+                moduleName: "Machine Learning",
+                moduleCode: "ML106",
+                lecturer: "Dr. Tharindu Wijesinghe",
+                batchNo: "Batch 0003",
+                students: 48,
+                averageMarks: 72,
+                completed: 39,
+                passRate: 81
+            },
+
+            {
+                moduleName: "Computer Networks",
+                moduleCode: "CN107",
+                lecturer: "Prof. Dinuka Ekanayake",
+                batchNo: "Batch 0004",
+                students: 54,
+                averageMarks: 69,
+                completed: 40,
+                passRate: 74
+            },
+
+            {
+                moduleName: "Cyber Security",
+                moduleCode: "CS108",
+                lecturer: "Dr. Yasasvi Gunawardena",
+                batchNo: "Batch 0004",
+                students: 46,
+                averageMarks: 83,
+                completed: 42,
+                passRate: 92
+            },
+
+            {
+                moduleName: "Cloud Computing",
+                moduleCode: "CC109",
+                lecturer: "Prof. Chamodi Rathnayake",
+                batchNo: "Batch 0005",
+                students: 57,
+                averageMarks: 75,
+                completed: 49,
+                passRate: 85
+            },
+
+            {
+                moduleName: "Mobile Application Development",
+                moduleCode: "MAD110",
+                lecturer: "Dr. Lahiru Fernando",
+                batchNo: "Batch 0005",
+                students: 51,
+                averageMarks: 79,
+                completed: 46,
+                passRate: 89
+            }
+        ];
+
+    let currentPage = 1;
+    const rowsPerPage = 10;
+    let sortedModules = [...modules];
+
+    const courseDropdownButton = document.getElementById("courseDropdownButton");
+    const courseDropdownPanel = document.getElementById("courseDropdownPanel");
+    const courseSearchInput = document.getElementById("courseSearchInput");
+    const courseOptions = document.getElementById("courseOptions");
+    const selectedCourseText = document.getElementById("selectedCourseText");
+    const selectedCourseValue = document.getElementById("selectedCourseValue");
+
+    function renderCourses(searchText = "") {
+        courseOptions.innerHTML = "";
+
+        const filteredCourses = courses.filter(course =>
+            course.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            course.code.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        filteredCourses.forEach(course => {
+            const option = document.createElement("button");
+            option.type = "button";
+            option.className = "flex w-full flex-col rounded-xl px-4 py-3 text-left hover:bg-brand-50";
+            option.innerHTML = `
+                <span class="font-semibold text-slate-700">${course.name}</span>
+                <span class="text-xs text-slate-400">${course.code}</span>
+            `;
+
+            option.addEventListener("click", () => {
+                selectedCourseText.textContent = `${course.name} (${course.code})`;
+                selectedCourseValue.value = course.code;
+                courseDropdownPanel.classList.add("hidden");
+            });
+
+            courseOptions.appendChild(option);
+        });
+    }
+
+    courseDropdownButton.addEventListener("click", () => {
+        courseDropdownPanel.classList.toggle("hidden");
+        courseSearchInput.focus();
+        renderCourses();
+    });
+
+    courseSearchInput.addEventListener("input", function () {
+        renderCourses(this.value);
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!courseDropdownButton.contains(event.target) && !courseDropdownPanel.contains(event.target)) {
+            courseDropdownPanel.classList.add("hidden");
+        }
+    });
+
+    function renderTable() {
+        const tableBody = document.getElementById("moduleTableBody");
+        tableBody.innerHTML = "";
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginatedModules = sortedModules.slice(start, end);
+
+        paginatedModules.forEach(module => {
+            tableBody.innerHTML += `
+                    <tr class="transition hover:bg-brand-50/40">
+        <td class="px-4 py-3 font-medium text-slate-800">${module.moduleName}</td>
+        <td class="px-4 py-3 text-center text-slate-600">${module.moduleCode}</td>
+        <td class="px-4 py-3 text-slate-600">${module.lecturer}</td>
+        <td class="px-4 py-3 text-center text-slate-600">${module.batchNo}</td>
+        <td class="px-4 py-3 text-center text-slate-600">${module.students}</td>
+        <td class="px-4 py-3 text-center">
+            <span class="rounded-full bg-brand-50 px-3 py-1 font-semibold text-brand-700">
+                ${module.averageMarks}%
+            </span>
+        </td>
+        <td class="px-4 py-3 text-center">
+            <span class="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700">
+                ${module.completed}
+            </span>
+        </td>
+        <td class="px-4 py-3 text-center">
+            <span class="rounded-full bg-indigo-50 px-3 py-1 font-semibold text-indigo-700">
+                ${module.passRate}%
+            </span>
+        </td>
+    </tr>
+            `;
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(sortedModules.length / rowsPerPage);
+        const paginationButtons = document.getElementById("paginationButtons");
+        const paginationInfo = document.getElementById("paginationInfo");
+
+        paginationButtons.innerHTML = "";
+
+        const startRecord = (currentPage - 1) * rowsPerPage + 1;
+        const endRecord = Math.min(currentPage * rowsPerPage, sortedModules.length);
+
+        paginationInfo.textContent = `Showing ${startRecord} to ${endRecord} of ${sortedModules.length} records`;
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement("button");
+            button.textContent = i;
+            button.className = i === currentPage
+                ? "rounded-lg bg-brand-700 px-3 py-2 text-sm font-semibold text-white"
+                : "rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50";
+
+            button.addEventListener("click", () => {
+                currentPage = i;
+                renderTable();
+            });
+
+            paginationButtons.appendChild(button);
+        }
+
+        document.getElementById("previousPage").disabled = currentPage === 1;
+        document.getElementById("nextPage").disabled = currentPage === totalPages;
+    }
+
+    document.getElementById("previousPage").addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", () => {
+        const totalPages = Math.ceil(sortedModules.length / rowsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    document.getElementById("sortOption").addEventListener("change", function () {
+        const value = this.value;
+
+        sortedModules.sort((a, b) => {
+            if (value === "moduleName") return a.moduleName.localeCompare(b.moduleName);
+            if (value === "averageMarksDesc") return b.averageMarks - a.averageMarks;
+            if (value === "averageMarksAsc") return a.averageMarks - b.averageMarks;
+            if (value === "studentsDesc") return b.students - a.students;
+            if (value === "studentsAsc") return a.students - b.students;
+            if (value === "completedDesc") return b.completed - a.completed;
+            if (value === "completedAsc") return a.completed - b.completed;
+            if (value === "passRateDesc") return b.passRate - a.passRate;
+            if (value === "passRateAsc") return a.passRate - b.passRate;
+            return 0;
+        });
+
+        currentPage = 1;
+        renderTable();
+    });
+
+    renderCourses();
+    renderTable();
+</script>

@@ -1,0 +1,477 @@
+﻿
+@{
+    ViewData["Title"] = "Course Popularity Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">
+                Reports and Analytics
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">
+                Course Popularity Report
+            </h1>
+            <p class="mt-1 text-sm text-slate-500">
+                Analyze course demand using enrollment count, waitlist count, completion rate, and popularity ranking.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <button class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+                <i class="fa-solid fa-file-excel"></i>
+                Export to Excel
+            </button>
+
+            <button class="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700">
+                <i class="fa-solid fa-file-pdf"></i>
+                Export to PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Total Courses</p>
+            <h3 class="mt-2 text-2xl font-bold text-slate-800">20</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Total Enrollments</p>
+            <h3 class="mt-2 text-2xl font-bold text-brand-700">1,548</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Most Popular Course</p>
+            <h3 class="mt-2 text-xl font-bold text-emerald-600">BSc Software Engineering</h3>
+        </div>
+
+        <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+            <p class="text-sm text-slate-500">Total Waitlisted</p>
+            <h3 class="mt-2 text-2xl font-bold text-rose-600">186</h3>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <h2 class="mb-4 text-lg font-bold text-slate-800">
+            Generate Report
+        </h2>
+
+        <div class="grid gap-4 lg:grid-cols-4">
+
+            <!-- Searchable Department Dropdown -->
+            <div class="relative">
+                <label class="mb-1 block text-sm font-semibold text-slate-600">
+                    Department
+                </label>
+
+                <button id="departmentDropdownButton"
+                        type="button"
+                        class="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-left text-sm text-slate-600 outline-none transition hover:border-brand-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <span id="selectedDepartmentText">Select department</span>
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                </button>
+
+                <input type="hidden" id="selectedDepartmentValue" />
+
+                <div id="departmentDropdownPanel"
+                     class="absolute z-40 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                    <div class="border-b border-slate-100 p-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
+                            <input id="departmentSearchInput"
+                                   type="text"
+                                   placeholder="Search department"
+                                   class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                        </div>
+                    </div>
+
+                    <div id="departmentOptions" class="max-h-72 overflow-y-auto p-2"></div>
+                </div>
+            </div>
+
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-600">
+                    Academic Year
+                </label>
+
+                <select class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
+                    <option>2026</option>
+                    <option>2025</option>
+                    <option>2024</option>
+                </select>
+            </div>
+
+            <div class="flex items-end">
+                <button class="w-full rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-800">
+                    <i class="fa-solid fa-chart-line mr-2"></i>
+                    Generate Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Graph -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h2 class="text-lg font-bold text-slate-800">
+                    Course Popularity Chart
+                </h2>
+                <p class="text-sm text-slate-500">
+                    Compare courses by total enrollments and waitlisted students.
+                </p>
+            </div>
+
+            <select id="chartMetric"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-64">
+                <option value="enrollments">Enrollments</option>
+                <option value="waitlist">Waitlist Count</option>
+                <option value="completionRate">Completion Rate</option>
+            </select>
+        </div>
+
+        <div class="h-[380px]">
+            <canvas id="coursePopularityChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Report Table -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div class="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h2 class="text-lg font-bold text-slate-800">
+                Course Popularity Details
+            </h2>
+
+            <select id="sortOption"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-80">
+                <option value="rank">Sort by Popularity Rank</option>
+                <option value="courseName">Sort by Course Name</option>
+                <option value="enrollmentsDesc">Highest Enrollments</option>
+                <option value="enrollmentsAsc">Lowest Enrollments</option>
+                <option value="waitlistDesc">Highest Waitlist</option>
+                <option value="completionDesc">Highest Completion Rate</option>
+                <option value="completionAsc">Lowest Completion Rate</option>
+            </select>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-100">
+            <table class="min-w-full divide-y divide-slate-100 text-sm">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Rank</th>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Course Name</th>
+                        <th class="px-4 py-3 text-left font-semibold text-slate-600">Department</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Batch No</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Enrollment Count</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Waitlist Count</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Completion Rate</th>
+                        <th class="px-4 py-3 text-center font-semibold text-slate-600">Popularity Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="courseTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p id="paginationInfo" class="text-sm text-slate-500"></p>
+
+            <div class="flex items-center gap-2">
+                <button id="previousPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Previous
+                </button>
+
+                <div id="paginationButtons" class="flex items-center gap-2"></div>
+
+                <button id="nextPage"
+                        class="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-500 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const departments = [
+        { code: "DSE", name: "Department of Software Engineering" },
+        { code: "DCS", name: "Department of Computer Science" },
+        { code: "DIT", name: "Department of Information Technology" },
+        { code: "DCY", name: "Department of Cyber Security" },
+        { code: "DDS", name: "Department of Data Science" },
+        { code: "DAI", name: "Department of Artificial Intelligence" }
+    ];
+
+    const courses = [
+        { rank: 1, courseName: "BSc Software Engineering", department: "Software Engineering", batchNo: "Batch 0001", enrollments: 124, waitlist: 22, completionRate: 89, status: "Very Popular" },
+        { rank: 2, courseName: "BSc Computer Science", department: "Computer Science", batchNo: "Batch 0001", enrollments: 118, waitlist: 19, completionRate: 86, status: "Very Popular" },
+        { rank: 3, courseName: "BSc Data Science", department: "Data Science", batchNo: "Batch 0002", enrollments: 106, waitlist: 18, completionRate: 84, status: "Very Popular" },
+        { rank: 4, courseName: "BSc Artificial Intelligence", department: "Artificial Intelligence", batchNo: "Batch 0002", enrollments: 101, waitlist: 17, completionRate: 87, status: "Very Popular" },
+        { rank: 5, courseName: "BSc Cyber Security", department: "Cyber Security", batchNo: "Batch 0003", enrollments: 96, waitlist: 15, completionRate: 82, status: "Popular" },
+        { rank: 6, courseName: "BSc Information Technology", department: "Information Technology", batchNo: "Batch 0003", enrollments: 91, waitlist: 13, completionRate: 80, status: "Popular" },
+        { rank: 7, courseName: "BSc Cloud Computing", department: "Cloud Computing", batchNo: "Batch 0004", enrollments: 84, waitlist: 11, completionRate: 78, status: "Popular" },
+        { rank: 8, courseName: "BSc Network Engineering", department: "Network Engineering", batchNo: "Batch 0004", enrollments: 77, waitlist: 9, completionRate: 76, status: "Moderate" },
+        { rank: 9, courseName: "BSc Business Information Systems", department: "Information Systems", batchNo: "Batch 0005", enrollments: 72, waitlist: 8, completionRate: 75, status: "Moderate" },
+        { rank: 10, courseName: "Diploma in Software Development", department: "Software Engineering", batchNo: "Batch 0005", enrollments: 68, waitlist: 7, completionRate: 74, status: "Moderate" },
+        { rank: 11, courseName: "Diploma in Web Engineering", department: "Software Engineering", batchNo: "Batch 0006", enrollments: 63, waitlist: 7, completionRate: 73, status: "Moderate" },
+        { rank: 12, courseName: "Higher Diploma in Computing", department: "Computing", batchNo: "Batch 0006", enrollments: 59, waitlist: 6, completionRate: 72, status: "Moderate" },
+        { rank: 13, courseName: "Higher Diploma in Software Engineering", department: "Software Engineering", batchNo: "Batch 0007", enrollments: 56, waitlist: 5, completionRate: 70, status: "Moderate" },
+        { rank: 14, courseName: "Diploma in Graphic Design", department: "Multimedia", batchNo: "Batch 0007", enrollments: 48, waitlist: 4, completionRate: 69, status: "Low Demand" },
+        { rank: 15, courseName: "Diploma in Multimedia Design", department: "Multimedia", batchNo: "Batch 0008", enrollments: 45, waitlist: 3, completionRate: 68, status: "Low Demand" },
+        { rank: 16, courseName: "MBA in Project Management", department: "Business Management", batchNo: "Batch 0008", enrollments: 42, waitlist: 5, completionRate: 81, status: "Low Demand" },
+        { rank: 17, courseName: "MSc Cyber Security", department: "Cyber Security", batchNo: "Batch 0009", enrollments: 39, waitlist: 4, completionRate: 83, status: "Low Demand" },
+        { rank: 18, courseName: "MSc Data Analytics", department: "Data Science", batchNo: "Batch 0009", enrollments: 37, waitlist: 3, completionRate: 82, status: "Low Demand" },
+        { rank: 19, courseName: "MSc Information Systems", department: "Information Systems", batchNo: "Batch 0010", enrollments: 35, waitlist: 2, completionRate: 79, status: "Low Demand" },
+        { rank: 20, courseName: "Foundation in Computing", department: "Computing", batchNo: "Batch 0010", enrollments: 28, waitlist: 1, completionRate: 66, status: "Low Demand" }
+    ];
+
+    let currentPage = 1;
+    const rowsPerPage = 10;
+    let sortedCourses = [...courses];
+    let popularityChart;
+
+    const courseTableBody = document.getElementById("courseTableBody");
+    const paginationButtons = document.getElementById("paginationButtons");
+    const paginationInfo = document.getElementById("paginationInfo");
+
+    function getStatusClass(status) {
+        if (status === "Very Popular") return "bg-emerald-50 text-emerald-700";
+        if (status === "Popular") return "bg-brand-50 text-brand-700";
+        if (status === "Moderate") return "bg-amber-50 text-amber-700";
+        return "bg-rose-50 text-rose-700";
+    }
+
+    function renderTable() {
+        courseTableBody.innerHTML = "";
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        sortedCourses.slice(start, end).forEach(course => {
+            courseTableBody.innerHTML += `
+                <tr class="transition hover:bg-brand-50/40">
+                    <td class="px-4 py-3 text-center font-semibold text-slate-700">${course.rank}</td>
+                    <td class="px-4 py-3 font-medium text-slate-800">${course.courseName}</td>
+                    <td class="px-4 py-3 text-slate-600">${course.department}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${course.batchNo}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-brand-50 px-3 py-1 font-semibold text-brand-700">
+                            ${course.enrollments}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-center text-slate-600">${course.waitlist}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700">
+                            ${course.completionRate}%
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full px-3 py-1 font-semibold ${getStatusClass(course.status)}">
+                            ${course.status}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(sortedCourses.length / rowsPerPage);
+        paginationButtons.innerHTML = "";
+
+        const startRecord = (currentPage - 1) * rowsPerPage + 1;
+        const endRecord = Math.min(currentPage * rowsPerPage, sortedCourses.length);
+
+        paginationInfo.textContent = `Showing ${startRecord} to ${endRecord} of ${sortedCourses.length} records`;
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement("button");
+            button.textContent = i;
+
+            button.className = i === currentPage
+                ? "rounded-lg bg-brand-700 px-3 py-2 text-sm font-semibold text-white"
+                : "rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50";
+
+            button.addEventListener("click", () => {
+                currentPage = i;
+                renderTable();
+            });
+
+            paginationButtons.appendChild(button);
+        }
+
+        document.getElementById("previousPage").disabled = currentPage === 1;
+        document.getElementById("nextPage").disabled = currentPage === totalPages;
+    }
+
+    document.getElementById("previousPage").addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById("nextPage").addEventListener("click", () => {
+        const totalPages = Math.ceil(sortedCourses.length / rowsPerPage);
+
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    document.getElementById("sortOption").addEventListener("change", function () {
+        const value = this.value;
+
+        sortedCourses.sort((a, b) => {
+            if (value === "rank") return a.rank - b.rank;
+            if (value === "courseName") return a.courseName.localeCompare(b.courseName);
+            if (value === "enrollmentsDesc") return b.enrollments - a.enrollments;
+            if (value === "enrollmentsAsc") return a.enrollments - b.enrollments;
+            if (value === "waitlistDesc") return b.waitlist - a.waitlist;
+            if (value === "completionDesc") return b.completionRate - a.completionRate;
+            if (value === "completionAsc") return a.completionRate - b.completionRate;
+            return 0;
+        });
+
+        currentPage = 1;
+        renderTable();
+        renderChart();
+    });
+
+    function renderChart() {
+        const metric = document.getElementById("chartMetric").value;
+
+        const topCourses = [...sortedCourses]
+            .sort((a, b) => b[metric] - a[metric])
+            .slice(0, 10);
+
+        const labels = topCourses.map(course => course.courseName);
+        const values = topCourses.map(course => course[metric]);
+
+        const chartLabel =
+            metric === "enrollments"
+                ? "Enrollment Count"
+                : metric === "waitlist"
+                    ? "Waitlist Count"
+                    : "Completion Rate (%)";
+
+        if (popularityChart) {
+            popularityChart.destroy();
+        }
+
+        const ctx = document.getElementById("coursePopularityChart");
+
+        popularityChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: chartLabel,
+                    data: values,
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: "index",
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            callback: function (value) {
+                                const label = this.getLabelForValue(value);
+                                return label.length > 18 ? label.substring(0, 18) + "..." : label;
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    document.getElementById("chartMetric").addEventListener("change", renderChart);
+
+    function renderDepartments(searchText = "") {
+        const departmentOptions = document.getElementById("departmentOptions");
+        departmentOptions.innerHTML = "";
+
+        const filteredDepartments = departments.filter(dept =>
+            dept.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            dept.code.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        filteredDepartments.forEach(dept => {
+            const option = document.createElement("button");
+            option.type = "button";
+            option.className = "flex w-full flex-col rounded-xl px-4 py-3 text-left hover:bg-brand-50";
+
+            option.innerHTML = `
+                <span class="font-semibold text-slate-700">${dept.name}</span>
+                <span class="text-xs text-slate-400">${dept.code}</span>
+            `;
+
+            option.addEventListener("click", () => {
+                document.getElementById("selectedDepartmentText").textContent = `${dept.name} (${dept.code})`;
+                document.getElementById("selectedDepartmentValue").value = dept.code;
+                document.getElementById("departmentDropdownPanel").classList.add("hidden");
+                document.getElementById("departmentSearchInput").value = "";
+            });
+
+            departmentOptions.appendChild(option);
+        });
+    }
+
+    document.getElementById("departmentDropdownButton").addEventListener("click", function (event) {
+        event.stopPropagation();
+        document.getElementById("departmentDropdownPanel").classList.toggle("hidden");
+        renderDepartments();
+
+        setTimeout(() => {
+            document.getElementById("departmentSearchInput").focus();
+        }, 50);
+    });
+
+    document.getElementById("departmentSearchInput").addEventListener("input", function () {
+        renderDepartments(this.value);
+    });
+
+    document.getElementById("departmentDropdownPanel").addEventListener("click", function (event) {
+        event.stopPropagation();
+    });
+
+    document.addEventListener("click", function () {
+        document.getElementById("departmentDropdownPanel").classList.add("hidden");
+    });
+
+    renderDepartments();
+    renderTable();
+    renderChart();
+</script>

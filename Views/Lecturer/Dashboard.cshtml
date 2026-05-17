@@ -1,0 +1,313 @@
+﻿@{
+    ViewData["Title"] = "Lecturer Dashboard";
+}
+
+<div class="space-y-6">
+
+    <!-- Welcome Header -->
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-700">
+                    Lecturer Portal
+                </p>
+
+                <h1 class="mt-2 text-2xl font-bold text-slate-800">
+                    Welcome back, Dr. Nuwan Perera
+                </h1>
+
+                <p class="mt-2 text-sm text-slate-500">
+                    Monitor assigned modules, student submissions, grading progress and communication updates.
+                </p>
+            </div>
+
+            <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-brand-100 text-brand-700">
+                <i class="fa-solid fa-chalkboard-user text-3xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+
+        <div class="rounded-3xl border border-blue-100 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-semibold text-slate-500">Assigned Modules</p>
+                    <h2 class="mt-2 text-3xl font-extrabold text-slate-800">4</h2>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-700">
+                    <i class="fa-solid fa-book-open-reader text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded-3xl border border-blue-100 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-semibold text-slate-500">Total Students</p>
+                    <h2 class="mt-2 text-3xl font-extrabold text-slate-800">420</h2>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+                    <i class="fa-solid fa-users text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded-3xl border border-blue-100 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-semibold text-slate-500">Pending Grading</p>
+                    <h2 class="mt-2 text-3xl font-extrabold text-slate-800">36</h2>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-700">
+                    <i class="fa-solid fa-clipboard-check text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded-3xl border border-blue-100 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-semibold text-slate-500">Unread Messages</p>
+                    <h2 class="mt-2 text-3xl font-extrabold text-slate-800">9</h2>
+                </div>
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-red-700">
+                    <i class="fa-solid fa-message text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
+
+        <!-- Left Content -->
+        <div class="space-y-6 xl:col-span-2">
+
+            <!-- Submission Overview Chart -->
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+                <div class="mb-5 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Submission Overview</h2>
+                        <p class="text-sm text-slate-500">Submission status across active assessments.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+                    <div class="rounded-2xl bg-green-50 p-5 text-center">
+                        <p class="text-sm font-semibold text-green-700">Submitted</p>
+                        <h3 class="mt-2 text-3xl font-extrabold text-green-700">218</h3>
+                    </div>
+
+                    <div class="rounded-2xl bg-red-50 p-5 text-center">
+                        <p class="text-sm font-semibold text-red-700">Late Submitted</p>
+                        <h3 class="mt-2 text-3xl font-extrabold text-red-700">27</h3>
+                    </div>
+
+                    <div class="rounded-2xl bg-slate-50 p-5 text-center">
+                        <p class="text-sm font-semibold text-slate-600">Not Submitted</p>
+                        <h3 class="mt-2 text-3xl font-extrabold text-slate-700">41</h3>
+                    </div>
+                </div>
+
+                <div class="mt-6 space-y-4">
+                    <div>
+                        <div class="mb-2 flex justify-between text-sm">
+                            <span class="font-semibold text-slate-700">Submitted</span>
+                            <span class="font-bold text-green-700">76%</span>
+                        </div>
+                        <div class="h-3 rounded-full bg-slate-200">
+                            <div class="h-3 rounded-full bg-green-600" style="width: 76%;"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="mb-2 flex justify-between text-sm">
+                            <span class="font-semibold text-slate-700">Late Submitted</span>
+                            <span class="font-bold text-red-700">9%</span>
+                        </div>
+                        <div class="h-3 rounded-full bg-slate-200">
+                            <div class="h-3 rounded-full bg-red-500" style="width: 9%;"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="mb-2 flex justify-between text-sm">
+                            <span class="font-semibold text-slate-700">Not Submitted</span>
+                            <span class="font-bold text-slate-700">15%</span>
+                        </div>
+                        <div class="h-3 rounded-full bg-slate-200">
+                            <div class="h-3 rounded-full bg-slate-500" style="width: 15%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assigned Modules -->
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+                <div class="mb-5 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Assigned Modules</h2>
+                        <p class="text-sm text-slate-500">Current teaching modules and student counts.</p>
+                    </div>
+
+                    <button onclick="navigateToModules()"
+                            class="rounded-xl border border-brand-700 px-4 py-2 text-sm font-semibold text-brand-700 hover:bg-brand-50">
+                        View All
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+
+                    <div class="rounded-2xl border border-slate-200 p-5">
+                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800">Software Testing and Quality Assurance</h3>
+                                <p class="text-sm text-slate-500">SE202 • 112 Students</p>
+                            </div>
+                            <span class="rounded-full bg-yellow-100 px-4 py-1.5 text-xs font-bold text-yellow-700">
+                                Ongoing
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 p-5">
+                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800">Web Application Development</h3>
+                                <p class="text-sm text-slate-500">SE205 • 98 Students</p>
+                            </div>
+                            <span class="rounded-full bg-green-100 px-4 py-1.5 text-xs font-bold text-green-700">
+                                Active
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 p-5">
+                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800">Cloud Application Development</h3>
+                                <p class="text-sm text-slate-500">SE310 • 86 Students</p>
+                            </div>
+                            <span class="rounded-full bg-blue-100 px-4 py-1.5 text-xs font-bold text-blue-700">
+                                Upcoming
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="space-y-6">
+
+            <!-- Quick Links -->
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+                <h2 class="mb-5 text-xl font-bold text-slate-800">Quick Links</h2>
+
+                <div class="space-y-3">
+                    <button onclick="navigateToModules()"
+                            class="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-left font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50">
+                        <i class="fa-solid fa-book-open-reader text-brand-700"></i>
+                        My Modules
+                    </button>
+
+                    <button onclick="navigateToAssessments()"
+                            class="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-left font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50">
+                        <i class="fa-solid fa-file-pen text-brand-700"></i>
+                        Manage Assessments
+                    </button>
+
+                    <button onclick="navigateToGrading()"
+                            class="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-left font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50">
+                        <i class="fa-solid fa-award text-brand-700"></i>
+                        Pending Grading
+                    </button>
+
+                    <button onclick="navigateToChats()"
+                            class="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-left font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50">
+                        <i class="fa-solid fa-comments text-brand-700"></i>
+                        Student Chats
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pending Grading -->
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+                <div class="mb-5 flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-slate-800">Pending Grading</h2>
+                    <i class="fa-solid fa-clock text-amber-600"></i>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="border-b border-slate-200 pb-4">
+                        <h3 class="font-bold text-slate-800">AD CW 01</h3>
+                        <p class="text-sm text-slate-500">Software Testing and QA</p>
+                        <p class="mt-2 text-xs font-semibold text-amber-700">18 submissions pending</p>
+                    </div>
+
+                    <div class="border-b border-slate-200 pb-4">
+                        <h3 class="font-bold text-slate-800">Web Lab Report</h3>
+                        <p class="text-sm text-slate-500">Web Application Development</p>
+                        <p class="mt-2 text-xs font-semibold text-amber-700">11 submissions pending</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800">Cloud Deployment Task</h3>
+                        <p class="text-sm text-slate-500">Cloud Application Development</p>
+                        <p class="mt-2 text-xs font-semibold text-amber-700">7 submissions pending</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Messages -->
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+                <div class="mb-5 flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-slate-800">Recent Messages</h2>
+                    <i class="fa-solid fa-message text-brand-700"></i>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="border-b border-slate-200 pb-4">
+                        <h3 class="font-bold text-slate-800">Kasun Perera</h3>
+                        <p class="mt-1 text-sm text-slate-500">Sir, I uploaded the corrected coursework document.</p>
+                        <p class="mt-2 text-xs font-semibold text-slate-400">Today</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800">Nimal Silva</h3>
+                        <p class="mt-1 text-sm text-slate-500">Can you clarify the submission requirements?</p>
+                        <p class="mt-2 text-xs font-semibold text-slate-400">Yesterday</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        function navigateToModules() {
+            console.log("Navigate to lecturer modules page");
+        }
+
+        function navigateToAssessments() {
+            console.log("Navigate to assessments management page");
+        }
+
+        function navigateToGrading() {
+            console.log("Navigate to pending grading page");
+        }
+
+        function navigateToChats() {
+            console.log("Navigate to student chats page");
+        }
+    </script>
+}

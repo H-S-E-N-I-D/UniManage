@@ -5,8 +5,8 @@
 <section class="space-y-6 px-1 sm:px-2">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Lecturer Management</p>
-            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Lecturer List</h1>
+            <p class="texttext-sm font-semibold uppercase tracking-[0.25em] text-brand-700">Lecturer Management</p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">Lecturer List</h1>
             <p class="mt-2 text-sm text-slate-500">View, filter, and manage registered lecturer records.</p>
         </div>
     </div>
@@ -34,7 +34,7 @@
                 <label class="block text-xs font-bold text-slate-700">Department</label>
                 <div class="relative mt-2">
                     <button id="departmentDropdownButton" type="button" class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
-                        <span id="selectedDepartmentText" class="truncate text-slate-400">Searchable Department Dropdown</span>
+                        <span id="selectedDepartmentText" class="truncate text-slate-400">Search Department</span>
                         <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
                     </button>
 
@@ -127,26 +127,26 @@
         ];
 
         const lecturers = [
-            { id: 1, title: 'Dr.', fullName: 'Nimal Perera', regNo: 'LEC-2026-001', department: 'Department of Computing', status: 'Active', email: 'nimal.perera@unimanage.edu', contactNumber: '+94 71 245 8891' },
-            { id: 2, title: 'Ms.', fullName: 'Thilini Fernando', regNo: 'LEC-2026-002', department: 'Department of Computing', status: 'Active', email: 'thilini.fernando@unimanage.edu', contactNumber: '+94 77 564 2281' },
-            { id: 3, title: 'Mr.', fullName: 'Kasun Wijesinghe', regNo: 'LEC-2026-003', department: 'Department of Computing', status: 'Inactive', email: 'kasun.wijesinghe@unimanage.edu', contactNumber: '+94 76 882 7741' },
-            { id: 4, title: 'Dr.', fullName: 'Chamara Silva', regNo: 'LEC-2026-004', department: 'Department of Computing', status: 'Active', email: 'chamara.silva@unimanage.edu', contactNumber: '+94 70 334 1128' },
-            { id: 5, title: 'Ms.', fullName: 'Dilini Jayawardena', regNo: 'LEC-2026-005', department: 'Department of Computing', status: 'Active', email: 'dilini.jayawardena@unimanage.edu', contactNumber: '+94 75 889 3412' },
-            { id: 6, title: 'Mr.', fullName: 'Lahiru Bandara', regNo: 'LEC-2026-006', department: 'Department of Engineering', status: 'Inactive', email: 'lahiru.bandara@unimanage.edu', contactNumber: '+94 78 672 4490' },
-            { id: 7, title: 'Dr.', fullName: 'Amila Rathnayake', regNo: 'LEC-2026-007', department: 'Department of Engineering', status: 'Active', email: 'amila.rathnayake@unimanage.edu', contactNumber: '+94 71 908 7762' },
-            { id: 8, title: 'Ms.', fullName: 'Kavindi Herath', regNo: 'LEC-2026-008', department: 'Department of Engineering', status: 'Active', email: 'kavindi.herath@unimanage.edu', contactNumber: '+94 76 521 9983' },
-            { id: 9, title: 'Mr.', fullName: 'Ruwan De Silva', regNo: 'LEC-2026-009', department: 'Department of Art & Design', status: 'Inactive', email: 'ruwan.desilva@unimanage.edu', contactNumber: '+94 77 301 5528' },
-            { id: 10, title: 'Dr.', fullName: 'Harsha Gunawardena', regNo: 'LEC-2026-010', department: 'Department of Art & Design', status: 'Active', email: 'harsha.gunawardena@unimanage.edu', contactNumber: '+94 72 654 4421' },
-            { id: 11, title: 'Ms.', fullName: 'Anjali Perera', regNo: 'LEC-2026-011', department: 'Department of Art & Design', status: 'Active', email: 'anjali.perera@unimanage.edu', contactNumber: '+94 71 667 2345' },
-            { id: 12, title: 'Dr.', fullName: 'Saman Kumara', regNo: 'LEC-2026-012', department: 'Department of Languages', status: 'Inactive', email: 'saman.kumara@unimanage.edu', contactNumber: '+94 74 213 9981' },
-            { id: 13, title: 'Ms.', fullName: 'Hiruni Wickramasinghe', regNo: 'LEC-2026-013', department: 'Department of Languages', status: 'Active', email: 'hiruni.wickramasinghe@unimanage.edu', contactNumber: '+94 76 118 7345' },
-            { id: 14, title: 'Mr.', fullName: 'Pradeep Senanayake', regNo: 'LEC-2026-014', department: 'Department of Languages', status: 'Active', email: 'pradeep.senanayake@unimanage.edu', contactNumber: '+94 77 845 6620' },
-            { id: 15, title: 'Dr.', fullName: 'Hashini Ekanayake', regNo: 'LEC-2026-015', department: 'Department of Life Science', status: 'Inactive', email: 'hashini.ekanayake@unimanage.edu', contactNumber: '+94 70 984 5521' },
-            { id: 16, title: 'Ms.', fullName: 'Chamodi Rathnayake', regNo: 'LEC-2026-016', department: 'Department of Life Science', status: 'Active', email: 'chamodi.rathnayake@unimanage.edu', contactNumber: '+94 71 345 7812' },
-            { id: 17, title: 'Dr.', fullName: 'Malith Dissanayake', regNo: 'LEC-2026-017', department: 'Department of Life Science', status: 'Active', email: 'malith.dissanayake@unimanage.edu', contactNumber: '+94 75 674 2201' },
-            { id: 18, title: 'Mr.', fullName: 'Pasan Abeysekara', regNo: 'LEC-2026-018', department: 'Department of Management & Law', status: 'Inactive', email: 'pasan.abeysekara@unimanage.edu', contactNumber: '+94 78 432 1198' },
-            { id: 19, title: 'Dr.', fullName: 'Yasith Samarasinghe', regNo: 'LEC-2026-019', department: 'Department of Management & Law', status: 'Active', email: 'yasith.samarasinghe@unimanage.edu', contactNumber: '+94 77 926 3814' },
-            { id: 20, title: 'Ms.', fullName: 'Sanduni Ranasinghe', regNo: 'LEC-2026-020', department: 'Department of Management & Law', status: 'Active', email: 'sanduni.ranasinghe@unimanage.edu', contactNumber: '+94 70 552 6432' }
+            { id: 1, title: 'Dr.', fullName: 'Nimal Perera', regNo: 'LEC-2026-001', department: 'Department of Computing', status: 'Active', email: 'nimal.perera@smartedu.lk', contactNumber: '+94 71 245 8891' },
+            { id: 2, title: 'Ms.', fullName: 'Thilini Fernando', regNo: 'LEC-2026-002', department: 'Department of Computing', status: 'Active', email: 'thilini.fernando@smartedu.lk', contactNumber: '+94 77 564 2281' },
+            { id: 3, title: 'Mr.', fullName: 'Kasun Wijesinghe', regNo: 'LEC-2026-003', department: 'Department of Computing', status: 'Inactive', email: 'kasun.wijesinghe@smartedu.lk', contactNumber: '+94 76 882 7741' },
+            { id: 4, title: 'Dr.', fullName: 'Chamara Silva', regNo: 'LEC-2026-004', department: 'Department of Computing', status: 'Active', email: 'chamara.silva@smartedu.lk', contactNumber: '+94 70 334 1128' },
+            { id: 5, title: 'Ms.', fullName: 'Dilini Jayawardena', regNo: 'LEC-2026-005', department: 'Department of Computing', status: 'Active', email: 'dilini.jayawardena@smartedu.lk', contactNumber: '+94 75 889 3412' },
+            { id: 6, title: 'Mr.', fullName: 'Lahiru Bandara', regNo: 'LEC-2026-006', department: 'Department of Engineering', status: 'Inactive', email: 'lahiru.bandara@smartedu.lk', contactNumber: '+94 78 672 4490' },
+            { id: 7, title: 'Dr.', fullName: 'Amila Rathnayake', regNo: 'LEC-2026-007', department: 'Department of Engineering', status: 'Active', email: 'amila.rathnayake@smartedu.lk', contactNumber: '+94 71 908 7762' },
+            { id: 8, title: 'Ms.', fullName: 'Kavindi Herath', regNo: 'LEC-2026-008', department: 'Department of Engineering', status: 'Active', email: 'kavindi.herath@smartedu.lk', contactNumber: '+94 76 521 9983' },
+            { id: 9, title: 'Mr.', fullName: 'Ruwan De Silva', regNo: 'LEC-2026-009', department: 'Department of Art & Design', status: 'Inactive', email: 'ruwan.desilva@smartedu.lk', contactNumber: '+94 77 301 5528' },
+            { id: 10, title: 'Dr.', fullName: 'Harsha Gunawardena', regNo: 'LEC-2026-010', department: 'Department of Art & Design', status: 'Active', email: 'harsha.gunawardena@smartedu.lk', contactNumber: '+94 72 654 4421' },
+            { id: 11, title: 'Ms.', fullName: 'Anjali Perera', regNo: 'LEC-2026-011', department: 'Department of Art & Design', status: 'Active', email: 'anjali.perera@smartedu.lk', contactNumber: '+94 71 667 2345' },
+            { id: 12, title: 'Dr.', fullName: 'Saman Kumara', regNo: 'LEC-2026-012', department: 'Department of Languages', status: 'Inactive', email: 'saman.kumara@smartedu.lk', contactNumber: '+94 74 213 9981' },
+            { id: 13, title: 'Ms.', fullName: 'Hiruni Wickramasinghe', regNo: 'LEC-2026-013', department: 'Department of Languages', status: 'Active', email: 'hiruni.wickramasinghe@smartedu.lk', contactNumber: '+94 76 118 7345' },
+            { id: 14, title: 'Mr.', fullName: 'Pradeep Senanayake', regNo: 'LEC-2026-014', department: 'Department of Languages', status: 'Active', email: 'pradeep.senanayake@smartedu.lk', contactNumber: '+94 77 845 6620' },
+            { id: 15, title: 'Dr.', fullName: 'Hashini Ekanayake', regNo: 'LEC-2026-015', department: 'Department of Life Science', status: 'Inactive', email: 'hashini.ekanayake@smartedu.lk', contactNumber: '+94 70 984 5521' },
+            { id: 16, title: 'Ms.', fullName: 'Chamodi Rathnayake', regNo: 'LEC-2026-016', department: 'Department of Life Science', status: 'Active', email: 'chamodi.rathnayake@smartedu.lk', contactNumber: '+94 71 345 7812' },
+            { id: 17, title: 'Dr.', fullName: 'Malith Dissanayake', regNo: 'LEC-2026-017', department: 'Department of Life Science', status: 'Active', email: 'malith.dissanayake@smartedu.lk', contactNumber: '+94 75 674 2201' },
+            { id: 18, title: 'Mr.', fullName: 'Pasan Abeysekara', regNo: 'LEC-2026-018', department: 'Department of Management & Law', status: 'Inactive', email: 'pasan.abeysekara@smartedu.lk', contactNumber: '+94 78 432 1198' },
+            { id: 19, title: 'Dr.', fullName: 'Yasith Samarasinghe', regNo: 'LEC-2026-019', department: 'Department of Management & Law', status: 'Active', email: 'yasith.samarasinghe@smartedu.lk', contactNumber: '+94 77 926 3814' },
+            { id: 20, title: 'Ms.', fullName: 'Sanduni Ranasinghe', regNo: 'LEC-2026-020', department: 'Department of Management & Law', status: 'Active', email: 'sanduni.ranasinghe@smartedu.lk', contactNumber: '+94 70 552 6432' }
         ];
 
         const departmentDropdownButton = document.getElementById('departmentDropdownButton');
@@ -320,7 +320,7 @@
         function clearFilters() {
             selectedDepartment = '';
             selectedDepartmentInput.value = '';
-            selectedDepartmentText.textContent = 'Searchable Department Dropdown';
+            selectedDepartmentText.textContent = 'Search Department';
             selectedDepartmentText.classList.add('text-slate-400');
             selectedDepartmentText.classList.remove('text-slate-900');
             departmentSearchInput.value = '';

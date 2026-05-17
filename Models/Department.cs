@@ -1,38 +1,41 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UniManage.Models
 {
+    /// <summary>
+    /// Maps to the <c>departments</c> table.
+    /// Represents a university department that owns courses and staff profiles.
+    /// </summary>
     [Table("departments")]
     public class Department
     {
         [Key]
-        [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         [Required]
-        [Column("guid")]
-        [StringLength(255)]
+        [MaxLength(255)]
         public string Guid { get; set; } = string.Empty;
 
         [Required]
-        [Column("name")]
-        [StringLength(100)]
+        [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
 
-        [Column("description")]
         public string? Description { get; set; }
 
         [Required]
-        [Column("is_active")]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
-        [Column("created_at")]
         public DateTime? CreatedAt { get; set; }
 
-        [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
 
-        public virtual ICollection<Course> Courses { get; set; }
+        // Navigation properties
+        public virtual ICollection<Course> Courses { get; set; } = [];
+        public virtual ICollection<LecturerProfile> LecturerProfiles { get; set; } = [];
+        public virtual ICollection<DepartmentAdminProfile> DepartmentAdminProfiles { get; set; } = [];
     }
 }

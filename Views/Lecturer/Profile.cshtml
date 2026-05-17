@@ -1,0 +1,456 @@
+﻿
+@{
+    ViewData["Title"] = "Lecturer Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">
+                Lecturer Management
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">Lecturer Profile</h1>
+            <p class="mt-1 text-sm text-slate-500">
+                View lecturer personal details, assigned modules, teaching workload, grading progress, and feedback summary.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <button class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
+                <i class="fa-solid fa-print"></i>
+                Print Profile
+            </button>
+
+            <button class="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-800">
+                <i class="fa-solid fa-pen-to-square"></i>
+                Edit Profile
+            </button>
+        </div>
+    </div>
+
+    <!-- Profile Summary -->
+    <div class="rounded-2xl border border-blue-300 bg-white p-6 shadow-sm">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex items-center gap-5">
+                <div class="flex h-24 w-24 items-center justify-center rounded-full bg-brand-100 text-3xl font-bold text-brand-700">
+                    NP
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">Dr. Nuwan Perera</h2>
+                    <p class="mt-1 text-sm text-slate-500">Lecturer ID: LEC0001</p>
+
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <span class="rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700">
+                            Active
+                        </span>
+                        <span class="rounded-full bg-brand-50 px-3 py-1 text-sm font-semibold text-brand-700">
+                            Senior Lecturer
+                        </span>
+                        <span class="rounded-full bg-indigo-50 px-3 py-1 text-sm font-semibold text-indigo-700">
+                            Software Engineering
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-4 lg:w-[680px]">
+                <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4 text-center">
+                    <p class="text-sm text-slate-500">Assigned Modules</p>
+                    <h3 class="mt-1 text-2xl font-bold text-brand-700">4</h3>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4 text-center">
+                    <p class="text-sm text-slate-500">Students</p>
+                    <h3 class="mt-1 text-2xl font-bold text-emerald-600">142</h3>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4 text-center">
+                    <p class="text-sm text-slate-500">Weekly Hours</p>
+                    <h3 class="mt-1 text-2xl font-bold text-indigo-600">32</h3>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4 text-center">
+                    <p class="text-sm text-slate-500">Rating</p>
+                    <h3 class="mt-1 text-2xl font-bold text-amber-600">4.7</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Tabs -->
+    <div class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+        <div class="mb-5 flex flex-wrap gap-2 border-b border-slate-100 pb-4">
+            <button class="tab-button rounded-xl bg-brand-700 px-4 py-2 text-sm font-semibold text-white" data-tab="personal">
+                Personal Details
+            </button>
+            <button class="tab-button rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50" data-tab="academic">
+                Academic Details
+            </button>
+            <button class="tab-button rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50" data-tab="modules">
+                Assigned Modules
+            </button>
+            <button class="tab-button rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50" data-tab="workload">
+                Workload
+            </button>
+            <button class="tab-button rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50" data-tab="feedback">
+                Feedback
+            </button>
+            <button class="tab-button rounded-xl px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50" data-tab="documents">
+                Documents
+            </button>
+        </div>
+
+        <!-- Personal Details -->
+        <div id="personal" class="tab-content">
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Full Name</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">Dr. Nuwan Perera</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Email Address</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">nuwan.perera@smartedu.lk</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Contact Number</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">+94 77 456 8912</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">NIC / Passport</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">198512345678</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Date of Birth</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">18 August 1985</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Address</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">No. 41, Lake Road, Colombo</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic Details -->
+        <div id="academic" class="tab-content hidden">
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Department</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">Software Engineering</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Designation</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">Senior Lecturer</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Employment Type</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">Full-time</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Highest Qualification</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">PhD in Software Engineering</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Joined Date</p>
+                    <h4 class="mt-1 font-semibold text-slate-800">05 February 2020</h4>
+                </div>
+
+                <div class="rounded-2xl border border-slate-100 p-4">
+                    <p class="text-sm text-slate-500">Account Status</p>
+                    <h4 class="mt-1 font-semibold text-emerald-700">Active</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assigned Modules -->
+        <div id="modules" class="tab-content hidden">
+            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h3 class="text-lg font-bold text-slate-800">Assigned Modules</h3>
+
+                <select id="moduleStatusFilter"
+                        class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 sm:w-64">
+                    <option value="all">All Modules</option>
+                    <option value="Active">Active Modules</option>
+                    <option value="Completed">Completed Modules</option>
+                </select>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-100">
+                <table class="min-w-full divide-y divide-slate-100 text-sm">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Module Name</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Module Code</th>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Course</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Batch</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Students</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Average GPA</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="moduleTableBody" class="divide-y divide-slate-100 bg-white"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Workload -->
+        <div id="workload" class="tab-content hidden">
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+                    <p class="text-sm text-slate-500">Lecture Hours</p>
+                    <h3 class="mt-2 text-2xl font-bold text-brand-700">16 hrs</h3>
+                </div>
+
+                <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+                    <p class="text-sm text-slate-500">Lab Hours</p>
+                    <h3 class="mt-2 text-2xl font-bold text-emerald-600">8 hrs</h3>
+                </div>
+
+                <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+                    <p class="text-sm text-slate-500">Grading Hours</p>
+                    <h3 class="mt-2 text-2xl font-bold text-indigo-600">6 hrs</h3>
+                </div>
+
+                <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+                    <p class="text-sm text-slate-500">Consultation Hours</p>
+                    <h3 class="mt-2 text-2xl font-bold text-amber-600">2 hrs</h3>
+                </div>
+            </div>
+
+            <div class="mt-5 rounded-2xl border border-slate-100 p-5">
+                <div class="mb-2 flex justify-between text-sm">
+                    <span class="font-semibold text-slate-600">Weekly Workload Utilization</span>
+                    <span class="font-semibold text-brand-700">32 / 40 hrs</span>
+                </div>
+                <div class="h-3 rounded-full bg-slate-100">
+                    <div class="h-3 rounded-full bg-brand-600" style="width:80%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback -->
+        <div id="feedback" class="tab-content hidden">
+            <div class="grid gap-4 md:grid-cols-3">
+                <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+                    <p class="text-sm text-slate-500">Average Feedback Rating</p>
+                    <h3 class="mt-2 text-2xl font-bold text-amber-600">4.7 / 5</h3>
+                </div>
+
+                <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+                    <p class="text-sm text-slate-500">Feedback Responses</p>
+                    <h3 class="mt-2 text-2xl font-bold text-brand-700">118</h3>
+                </div>
+
+                <div class="rounded-2xl border border-blue-300 bg-white p-5 shadow-sm">
+                    <p class="text-sm text-slate-500">Student Satisfaction</p>
+                    <h3 class="mt-2 text-2xl font-bold text-emerald-600">94%</h3>
+                </div>
+            </div>
+
+            <div class="mt-5 overflow-x-auto rounded-2xl border border-slate-100">
+                <table class="min-w-full divide-y divide-slate-100 text-sm">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Evaluation Area</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Rating</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white">
+                        <tr>
+                            <td class="px-4 py-3 font-medium text-slate-800">Teaching Clarity</td>
+                            <td class="px-4 py-3 text-center text-slate-600">4.8 / 5</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700">Excellent</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 font-medium text-slate-800">Student Engagement</td>
+                            <td class="px-4 py-3 text-center text-slate-600">4.6 / 5</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700">Excellent</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 font-medium text-slate-800">Assessment Feedback</td>
+                            <td class="px-4 py-3 text-center text-slate-600">4.5 / 5</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="rounded-full bg-brand-50 px-3 py-1 font-semibold text-brand-700">Very Good</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Documents -->
+        <div id="documents" class="tab-content hidden">
+            <div class="overflow-x-auto rounded-2xl border border-slate-100">
+                <table class="min-w-full divide-y divide-slate-100 text-sm">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">Document</th>
+                            <th class="px-4 py-3 text-left font-semibold text-slate-600">File Name</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Type</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Status</th>
+                            <th class="px-4 py-3 text-center font-semibold text-slate-600">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-slate-100 bg-white">
+                        <tr>
+                            <td class="px-4 py-3 font-medium text-slate-800">Appointment Letter</td>
+                            <td class="px-4 py-3 text-slate-600">appointment_letter.pdf</td>
+                            <td class="px-4 py-3 text-center text-slate-600">PDF</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700">Verified</span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <button class="rounded-lg bg-brand-50 px-3 py-1.5 text-sm font-semibold text-brand-700 hover:bg-brand-100">
+                                    Download
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="px-4 py-3 font-medium text-slate-800">Highest Qualification Certificate</td>
+                            <td class="px-4 py-3 text-slate-600">phd_certificate.pdf</td>
+                            <td class="px-4 py-3 text-center text-slate-600">PDF</td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="rounded-full bg-emerald-50 px-3 py-1 font-semibold text-emerald-700">Verified</span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <button class="rounded-lg bg-brand-50 px-3 py-1.5 text-sm font-semibold text-brand-700 hover:bg-brand-100">
+                                    Download
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const selectedTab = this.getAttribute("data-tab");
+
+            tabButtons.forEach(btn => {
+                btn.classList.remove("bg-brand-700", "text-white");
+                btn.classList.add("text-slate-600", "hover:bg-slate-50");
+            });
+
+            this.classList.add("bg-brand-700", "text-white");
+            this.classList.remove("text-slate-600", "hover:bg-slate-50");
+
+            tabContents.forEach(content => {
+                content.classList.add("hidden");
+            });
+
+            document.getElementById(selectedTab).classList.remove("hidden");
+        });
+    });
+
+    const modules = [
+        {
+            moduleName: "Programming Fundamentals",
+            moduleCode: "PF101",
+            course: "BSc Software Engineering",
+            batch: "Batch 0001",
+            students: 42,
+            gpa: 3.62,
+            status: "Active"
+        },
+        {
+            moduleName: "Object Oriented Programming",
+            moduleCode: "OOP102",
+            course: "BSc Software Engineering",
+            batch: "Batch 0001",
+            students: 38,
+            gpa: 3.54,
+            status: "Active"
+        },
+        {
+            moduleName: "Software Quality Assurance",
+            moduleCode: "SQA201",
+            course: "BSc Software Engineering",
+            batch: "Batch 0002",
+            students: 34,
+            gpa: 3.71,
+            status: "Completed"
+        },
+        {
+            moduleName: "Final Year Project Supervision",
+            moduleCode: "FYP401",
+            course: "BSc Software Engineering",
+            batch: "Batch 0004",
+            students: 28,
+            gpa: 3.83,
+            status: "Active"
+        }
+    ];
+
+    const moduleTableBody = document.getElementById("moduleTableBody");
+    const moduleStatusFilter = document.getElementById("moduleStatusFilter");
+
+    function getStatusClass(status) {
+        if (status === "Active") return "bg-emerald-50 text-emerald-700";
+        if (status === "Completed") return "bg-brand-50 text-brand-700";
+        return "bg-slate-100 text-slate-700";
+    }
+
+    function renderModules(filter = "all") {
+        moduleTableBody.innerHTML = "";
+
+        const filteredModules = filter === "all"
+            ? modules
+            : modules.filter(item => item.status === filter);
+
+        filteredModules.forEach(item => {
+            moduleTableBody.innerHTML += `
+                <tr class="transition hover:bg-brand-50/40">
+                    <td class="px-4 py-3 font-medium text-slate-800">${item.moduleName}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${item.moduleCode}</td>
+                    <td class="px-4 py-3 text-slate-600">${item.course}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${item.batch}</td>
+                    <td class="px-4 py-3 text-center text-slate-600">${item.students}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full bg-brand-50 px-3 py-1 font-semibold text-brand-700">
+                            ${item.gpa.toFixed(2)}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="rounded-full px-3 py-1 font-semibold ${getStatusClass(item.status)}">
+                            ${item.status}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    moduleStatusFilter.addEventListener("change", function () {
+        renderModules(this.value);
+    });
+
+    renderModules();
+</script>

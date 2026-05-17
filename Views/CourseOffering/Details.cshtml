@@ -1,25 +1,33 @@
 ﻿@{
-    ViewData["Title"] = "Course Offering Infor";
+    ViewData["Title"] = "Course Offering Info";
 }
 
-
-
 <section class="space-y-6">
+
+    <!-- Page Header -->
     <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-brand-700">Course Offering Management</p>
-            <h1 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Course Offering View</h1>
-            <p class="mt-2 text-sm text-slate-500">View course offering details, semesters, modules, and assigned lecturers.</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-700">
+                Course Offering Management
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">
+                Course Offering View
+            </h1>
+            <p class="mt-2 text-sm text-slate-500">
+                View course offering details, semesters, modules, and assigned lecturers.
+            </p>
         </div>
 
         <div class="flex flex-col gap-3 sm:flex-row lg:justify-end">
-            <button id="addSemesterButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+            <button id="addSemesterButton" type="button"
+                    class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:-translate-y-0.5 hover:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
                 <i class="fa-solid fa-calendar-plus"></i>
                 Add Semester
             </button>
         </div>
     </div>
 
+    <!-- Course Information -->
     <section class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-panel sm:p-6">
         <div class="flex flex-col gap-4 border-b border-slate-100 pb-4 sm:flex-row sm:items-center sm:justify-between">
             <div class="flex items-center gap-3">
@@ -32,7 +40,10 @@
                 </div>
             </div>
 
-            <span id="statusBadge" class="inline-flex w-fit rounded-full bg-emerald-50 px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-100">Open</span>
+            <span id="statusBadge"
+                  class="inline-flex w-fit rounded-full bg-emerald-50 px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-100">
+                Open
+            </span>
         </div>
 
         <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -98,6 +109,7 @@
         </div>
     </section>
 
+    <!-- Semesters -->
     <section class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-panel sm:p-6">
         <div class="flex flex-col gap-4 border-b border-slate-100 pb-4 sm:flex-row sm:items-center sm:justify-between">
             <div class="flex items-center gap-3">
@@ -110,24 +122,107 @@
                 </div>
             </div>
 
-            <span id="semesterCountBadge" class="inline-flex w-fit rounded-full bg-slate-100 px-4 py-2 text-xs font-extrabold text-slate-700">2 Semesters</span>
+            <span id="semesterCountBadge"
+                  class="inline-flex w-fit rounded-full bg-slate-100 px-4 py-2 text-xs font-extrabold text-slate-700">
+                2 Semesters
+            </span>
         </div>
 
         <div id="semestersContainer" class="mt-6 space-y-5"></div>
     </section>
 
+    <!-- Page Buttons -->
     <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
-        <button id="goBackButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-8 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-300">
+        <button id="goBackButton" type="button"
+                class="inline-flex items-center justify-center gap-2 rounded-full bg-slate-100 px-8 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-300">
             <i class="fa-solid fa-arrow-left"></i>
             Go Back
         </button>
 
-        <button id="saveOfferingButton" type="button" class="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full bg-emerald-600 px-10 py-3 text-sm font-extrabold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-600">
+        <button id="saveOfferingButton" type="button"
+                class="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full bg-emerald-600 px-10 py-3 text-sm font-extrabold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-600">
             <i class="fa-solid fa-floppy-disk"></i>
             Save
         </button>
     </div>
 
+    <!-- Add Semester Popup -->
+    <div id="semesterPopup" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 p-4">
+        <div class="w-full max-w-xl rounded-[28px] bg-white p-5 shadow-2xl sm:p-6">
+            <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900">Add Semester</h2>
+                        <p class="text-sm text-slate-500">Create a new semester section for this course offering.</p>
+                    </div>
+                </div>
+
+                <button id="closeSemesterPopupButton" type="button"
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition hover:bg-slate-200">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="mt-5 grid gap-5 sm:grid-cols-2">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700">Academic Year</label>
+                    <div class="relative mt-2">
+                        <select id="semesterAcademicYear"
+                                class="w-full appearance-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-brand-600">
+                            <option value="">Select Academic Year</option>
+                            <option value="2026">2026</option>
+                            <option value="2025">2025</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700">Semester Name</label>
+                    <input id="semesterNameInput"
+                           type="text"
+                           placeholder="Example: Semester 3"
+                           class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700">Start Date</label>
+                    <input id="semesterStartDate"
+                           type="date"
+                           class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700">End Date</label>
+                    <input id="semesterEndDate"
+                           type="date"
+                           class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                </div>
+            </div>
+
+            <div id="semesterValidationBox"
+                 class="mt-5 hidden rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+            </div>
+
+            <div class="mt-6 flex justify-end gap-3 border-t border-slate-100 pt-5">
+                <button id="cancelSemesterPopupButton" type="button"
+                        class="rounded-full bg-slate-100 px-5 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">
+                    Cancel
+                </button>
+
+                <button id="confirmAddSemesterButton" type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:bg-brand-800">
+                    <i class="fa-solid fa-plus"></i>
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Module Popup -->
     <div id="modulePopup" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 p-4">
         <div class="w-full max-w-2xl rounded-[28px] bg-white p-5 shadow-2xl sm:p-6">
             <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
@@ -140,7 +235,9 @@
                         <p id="popupSemesterText" class="text-sm text-slate-500">Select module and lecturer.</p>
                     </div>
                 </div>
-                <button id="closePopupButton" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition hover:bg-slate-200">
+
+                <button id="closePopupButton" type="button"
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition hover:bg-slate-200">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -149,15 +246,19 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700">Module</label>
                     <div class="relative mt-2">
-                        <button id="moduleDropdownButton" type="button" class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <button id="moduleDropdownButton" type="button"
+                                class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
                             <span id="selectedModuleText" class="truncate text-slate-400">Search and select module</span>
                             <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
                         </button>
-                        <div id="moduleDropdownPanel" class="absolute z-50 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+
+                        <div id="moduleDropdownPanel"
+                             class="absolute z-50 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
                             <div class="border-b border-slate-100 p-3">
                                 <div class="relative">
                                     <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
-                                    <input id="moduleSearchInput" type="text" placeholder="Search module" class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                                    <input id="moduleSearchInput" type="text" placeholder="Search module"
+                                           class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
                                 </div>
                             </div>
                             <div id="moduleOptions" class="max-h-56 overflow-y-auto p-2"></div>
@@ -168,15 +269,19 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700">Lecturer</label>
                     <div class="relative mt-2">
-                        <button id="lecturerDropdownButton" type="button" class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <button id="lecturerDropdownButton" type="button"
+                                class="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-600">
                             <span id="selectedLecturerText" class="truncate text-slate-400">Search and select lecturer</span>
                             <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
                         </button>
-                        <div id="lecturerDropdownPanel" class="absolute z-50 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+
+                        <div id="lecturerDropdownPanel"
+                             class="absolute z-50 mt-2 hidden w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
                             <div class="border-b border-slate-100 p-3">
                                 <div class="relative">
                                     <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sm text-slate-400"></i>
-                                    <input id="lecturerSearchInput" type="text" placeholder="Search lecturer" class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
+                                    <input id="lecturerSearchInput" type="text" placeholder="Search lecturer"
+                                           class="w-full rounded-xl border border-slate-200 py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600" />
                                 </div>
                             </div>
                             <div id="lecturerOptions" class="max-h-56 overflow-y-auto p-2"></div>
@@ -185,17 +290,25 @@
                 </div>
             </div>
 
-            <div id="popupValidationBox" class="mt-5 hidden rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700"></div>
+            <div id="popupValidationBox"
+                 class="mt-5 hidden rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+            </div>
 
             <div class="mt-6 flex justify-end gap-3 border-t border-slate-100 pt-5">
-                <button id="cancelPopupButton" type="button" class="rounded-full bg-slate-100 px-5 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">Cancel</button>
-                <button id="confirmAddModuleButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:bg-brand-800">
+                <button id="cancelPopupButton" type="button"
+                        class="rounded-full bg-slate-100 px-5 py-3 text-sm font-extrabold text-slate-700 transition hover:bg-slate-200">
+                    Cancel
+                </button>
+
+                <button id="confirmAddModuleButton" type="button"
+                        class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-700/20 transition hover:bg-brand-800">
                     <i class="fa-solid fa-plus"></i>
                     Add
                 </button>
             </div>
         </div>
     </div>
+
 </section>
 
 <script>
@@ -203,6 +316,9 @@
         const semesters = [
             {
                 name: 'Semester 1',
+                academicYear: '2026',
+                startDate: '2026-01-15',
+                endDate: '2026-05-15',
                 modules: [
                     { module: 'Programming Fundamentals', lecturer: 'Dr. Nimal Perera' },
                     { module: 'Database Management Systems', lecturer: 'Ms. Thilini Fernando' },
@@ -211,6 +327,9 @@
             },
             {
                 name: 'Semester 2',
+                academicYear: '2026',
+                startDate: '2026-06-01',
+                endDate: '2026-10-30',
                 modules: [
                     { module: 'Object Oriented Programming', lecturer: 'Dr. Chamara Silva' },
                     { module: 'Software Engineering Principles', lecturer: 'Ms. Dilini Jayawardena' },
@@ -221,20 +340,34 @@
 
         const semestersContainer = document.getElementById('semestersContainer');
         const semesterCountBadge = document.getElementById('semesterCountBadge');
+
         const addSemesterButton = document.getElementById('addSemesterButton');
+        const semesterPopup = document.getElementById('semesterPopup');
+        const closeSemesterPopupButton = document.getElementById('closeSemesterPopupButton');
+        const cancelSemesterPopupButton = document.getElementById('cancelSemesterPopupButton');
+        const confirmAddSemesterButton = document.getElementById('confirmAddSemesterButton');
+        const semesterAcademicYear = document.getElementById('semesterAcademicYear');
+        const semesterNameInput = document.getElementById('semesterNameInput');
+        const semesterStartDate = document.getElementById('semesterStartDate');
+        const semesterEndDate = document.getElementById('semesterEndDate');
+        const semesterValidationBox = document.getElementById('semesterValidationBox');
+
         const saveOfferingButton = document.getElementById('saveOfferingButton');
         const goBackButton = document.getElementById('goBackButton');
+
         const modulePopup = document.getElementById('modulePopup');
         const closePopupButton = document.getElementById('closePopupButton');
         const cancelPopupButton = document.getElementById('cancelPopupButton');
         const confirmAddModuleButton = document.getElementById('confirmAddModuleButton');
         const popupSemesterText = document.getElementById('popupSemesterText');
         const popupValidationBox = document.getElementById('popupValidationBox');
+
         const moduleDropdownButton = document.getElementById('moduleDropdownButton');
         const moduleDropdownPanel = document.getElementById('moduleDropdownPanel');
         const moduleSearchInput = document.getElementById('moduleSearchInput');
         const moduleOptions = document.getElementById('moduleOptions');
         const selectedModuleText = document.getElementById('selectedModuleText');
+
         const lecturerDropdownButton = document.getElementById('lecturerDropdownButton');
         const lecturerDropdownPanel = document.getElementById('lecturerDropdownPanel');
         const lecturerSearchInput = document.getElementById('lecturerSearchInput');
@@ -273,6 +406,17 @@
             'Ms. Anjali Perera'
         ];
 
+        function formatDate(value) {
+            if (!value) return 'Not set';
+
+            const date = new Date(value + 'T00:00:00');
+            return date.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+
         function renderSemesters() {
             semestersContainer.innerHTML = '';
             semesterCountBadge.textContent = `${semesters.length} Semester${semesters.length === 1 ? '' : 's'}`;
@@ -286,7 +430,10 @@
                         <td class="px-5 py-4 font-semibold text-slate-900">${item.module}</td>
                         <td class="px-5 py-4 text-slate-700">${item.lecturer}</td>
                         <td class="px-5 py-4 text-right">
-                            <button type="button" data-semester="${semesterIndex}" data-module="${moduleIndex}" class="remove-module inline-flex h-9 w-9 items-center justify-center rounded-full bg-rose-50 text-rose-700 transition hover:bg-rose-100">
+                            <button type="button"
+                                    data-semester="${semesterIndex}"
+                                    data-module="${moduleIndex}"
+                                    class="remove-module inline-flex h-9 w-9 items-center justify-center rounded-full bg-rose-50 text-rose-700 transition hover:bg-rose-100">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
@@ -294,12 +441,23 @@
                 `).join('');
 
                 semesterCard.innerHTML = `
-                    <div class="flex flex-col gap-3 border-b border-slate-100 bg-slate-50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div class="flex flex-col gap-4 border-b border-slate-100 bg-slate-50 px-5 py-4 xl:flex-row xl:items-center xl:justify-between">
                         <div>
-                            <h3 class="text-base font-extrabold text-slate-900">${semester.name}</h3>
-                            <p class="mt-1 text-sm text-slate-500">${semester.modules.length} module${semester.modules.length === 1 ? '' : 's'} assigned</p>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <h3 class="text-base font-extrabold text-slate-900">${semester.name}</h3>
+                                <span class="rounded-full bg-brand-50 px-3 py-1 text-xs font-extrabold text-brand-700">${semester.academicYear}</span>
+                            </div>
+
+                            <div class="mt-2 flex flex-wrap gap-3 text-xs font-semibold text-slate-500">
+                                <span><i class="fa-regular fa-calendar mr-1 text-brand-600"></i>Start: ${formatDate(semester.startDate)}</span>
+                                <span><i class="fa-regular fa-calendar-check mr-1 text-brand-600"></i>End: ${formatDate(semester.endDate)}</span>
+                                <span><i class="fa-solid fa-layer-group mr-1 text-brand-600"></i>${semester.modules.length} module${semester.modules.length === 1 ? '' : 's'} assigned</span>
+                            </div>
                         </div>
-                        <button type="button" data-semester="${semesterIndex}" class="add-module-to-semester inline-flex items-center justify-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700 transition hover:bg-brand-100">
+
+                        <button type="button"
+                                data-semester="${semesterIndex}"
+                                class="add-module-to-semester inline-flex items-center justify-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-xs font-extrabold text-brand-700 transition hover:bg-brand-100">
                             <i class="fa-solid fa-plus"></i>
                             Add Module
                         </button>
@@ -314,10 +472,13 @@
                                     <th class="px-5 py-4 text-right">Action</th>
                                 </tr>
                             </thead>
+
                             <tbody class="divide-y divide-slate-100 bg-white">
                                 ${rows || `
                                     <tr>
-                                        <td colspan="3" class="px-5 py-8 text-center text-sm font-semibold text-slate-400">No modules assigned to this semester.</td>
+                                        <td colspan="3" class="px-5 py-8 text-center text-sm font-semibold text-slate-400">
+                                            No modules assigned to this semester.
+                                        </td>
                                     </tr>
                                 `}
                             </tbody>
@@ -329,13 +490,72 @@
             });
         }
 
+        function openSemesterPopup() {
+            semesterAcademicYear.value = '';
+            semesterNameInput.value = '';
+            semesterStartDate.value = '';
+            semesterEndDate.value = '';
+            semesterValidationBox.classList.add('hidden');
+
+            semesterPopup.classList.remove('hidden');
+            semesterPopup.classList.add('flex');
+
+            setTimeout(() => semesterAcademicYear.focus(), 0);
+        }
+
+        function closeSemesterPopup() {
+            semesterPopup.classList.add('hidden');
+            semesterPopup.classList.remove('flex');
+        }
+
         function addSemester() {
-            const nextNumber = semesters.length + 1;
+            semesterValidationBox.classList.add('hidden');
+
+            const academicYear = semesterAcademicYear.value;
+            const semesterName = semesterNameInput.value.trim();
+            const startDate = semesterStartDate.value;
+            const endDate = semesterEndDate.value;
+
+            if (!academicYear) {
+                semesterValidationBox.textContent = 'Please select an academic year.';
+                semesterValidationBox.classList.remove('hidden');
+                return;
+            }
+
+            if (!semesterName) {
+                semesterValidationBox.textContent = 'Please enter semester name.';
+                semesterValidationBox.classList.remove('hidden');
+                return;
+            }
+
+            if (!startDate) {
+                semesterValidationBox.textContent = 'Please select start date.';
+                semesterValidationBox.classList.remove('hidden');
+                return;
+            }
+
+            if (!endDate) {
+                semesterValidationBox.textContent = 'Please select end date.';
+                semesterValidationBox.classList.remove('hidden');
+                return;
+            }
+
+            if (new Date(endDate) < new Date(startDate)) {
+                semesterValidationBox.textContent = 'End date cannot be earlier than start date.';
+                semesterValidationBox.classList.remove('hidden');
+                return;
+            }
+
             semesters.push({
-                name: `Semester ${nextNumber}`,
+                name: semesterName,
+                academicYear: academicYear,
+                startDate: startDate,
+                endDate: endDate,
                 modules: []
             });
+
             renderSemesters();
+            closeSemesterPopup();
         }
 
         function openModulePopup(semesterIndex) {
@@ -344,17 +564,22 @@
             selectedLecturer = '';
 
             popupSemesterText.textContent = `Add a module to ${semesters[semesterIndex].name}.`;
+
             selectedModuleText.textContent = 'Search and select module';
             selectedModuleText.classList.add('text-slate-400');
             selectedModuleText.classList.remove('text-slate-900');
+
             selectedLecturerText.textContent = 'Search and select lecturer';
             selectedLecturerText.classList.add('text-slate-400');
             selectedLecturerText.classList.remove('text-slate-900');
+
             moduleSearchInput.value = '';
             lecturerSearchInput.value = '';
             popupValidationBox.classList.add('hidden');
+
             renderDropdownOptions(moduleOptions, availableModules, '', selectModule);
             renderDropdownOptions(lecturerOptions, availableLecturers, '', selectLecturer);
+
             modulePopup.classList.remove('hidden');
             modulePopup.classList.add('flex');
         }
@@ -369,6 +594,7 @@
         function renderDropdownOptions(container, items, keyword, selectCallback) {
             const normalizedKeyword = keyword.trim().toLowerCase();
             const filteredItems = items.filter(item => item.toLowerCase().includes(normalizedKeyword));
+
             container.innerHTML = '';
 
             if (filteredItems.length === 0) {
@@ -435,7 +661,16 @@
             closeModulePopup();
         }
 
-        addSemesterButton.addEventListener('click', addSemester);
+        addSemesterButton.addEventListener('click', openSemesterPopup);
+        closeSemesterPopupButton.addEventListener('click', closeSemesterPopup);
+        cancelSemesterPopupButton.addEventListener('click', closeSemesterPopup);
+        confirmAddSemesterButton.addEventListener('click', addSemester);
+
+        semesterPopup.addEventListener('click', event => {
+            if (event.target === semesterPopup) {
+                closeSemesterPopup();
+            }
+        });
 
         semestersContainer.addEventListener('click', event => {
             const addButton = event.target.closest('.add-module-to-semester');
@@ -453,6 +688,7 @@
                 renderSemesters();
             }
         });
+
         moduleDropdownButton.addEventListener('click', () => {
             moduleDropdownPanel.classList.toggle('hidden');
             lecturerDropdownPanel.classList.add('hidden');

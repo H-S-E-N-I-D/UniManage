@@ -1,0 +1,340 @@
+﻿@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="space-y-6">
+
+    <!-- Welcome Header -->
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-700">
+                    Student Portal
+                </p>
+
+                <h1 class="mtmt-2 text-2xl font-bold text-slate-800">
+                    Welcome back, Kasun Perera
+                </h1>
+
+                <p class="mt-2 text-sm text-slate-500">
+                    Monitor your enrolled courses, module progress, deadlines and academic updates.
+                </p>
+            </div>
+
+            <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-brand-100 text-brand-700">
+                <i class="fa-solid fa-user-graduate text-3xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+
+        <!-- Enrolled Courses -->
+        <div class="rounded-3xl border border-blue-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-sm font-semibold text-slate-500">
+                        Enrolled Courses
+                    </p>
+
+                    <h2 class="mt-2 text-3xl font-extrabold text-slate-800">
+                        2
+                    </h2>
+                </div>
+
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-700">
+                    <i class="fa-solid fa-book-open text-xl"></i>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Active Modules -->
+        <div class="rounded-3xl border border-blue-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-sm font-semibold text-slate-500">
+                        Active Modules
+                    </p>
+
+                    <h2 class="mt-2 text-3xl font-extrabold text-slate-800">
+                        7
+                    </h2>
+                </div>
+
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+                    <i class="fa-solid fa-layer-group text-xl"></i>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Pending Assessments -->
+        <div class="rounded-3xl border border-blue-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-sm font-semibold text-slate-500">
+                        Pending Assessments
+                    </p>
+
+                    <h2 class="mt-2 text-3xl font-extrabold text-slate-800">
+                        3
+                    </h2>
+                </div>
+
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-700">
+                    <i class="fa-solid fa-file-pen text-xl"></i>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Unread Messages -->
+        <div class="rounded-3xl border border-blue-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <p class="text-sm font-semibold text-slate-500">
+                        Unread Messages
+                    </p>
+
+                    <h2 class="mt-2 text-3xl font-extrabold text-slate-800">
+                        4
+                    </h2>
+                </div>
+
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-red-700">
+                    <i class="fa-solid fa-message text-xl"></i>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
+
+        <!-- Left Content -->
+        <div class="space-y-6 xl:col-span-2">
+
+            <!-- Course Progress -->
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+                <div class="mb-5 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">My Course Progress</h2>
+                        <p class="text-sm text-slate-500">Current progress of enrolled courses.</p>
+                    </div>
+
+                    <button onclick="navigateToCourses()"
+                            class="rounded-xl border border-brand-700 px-4 py-2 text-sm font-semibold text-brand-700 hover:bg-brand-50">
+                        View Courses
+                    </button>
+                </div>
+
+                <div class="space-y-5">
+
+                    <div class="rounded-2xl border border-slate-200 p-5">
+                        <div class="mb-3 flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800">BSc (Hons) in Software Engineering</h3>
+                                <p class="text-sm text-slate-500">Department of Computing</p>
+                            </div>
+                            <span class="text-sm font-bold text-brand-700">58%</span>
+                        </div>
+
+                        <div class="h-3 overflow-hidden rounded-full bg-slate-200">
+                            <div class="h-full rounded-full bg-brand-600" style="width: 58%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 p-5">
+                        <div class="mb-3 flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800">Diploma in Web Development</h3>
+                                <p class="text-sm text-slate-500">Department of Computing</p>
+                            </div>
+                            <span class="text-sm font-bold text-emerald-700">100%</span>
+                        </div>
+
+                        <div class="h-3 overflow-hidden rounded-full bg-slate-200">
+                            <div class="h-full rounded-full bg-emerald-600" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Upcoming Assessment Deadlines -->
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+                <div class="mb-5 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Upcoming Assessment Deadlines</h2>
+                        <p class="text-sm text-slate-500">Assessments that require your attention.</p>
+                    </div>
+
+                    <button onclick="navigateToAssessments()"
+                            class="rounded-xl border border-brand-700 px-4 py-2 text-sm font-semibold text-brand-700 hover:bg-brand-50">
+                        View All
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+
+                    <div class="rounded-2xl border border-amber-200 bg-amber-50 p-5">
+                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800">SEP 2025 - AD CW 02</h3>
+                                <p class="mt-1 text-sm text-slate-600">Software Testing and Quality Assurance</p>
+                                <p class="mt-2 text-xs font-semibold text-amber-700">
+                                    Due: 11 May 2026, 11:59 PM
+                                </p>
+                            </div>
+
+                            <span class="rounded-full bg-amber-100 px-4 py-1.5 text-xs font-bold text-amber-700">
+                                Open
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-red-200 bg-red-50 p-5">
+                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800">Cloud Deployment Lab Report</h3>
+                                <p class="mt-1 text-sm text-slate-600">Cloud Application Development</p>
+                                <p class="mt-2 text-xs font-semibold text-red-700">
+                                    Due: 15 May 2026, 05:00 PM
+                                </p>
+                            </div>
+
+                            <span class="rounded-full bg-red-100 px-4 py-1.5 text-xs font-bold text-red-700">
+                                Urgent
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl border border-slate-200 p-5">
+                        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800">QA Group Presentation</h3>
+                                <p class="mt-1 text-sm text-slate-600">Software Testing and Quality Assurance</p>
+                                <p class="mt-2 text-xs font-semibold text-slate-500">
+                                    Due: 20 May 2026, 09:00 AM
+                                </p>
+                            </div>
+
+                            <span class="rounded-full bg-blue-100 px-4 py-1.5 text-xs font-bold text-blue-700">
+                                Upcoming
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="space-y-6">
+
+            <!-- Recent Announcements -->
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+                <div class="mb-5 flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-slate-800">Announcements</h2>
+                    <i class="fa-solid fa-bullhorn text-brand-700"></i>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="border-b border-slate-200 pb-4">
+                        <h3 class="font-bold text-slate-800">Coursework Brief Released</h3>
+                        <p class="mt-1 text-sm text-slate-500">
+                            The latest coursework brief is available.
+                        </p>
+                        <p class="mt-2 text-xs font-semibold text-slate-400">Today</p>
+                    </div>
+
+                    <div class="border-b border-slate-200 pb-4">
+                        <h3 class="font-bold text-slate-800">Additional Lab Session</h3>
+                        <p class="mt-1 text-sm text-slate-500">
+                            Practical session scheduled for automation testing.
+                        </p>
+                        <p class="mt-2 text-xs font-semibold text-slate-400">Yesterday</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-slate-800">Examination Notice</h3>
+                        <p class="mt-1 text-sm text-slate-500">
+                            Exam admission cards will be available soon.
+                        </p>
+                        <p class="mt-2 text-xs font-semibold text-slate-400">21 Mar 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-panel">
+                <h2 class="mb-5 text-xl font-bold text-slate-800">Quick Actions</h2>
+
+                <div class="space-y-3">
+                    <button onclick="navigateToModules()"
+                            class="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-left font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50">
+                        <i class="fa-solid fa-layer-group text-brand-700"></i>
+                        View Modules
+                    </button>
+
+                    <button onclick="navigateToChats()"
+                            class="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-left font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50">
+                        <i class="fa-solid fa-comments text-brand-700"></i>
+                        Open Chats
+                    </button>
+
+                    <button onclick="navigateToProfile()"
+                            class="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-left font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50">
+                        <i class="fa-solid fa-user text-brand-700"></i>
+                        My Profile
+                    </button>
+                    <button onclick="navigateToEnrollCourse()"
+                            class="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-left font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50">
+                        <i class="fa-solid fa-user-plus text-brand-700"></i>
+                        Enroll New Course
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        function navigateToCourses() {
+            console.log("Navigate to enrolled courses page");
+        }
+
+        function navigateToModules() {
+            console.log("Navigate to student modules page");
+        }
+
+        function navigateToAssessments() {
+            console.log("Navigate to assessments page");
+        }
+
+        function navigateToChats() {
+            console.log("Navigate to chats page");
+        }
+
+        function navigateToProfile() {
+            console.log("Navigate to student profile page");
+        }
+                function navigateToEnrollCourse() {
+            console.log("Navigate to course enrollment page");
+        }
+    </script>
+}

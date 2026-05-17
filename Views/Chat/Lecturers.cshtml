@@ -1,0 +1,350 @@
+﻿@{
+    ViewData["Title"] = "Chats";
+}
+
+<div class="space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-panel md:flex-row md:items-center md:justify-between">
+        <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-700">
+                Communication
+            </p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-800">
+                Chats
+            </h1>
+            <p class="mt-2 text-sm text-slate-500">
+                Communicate with lecturers, students and department staff.
+            </p>
+        </div>
+
+        <button onclick="newChat()"
+                class="inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700">
+            <i class="fa-solid fa-plus"></i>
+            New Chat
+        </button>
+    </div>
+
+    <!-- Chat Layout -->
+    <div class="grid min-h-[650px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-panel lg:grid-cols-12">
+
+        <!-- Left Chat List -->
+        <aside class="border-b border-slate-200 bg-slate-50 lg:col-span-4 lg:border-b-0 lg:border-r">
+
+            <div class="border-b border-slate-200 p-5">
+                <h2 class="text-lg font-bold text-slate-800">Messages</h2>
+
+                <div class="mt-4">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-sm text-slate-400"></i>
+                        <input type="text"
+                               placeholder="Search chats"
+                               class="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm focus:border-brand-500 focus:outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-h-[560px] overflow-y-auto">
+
+                <!-- Chat Item Active -->
+                <!-- Chat Item With Unread Count -->
+                <button onclick="openChat('Dr. Nuwan Perera', 'Department of Computing')"
+                        class="w-full border-b border-slate-200 bg-white px-5 py-4 text-left transition hover:bg-brand-50">
+                    <div class="flex items-center gap-4">
+
+                        <div class="relative">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-100 text-base font-bold text-brand-700">
+                                NP
+                            </div>
+
+                            <!-- Unread Counter -->
+                            <span class="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                                3
+                            </span>
+                        </div>
+
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center justify-between gap-3">
+                                <h3 class="truncate font-bold text-slate-800">
+                                    Dr. Nuwan Perera
+                                </h3>
+
+                                <span class="shrink-0 text-xs font-semibold text-slate-400">
+                                    Today
+                                </span>
+                            </div>
+
+                            <p class="mt-1 truncate text-sm font-medium text-slate-700">
+                                Please check the updated coursework brief.
+                            </p>
+                        </div>
+
+                    </div>
+                </button>
+
+                <!-- Chat Item With Unread Count -->
+                <button onclick="openChat('Ms. Tharushi Fernando', 'Department of Computing')"
+                        class="w-full border-b border-slate-200 px-5 py-4 text-left transition hover:bg-brand-50">
+                    <div class="flex items-center gap-4">
+
+                        <div class="relative">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-base font-bold text-emerald-700">
+                                TF
+                            </div>
+
+                            <!-- Unread Counter -->
+                            <span class="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                                1
+                            </span>
+                        </div>
+
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center justify-between gap-3">
+                                <h3 class="truncate font-bold text-slate-800">
+                                    Ms. Tharushi Fernando
+                                </h3>
+
+                                <span class="shrink-0 text-xs font-semibold text-slate-400">
+                                    Yesterday
+                                </span>
+                            </div>
+
+                            <p class="mt-1 truncate text-sm font-medium text-slate-700">
+                                Your lab attendance has been updated.
+                            </p>
+                        </div>
+
+                    </div>
+                </button>
+
+                <button onclick="openChat('Mr. Kasun Jayasinghe', 'Department of Software Engineering')"
+                        class="w-full border-b border-slate-200 px-5 py-4 text-left transition hover:bg-brand-50">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-base font-bold text-indigo-700">
+                            KJ
+                        </div>
+
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center justify-between gap-3">
+                                <h3 class="truncate font-bold text-slate-800">Mr. Kasun Jayasinghe</h3>
+                                <span class="shrink-0 text-xs font-semibold text-slate-400">21 Mar</span>
+                            </div>
+
+                            <p class="mt-1 truncate text-sm text-slate-500">
+                                Submit your project proposal draft by Friday.
+                            </p>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="openChat('Prof. Malini Silva', 'Department of Information Systems')"
+                        class="w-full border-b border-slate-200 px-5 py-4 text-left transition hover:bg-brand-50">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-amber-100 text-base font-bold text-amber-700">
+                            MS
+                        </div>
+
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center justify-between gap-3">
+                                <h3 class="truncate font-bold text-slate-800">Prof. Malini Silva</h3>
+                                <span class="shrink-0 text-xs font-semibold text-slate-400">19 Mar</span>
+                            </div>
+
+                            <p class="mt-1 truncate text-sm text-slate-500">
+                                Please review the seminar schedule.
+                            </p>
+                        </div>
+                    </div>
+                </button>
+
+                <button onclick="openChat('Department Office', 'Academic Administration')"
+                        class="w-full border-b border-slate-200 px-5 py-4 text-left transition hover:bg-brand-50">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-200 text-base font-bold text-slate-700">
+                            DO
+                        </div>
+
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center justify-between gap-3">
+                                <h3 class="truncate font-bold text-slate-800">Department Office</h3>
+                                <span class="shrink-0 text-xs font-semibold text-slate-400">15 Mar</span>
+                            </div>
+
+                            <p class="mt-1 truncate text-sm text-slate-500">
+                                Examination admission cards are now available.
+                            </p>
+                        </div>
+                    </div>
+                </button>
+
+            </div>
+        </aside>
+
+        <!-- Right Chat Section -->
+        <section class="flex min-h-[650px] flex-col lg:col-span-8">
+
+            <!-- Chat Header -->
+            <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+                <div class="flex items-center gap-4">
+                    <div id="chatProfileCircle"
+                         class="flex h-12 w-12 items-center justify-center rounded-full bg-brand-100 text-base font-bold text-brand-700">
+                        NP
+                    </div>
+
+                    <div>
+                        <h2 id="chatTitle" class="text-lg font-extrabold text-slate-800">
+                            Dr. Nuwan Perera
+                        </h2>
+                        <p id="chatDepartment" class="text-sm text-slate-500">
+                            Department of Computing
+                        </p>
+                    </div>
+                </div>
+
+                <button class="rounded-full p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="flex-1 space-y-5 overflow-y-auto bg-slate-50 px-6 py-6">
+
+                <!-- Received -->
+                <div class="flex items-start gap-3">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-700">
+                        NP
+                    </div>
+
+                    <div>
+                        <div class="max-w-xl rounded-2xl rounded-tl-none bg-white px-5 py-3 text-sm leading-6 text-slate-700 shadow-sm">
+                            Hello, please check the updated coursework brief uploaded under the assessments section.
+                        </div>
+                        <p class="mt-1 text-xs text-slate-400">09:15 AM</p>
+                    </div>
+                </div>
+
+                <!-- Sent -->
+                <div class="flex justify-end">
+                    <div>
+                        <div class="max-w-xl rounded-2xl rounded-tr-none bg-brand-700 px-5 py-3 text-sm leading-6 text-white shadow-sm">
+                            Thank you sir. I will review it today and contact you if I need clarification.
+                        </div>
+                        <p class="mt-1 text-right text-xs text-slate-400">09:18 AM</p>
+                    </div>
+                </div>
+
+                <!-- Received -->
+                <div class="flex items-start gap-3">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-700">
+                        NP
+                    </div>
+
+                    <div>
+                        <div class="max-w-xl rounded-2xl rounded-tl-none bg-white px-5 py-3 text-sm leading-6 text-slate-700 shadow-sm">
+                            Also, make sure your submission includes both the report and source code archive.
+                        </div>
+                        <p class="mt-1 text-xs text-slate-400">09:21 AM</p>
+                    </div>
+                </div>
+
+                <!-- Sent -->
+                <div class="flex justify-end">
+                    <div>
+                        <div class="max-w-xl rounded-2xl rounded-tr-none bg-brand-700 px-5 py-3 text-sm leading-6 text-white shadow-sm">
+                            Noted. I will prepare the files according to the submission guidelines.
+                        </div>
+                        <p class="mt-1 text-right text-xs text-slate-400">09:24 AM</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Message Box -->
+            <div class="border-t border-slate-200 bg-white p-4">
+                <div class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
+
+                    <button title="Attach Image"
+                            class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 hover:bg-white hover:text-brand-700">
+                        <i class="fa-regular fa-image text-lg"></i>
+                    </button>
+
+                    <button title="Add Attachment"
+                            class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 hover:bg-white hover:text-brand-700">
+                        <i class="fa-solid fa-paperclip text-lg"></i>
+                    </button>
+
+                    <button title="Emojis"
+                            class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 hover:bg-white hover:text-brand-700">
+                        <i class="fa-regular fa-face-smile text-lg"></i>
+                    </button>
+
+                    <input id="messageInput"
+                           type="text"
+                           placeholder="Write a message..."
+                           class="flex-1 bg-transparent text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none">
+
+                    <button onclick="sendMessage()"
+                            class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-700 text-white hover:bg-brand-800">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function getInitials(name) {
+            return name
+                .split(' ')
+                .filter(part => !['Dr.', 'Mr.', 'Ms.', 'Prof.'].includes(part))
+                .map(part => part.charAt(0))
+                .join('')
+                .substring(0, 2)
+                .toUpperCase();
+        }
+
+        function openChat(name, department) {
+            const initials = getInitials(name);
+
+            document.getElementById('chatTitle').innerText = name;
+            document.getElementById('chatDepartment').innerText = department;
+            document.getElementById('chatProfileCircle').innerText = initials;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+
+            if (!message) {
+                return;
+            }
+
+            const chatMessages = document.getElementById('chatMessages');
+
+            const messageWrapper = document.createElement('div');
+            messageWrapper.className = 'flex justify-end';
+
+            messageWrapper.innerHTML = `
+                <div>
+                    <div class="max-w-xl rounded-2xl rounded-tr-none bg-brand-700 px-5 py-3 text-sm leading-6 text-white shadow-sm">
+                        ${message}
+                    </div>
+                    <p class="mt-1 text-right text-xs text-slate-400">Just now</p>
+                </div>
+            `;
+
+            chatMessages.appendChild(messageWrapper);
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function newChat() {
+            alert('New Chat popup or page navigation can be implemented later.');
+        }
+    </script>
+}

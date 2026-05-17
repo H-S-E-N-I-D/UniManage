@@ -1,42 +1,46 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UniManage.Models
 {
+    /// <summary>
+    /// Maps to the <c>academic_year</c> table.
+    /// Represents a named academic year period (e.g. "2025/2026").
+    /// </summary>
     [Table("academic_year")]
     public class AcademicYear
     {
         [Key]
-        [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         [Required]
-        [Column("guid")]
-        [StringLength(255)]
+        [MaxLength(225)]
         public string Guid { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Human-readable label, e.g. "2025/2026". Must be unique.
+        /// </summary>
         [Required]
-        [Column("year_label")]
-        [StringLength(200)]
+        [MaxLength(45)]
         public string YearLabel { get; set; } = string.Empty;
 
         [Required]
-        [Column("start_date")]
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
 
         [Required]
-        [Column("end_date")]
-        public DateTime EndDate { get; set; }
+        public DateOnly EndDate { get; set; }
 
         [Required]
-        [Column("is_active")]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
-        [Column("created_at")]
         public DateTime? CreatedAt { get; set; }
 
-        [Column("updated_at")]
         public DateTime? UpdatedAt { get; set; }
 
+        // Navigation properties
+        public virtual ICollection<Semester> Semesters { get; set; } = [];
     }
 }
